@@ -3,6 +3,7 @@
 *.class
 .settings/
 .idea/
+ShareIt.iml
 target/
 
 # Mobile Tools for Java (J2ME)

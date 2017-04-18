@@ -1,6 +1,7 @@
 package edu.hm.shareit.services;
 
 import edu.hm.shareit.models.Book;
+import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.models.Medium;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 public class MediaServiceImpl implements MediaService {
 
     private List<Medium> books;
+    private List<Medium> discs;
 
     /**
      * Constructs a new instance.
@@ -21,10 +23,22 @@ public class MediaServiceImpl implements MediaService {
         books = new ArrayList<>();
         books.add(new Book("Die KÃ¤nguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
         books.add(new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"));
+        
+        discs = new ArrayList<>();
+        discs.add(new Disc("Rennschwein Rudi Rüssel", "123456789","Peter Timm",0));
+        discs.add(new Disc("Deadpool", "456789123","Tim Miller",16));
+        discs.add(new Disc("Source Code", "101001011","Duncan Jones",12));
+        
     }
 
     @Override
     public Medium[] getBooks() {
         return books.toArray(new Medium[books.size()]);
     }
+    
+    @Override
+    public Medium[] getDiscs() {
+        return discs.toArray(new Medium[discs.size()]);
+    }
+    
 }

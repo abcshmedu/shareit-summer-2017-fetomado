@@ -45,5 +45,25 @@ public class MediaResource {
                 .entity(json)
                 .build();
     }
-
+    
+    /**
+     * This function handles GET request to /media/discs/ .
+     * @return response with a list of all discs
+     */
+    @GET
+    @Path("/discs")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDiscs() {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = "";
+        try {
+            json = mapper.writeValueAsString(service.getDiscs());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return Response.status(Response.Status.OK)
+                .entity(json)
+                .build();
+    }
+    
 }

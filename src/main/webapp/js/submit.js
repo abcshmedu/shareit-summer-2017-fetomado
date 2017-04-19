@@ -53,6 +53,22 @@ var listBooks = function() {
 }
 
 /**
+ * Creates a list of all discs using a Mustache-template.
+ */
+var listDiscs = function() {
+	$.ajax({
+        url: '/shareit/media/discs',
+        type:'GET'
+	})
+	.done((data) => {
+		var template = "<table class='u-full-width'><tbody>{{#data}}<tr><td>{{title}}</td><td>{{barcode}}</td><td>{{director}}</td><td>{{fsk}}</td></tr>{{/data}}</tbody></table>";
+		Mustache.parse(template);
+		var output = Mustache.render(template, {data: data});
+		$("#content").html(output);
+	});// no error handling
+}
+
+/**
  * Call backer for "navigational buttons" in left column. Used to set content in main part.
  */
 var changeContent = function(content) {

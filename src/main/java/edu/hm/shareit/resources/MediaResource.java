@@ -7,6 +7,7 @@ import edu.hm.shareit.services.MediaServiceImpl;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -44,6 +45,27 @@ public class MediaResource {
         return Response.status(Response.Status.OK)
                 .entity(json)
                 .build();
+    }
+    
+    /**
+     *  This function handles GET request to  /media/discs/{barcode} .
+     * @param barcode
+     * @return response a disc with the correct barcode 
+     */
+    @GET
+    @Path("/discs/{barcode}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDisc(@PathParam("barcode") String barcode){
+    	 ObjectMapper mapper = new ObjectMapper();
+         String json = "";
+         try {
+             json = mapper.writeValueAsString(service.getDisc(barcode));
+         } catch (JsonProcessingException e) {
+             e.printStackTrace();
+         }
+    	return Response.status(Response.Status.OK)
+    					.entity(json)
+    					.build();
     }
     
     /**

@@ -34,7 +34,21 @@ public class MediaResource {
     public MediaResource() {
         service = new MediaServiceImpl();
     }
-
+    
+    
+    @POST
+    @Path("/books")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createBook(Book book) {
+        service.addBook(book);
+        return Response
+                .status(Response.Status.OK)
+                .entity(book)
+                .build();
+    }
+    
+ 
     /**
      * This function handles GET request to /media/books/ .
      * @return response with a list of all books
@@ -93,16 +107,6 @@ public class MediaResource {
         }
         return Response.status(Response.Status.OK)
                 .entity(json)
-                .build();
-    }
-    
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createBook(Book book) {
-        service.addBook(book);
-        return Response
-                .status(Response.Status.OK)
                 .build();
     }
     

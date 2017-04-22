@@ -21,6 +21,7 @@ public class MediaServiceImpl implements MediaService {
 	 */
 	public MediaServiceImpl() {
 		books = new ArrayList<>();
+		
 		books.add(new Book("Die Känguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
 		books.add(new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"));
 
@@ -30,6 +31,14 @@ public class MediaServiceImpl implements MediaService {
 		discs.add(new Disc("Source Code", "101001011", "Duncan Jones", 12));
 
 	}
+	
+
+    @Override
+    public Medium addBook(Book book) {
+    	books.add(book);
+        return book;
+    }
+	
 
 	@Override
 	public Medium[] getBooks() {
@@ -53,10 +62,5 @@ public class MediaServiceImpl implements MediaService {
 		return discs.toArray(new Medium[discs.size()]);
 	}
 
-    @Override
-    public Medium addBook(Book book) {
-        books.add(book);
-        return book;
-    }
 
 }

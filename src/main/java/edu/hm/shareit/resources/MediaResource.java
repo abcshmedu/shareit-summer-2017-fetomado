@@ -2,13 +2,21 @@ package edu.hm.shareit.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.hm.shareit.models.Book;
+import edu.hm.shareit.models.Medium;
 import edu.hm.shareit.services.MediaService;
 import edu.hm.shareit.services.MediaServiceImpl;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -85,6 +93,16 @@ public class MediaResource {
         }
         return Response.status(Response.Status.OK)
                 .entity(json)
+                .build();
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createBook(Book book) {
+        service.addBook(book);
+        return Response
+                .status(Response.Status.OK)
                 .build();
     }
     

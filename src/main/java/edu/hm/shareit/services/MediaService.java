@@ -5,6 +5,7 @@ import edu.hm.shareit.models.Medium;
 
 public interface MediaService {
 	public Medium addBook(Book book);
+	public Medium getBook(String isbn);
     public Medium[] getBooks();
     public Medium getDisc(String barcode);
     public Medium[] getDiscs();

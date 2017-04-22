@@ -1,11 +1,11 @@
 package edu.hm.shareit.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.models.Medium;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This is the implementation of the MediaService interface. It does the work
@@ -32,14 +32,24 @@ public class MediaServiceImpl implements MediaService {
 
 	}
 	
-
     @Override
     public Medium addBook(Book book) {
     	books.add(book);
         return book;
     }
 	
-
+    @Override
+    public Medium getBook(String isbn) {
+        Medium singleBook = null;
+        for (int i = 0; i < books.size(); i++) {
+            Book book = (Book) books.get(i);
+            if (book.getIsbn().equals(isbn)) {
+                singleBook = books.get(i);
+            }
+        }
+        return singleBook;
+    }    
+    
 	@Override
 	public Medium[] getBooks() {
 		return books.toArray(new Medium[books.size()]);
@@ -61,6 +71,5 @@ public class MediaServiceImpl implements MediaService {
 	public Medium[] getDiscs() {
 		return discs.toArray(new Medium[discs.size()]);
 	}
-
 
 }

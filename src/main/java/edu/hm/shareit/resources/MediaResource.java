@@ -48,7 +48,27 @@ public class MediaResource {
                 .build();
     }
     
- 
+    /**
+     * This function handles GET requests to /media/books/{isbn}.
+     * @param isbn unique identifier of the book
+     * @return response the book with the correct isbn
+     */
+    @GET
+    @Path("/books/{isbn}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBook(@PathParam("isbn") String isbn){
+        ObjectMapper mapper = new ObjectMapper();
+        String json = "";
+        try {
+            json = mapper.writeValueAsString(service.getBook(isbn));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return Response.status(Response.Status.OK)
+                .entity(json)
+                .build();
+    }
+    
     /**
      * This function handles GET request to /media/books/ .
      * @return response with a list of all books

@@ -33,16 +33,16 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
     @Override
-    public Medium addBook(Book book) {
+    public MediaServiceResult addBook(Book book) {
     	books.add(book);
-        return book;
+        return MediaServiceResult.TEST;
     }
 	
     @Override
-    public Medium getBook(String isbn) {
-        Medium singleBook = null;
+    public Book getBook(String isbn) {
+        Book singleBook = null;
         for (int i = 0; i < books.size(); i++) {
-            Book book = (Book) books.get(i);
+            Book book = books.get(i);
             if (book.getIsbn().equals(isbn)) {
                 singleBook = books.get(i);
             }
@@ -51,15 +51,15 @@ public class MediaServiceImpl implements MediaService {
     }    
     
 	@Override
-	public Medium[] getBooks() {
-		return books.toArray(new Medium[books.size()]);
+	public Book[] getBooks() {
+		return books.toArray(new Book[books.size()]);
 	}
 	
 	@Override
-	public Medium getDisc(String barcode) {
-		Medium singleDisc = null;
+	public Disc getDisc(String barcode) {
+		Disc singleDisc = null;
 		for (int i = 0; i < discs.size(); i++) {
-			Disc disc = (Disc) discs.get(i);
+			Disc disc = discs.get(i);
 			if (disc.getBarcode().equals(barcode)) {
 				singleDisc = discs.get(i);
 			}
@@ -68,8 +68,8 @@ public class MediaServiceImpl implements MediaService {
 	}
 
 	@Override
-	public Medium[] getDiscs() {
-		return discs.toArray(new Medium[discs.size()]);
+	public Disc[] getDiscs() {
+		return discs.toArray(new Disc[discs.size()]);
 	}
 
 }

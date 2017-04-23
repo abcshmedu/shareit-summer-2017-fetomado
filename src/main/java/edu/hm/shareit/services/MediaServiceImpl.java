@@ -13,22 +13,25 @@ import edu.hm.shareit.models.Medium;
  */
 public class MediaServiceImpl implements MediaService {
 
-	private List<Medium> books;
-	private List<Medium> discs;
+	private static List<Book> books;
+	private static List<Disc> discs;
 
 	/**
 	 * Constructs a new instance.
 	 */
 	public MediaServiceImpl() {
-		books = new ArrayList<>();
-		
-		books.add(new Book("Die Känguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
-		books.add(new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"));
+		if (books == null) {
+			books = new ArrayList<>();
+			books.add(new Book("Die Känguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
+			books.add(new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"));
+		}
 
-		discs = new ArrayList<>();
-		discs.add(new Disc("Rennschwein Rudi R�ssel", "123456789", "Peter Timm", 0));
-		discs.add(new Disc("Deadpool", "456789123", "Tim Miller", 16));
-		discs.add(new Disc("Source Code", "101001011", "Duncan Jones", 12));
+		if (discs == null) {
+			discs = new ArrayList<>();
+			discs.add(new Disc("Rennschwein Rudi R�ssel", "123456789", "Peter Timm", 0));
+			discs.add(new Disc("Deadpool", "456789123", "Tim Miller", 16));
+			discs.add(new Disc("Source Code", "101001011", "Duncan Jones", 12));
+		}
 
 	}
 	

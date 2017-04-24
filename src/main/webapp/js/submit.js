@@ -37,6 +37,39 @@ var submitNewBook = function() {
 }
 
 /**
+ * This function is used for transfer of new disc info.
+ */
+var submitNewDisc = function() {
+	var json = JSON.stringify({
+			title: $("input[name=title]").val(),
+			barcode: $("input[name=barcode]").val(),
+			director: $("input[name=director]").val(),
+			fsk: $("input[name=fsk]").val()
+	});
+	var errorText = $("#errormessage");
+    $.ajax({
+        url: '/shareit/media/discs/',
+        type:'POST',
+        contentType: 'application/json; charset=UTF-8',
+        data: json
+        })
+        .done(() => {
+			$("input[name=title]").val("");
+			$("input[name=barcode]").val("");
+			$("input[name=director]").val("");
+			$("input[name=fsk]").val("");
+        	
+        	errorText.removeClass("visible");
+        	errorText.addClass("hidden");
+        })
+        .fail((error) => {
+        	errorText.addClass("visible");
+        	errorText.text(error.responseJSON.detail);
+        	errorText.removeClass("hidden");
+        });
+}
+
+/**
  * Creates a list of all books using a Mustache-template.
  */
 var listBooks = function() {

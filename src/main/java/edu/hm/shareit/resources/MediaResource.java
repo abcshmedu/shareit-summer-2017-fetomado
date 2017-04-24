@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.hm.shareit.models.Book;
+import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.services.MediaService;
 import edu.hm.shareit.services.MediaServiceImpl;
 
@@ -31,7 +32,11 @@ public class MediaResource {
         service = new MediaServiceImpl();
     }
     
-    
+    /**
+     * This function handles POST requests to /media/book.
+     * @param book the book to create
+     * @return response 
+     */
     @POST
     @Path("/books")
     @Produces(MediaType.APPLICATION_JSON)
@@ -41,6 +46,23 @@ public class MediaResource {
         return Response
                 .status(Response.Status.OK)
                 .entity(book)
+                .build();
+    }
+    
+    /**
+     * This function handles POST requests to /media/disc.
+     * @param disc the disc to create
+     * @return response 
+     */
+    @POST
+    @Path("/discs")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createDisc(Disc disc) {
+        service.addDisc(disc);
+        return Response
+                .status(Response.Status.OK)
+                .entity(disc)
                 .build();
     }
     
@@ -57,7 +79,7 @@ public class MediaResource {
                 .entity(toJson(service.getBook(isbn)))
                 .build();
     }
-    
+
     /**
      * This function handles GET requests to /media/books/.
      * @return response list of all books

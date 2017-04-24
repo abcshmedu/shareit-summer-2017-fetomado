@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
-import edu.hm.shareit.models.Medium;
 
 /**
  * This is the implementation of the MediaService interface. It does the work
@@ -38,6 +37,12 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public MediaServiceResult addBook(Book book) {
     	books.add(book);
+        return MediaServiceResult.TEST;
+    }
+    
+    @Override
+    public MediaServiceResult addDisc(Disc disc) {
+        discs.add(disc);
         return MediaServiceResult.TEST;
     }
 	

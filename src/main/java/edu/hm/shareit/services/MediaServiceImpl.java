@@ -64,6 +64,22 @@ public class MediaServiceImpl implements MediaService {
 	}
 	
 	@Override
+	public MediaServiceResult updateBook(String isbn, Book book){
+	    for (int i = 0; i < books.size(); i++) {
+            Book existBook = books.get(i);
+            if (existBook.getIsbn().equals(isbn)) {
+               if (book.getAuthor()!= null && !book.getAuthor().equals("")){
+                   existBook.setAuthor(book.getAuthor());          
+               }
+               if (book.getTitle()!= null && !book.getTitle().equals("")){
+                   existBook.setTitle(book.getTitle());
+               }
+            }
+	    }
+	    return MediaServiceResult.TEST;
+	}
+	
+	@Override
 	public Disc getDisc(String barcode) {
 		Disc singleDisc = null;
 		for (int i = 0; i < discs.size(); i++) {

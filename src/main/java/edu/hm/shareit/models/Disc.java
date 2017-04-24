@@ -45,11 +45,19 @@ public class Disc extends Medium {
 		return director;
 	}
 	
+	public void setDirector (String director){
+	    this.director = director;
+	}
+	
 	/**
 	 * Returns the FSK number of the disc.
 	 * @return the FSK number
 	 */
 	public int getFsk(){
 		return fsk;
+	}
+	
+	public void setFsk(int fsk) {
+	    this.fsk = fsk;  
 	}
 }

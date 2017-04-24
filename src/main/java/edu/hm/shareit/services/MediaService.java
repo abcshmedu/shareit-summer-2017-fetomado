@@ -11,4 +11,5 @@ public interface MediaService {
     public MediaServiceResult updateBook(String isbn, Book book);
     public Disc getDisc(String barcode);
     public Disc[] getDiscs();
+    public MediaServiceResult updateDisc(String barcode, Disc disc);
 }

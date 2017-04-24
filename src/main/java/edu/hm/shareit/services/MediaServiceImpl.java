@@ -101,5 +101,24 @@ public class MediaServiceImpl implements MediaService {
 	public Disc[] getDiscs() {
 		return discs.values().toArray(new Disc[discs.size()]);
 	}
+	
+	@Override
+    public MediaServiceResult updateDisc(String barcode, Disc disc){
+        if (discs.containsKey(barcode)) {
+            Disc existDisc = discs.get(barcode);
+            if (existDisc.getBarcode().equals(barcode)) {
+               if (disc.getDirector()!= null && !disc.getDirector().equals("")){
+                   existDisc.setDirector(disc.getDirector());          
+               }
+               if (disc.getTitle()!= null && !disc.getTitle().equals("")){
+                   existDisc.setTitle(disc.getTitle());
+               }
+               if (disc.getFsk()!= existDisc.getFsk() && disc.getFsk() >= 0){
+                   existDisc.setFsk(disc.getFsk());
+               }
+            }
+        }
+        return MediaServiceResult.TEST;
+    }
 
 }

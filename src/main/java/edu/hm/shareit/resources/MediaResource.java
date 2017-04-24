@@ -133,6 +133,16 @@ public class MediaResource {
                 .build();
     }
     
+    @PUT
+    @Path("/discs/{barcode}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateDisc(@PathParam("barcode") String barcode, Disc disc){
+        return Response.status(Response.Status.OK)
+                       .entity(toJson(service.updateDisc(barcode,disc))) 
+                       .build();
+    }
+    
     /**
      * This method converts an Object to a string-representation in JSON.
      * @param obj Object to convert

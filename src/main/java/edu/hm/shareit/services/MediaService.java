@@ -8,6 +8,7 @@ public interface MediaService {
 	public MediaServiceResult addDisc(Disc disc);
 	public Book getBook(String isbn);
     public Book[] getBooks();
+    public MediaServiceResult updateBook(String isbn, Book book);
     public Disc getDisc(String barcode);
     public Disc[] getDiscs();
 }

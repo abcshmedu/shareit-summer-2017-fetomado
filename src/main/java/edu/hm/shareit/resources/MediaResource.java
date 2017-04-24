@@ -1,22 +1,16 @@
 package edu.hm.shareit.resources;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.services.MediaService;
 import edu.hm.shareit.services.MediaServiceImpl;
 import edu.hm.shareit.services.MediaServiceResult;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * This class is the API-layer for all requests to the resource media.
@@ -31,6 +25,14 @@ public class MediaResource {
      */
     public MediaResource() {
         service = new MediaServiceImpl();
+    }
+
+    /**
+     * Constructs a new instance with a given MediaService implementation.
+     * @param srv the MediaService object
+     */
+    MediaResource(MediaService srv) {
+        service = srv;
     }
     
     /**
@@ -92,6 +94,16 @@ public class MediaResource {
         return Response.status(Response.Status.OK)
                 .entity(toJson(service.getBooks()))
                 .build();
+    }
+    
+    @PUT
+    @Path("/books/{isbn}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateBook(@PathParam("isbn") String isbn,Book book){
+        return Response.status(Response.Status.OK)
+                       .entity(toJson(service.updateBook(isbn,book))) 
+                       .build();
     }
     
     /**

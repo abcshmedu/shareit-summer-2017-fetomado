@@ -1,5 +1,7 @@
 package edu.hm.shareit.services;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,14 +38,22 @@ public class MediaServiceImpl implements MediaService {
 	
     @Override
     public MediaServiceResult addBook(Book book) {
-    	books.put(book.getIsbn(), book);
-        return MediaServiceResult.TEST;
+        String regex = "^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(book.getIsbn());
+
+        if (!matcher.matches() || book.getAuthor() == "" || book.getTitle() == "") {
+            return MediaServiceResult.BAD_REQUEST;
+        } else {
+            books.put(book.getIsbn(), book);
+            return MediaServiceResult.OK;
+        }
     }
     
     @Override
     public MediaServiceResult addDisc(Disc disc) {
         discs.put(disc.getBarcode(), disc);
-        return MediaServiceResult.TEST;
+        return MediaServiceResult.OK;
     }
 	
     @Override
@@ -73,7 +83,7 @@ public class MediaServiceImpl implements MediaService {
                }
             }
 	    }
-	    return MediaServiceResult.TEST;
+	    return MediaServiceResult.OK;
 	}
 	
 	@Override

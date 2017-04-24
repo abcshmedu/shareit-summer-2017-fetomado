@@ -6,6 +6,7 @@ import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.services.MediaService;
 import edu.hm.shareit.services.MediaServiceImpl;
+import edu.hm.shareit.services.MediaServiceResult;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -44,10 +45,10 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createBook(Book book) {
-        service.addBook(book);
+        MediaServiceResult msr = service.addBook(book);
         return Response
-                .status(Response.Status.OK)
-                .entity(book)
+                .status(msr.getStatus())
+                .entity(toJson(new ResourceResponse(msr.getDetail(), msr.getStatus())))
                 .build();
     }
     
@@ -61,10 +62,10 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createDisc(Disc disc) {
-        service.addDisc(disc);
+        MediaServiceResult msr = service.addDisc(disc);
         return Response
-                .status(Response.Status.OK)
-                .entity(disc)
+                .status(msr.getStatus())
+                .entity(toJson(new ResourceResponse(msr.getDetail(), msr.getStatus())))
                 .build();
     }
     
@@ -150,11 +151,29 @@ public class MediaResource {
     private String toJson(Object obj) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.writeValueAsString(obj);
+            String value = mapper.writeValueAsString(obj);
+            return value;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         return "";
+    }
+    
+    private static class ResourceResponse {
+        final String detail;
+        final int code;
+        
+        public String getDetail() {
+            return detail;
+        }
+        public int getCode() {
+            return code;
+        }
+        public ResourceResponse(String detail, int code) {
+            super();
+            this.detail = detail;
+            this.code = code;
+        }
     }
     
 }

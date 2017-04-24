@@ -13,36 +13,39 @@ import edu.hm.shareit.models.Medium;
  */
 public class MediaServiceImpl implements MediaService {
 
-	private List<Medium> books;
-	private List<Medium> discs;
+	private static List<Book> books;
+	private static List<Disc> discs;
 
 	/**
 	 * Constructs a new instance.
 	 */
 	public MediaServiceImpl() {
-		books = new ArrayList<>();
-		
-		books.add(new Book("Die Känguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
-		books.add(new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"));
+		if (books == null) {
+			books = new ArrayList<>();
+			books.add(new Book("Die Känguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
+			books.add(new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"));
+		}
 
-		discs = new ArrayList<>();
-		discs.add(new Disc("Rennschwein Rudi R�ssel", "123456789", "Peter Timm", 0));
-		discs.add(new Disc("Deadpool", "456789123", "Tim Miller", 16));
-		discs.add(new Disc("Source Code", "101001011", "Duncan Jones", 12));
+		if (discs == null) {
+			discs = new ArrayList<>();
+			discs.add(new Disc("Rennschwein Rudi R�ssel", "123456789", "Peter Timm", 0));
+			discs.add(new Disc("Deadpool", "456789123", "Tim Miller", 16));
+			discs.add(new Disc("Source Code", "101001011", "Duncan Jones", 12));
+		}
 
 	}
 	
     @Override
-    public Medium addBook(Book book) {
+    public MediaServiceResult addBook(Book book) {
     	books.add(book);
-        return book;
+        return MediaServiceResult.TEST;
     }
 	
     @Override
-    public Medium getBook(String isbn) {
-        Medium singleBook = null;
+    public Book getBook(String isbn) {
+        Book singleBook = null;
         for (int i = 0; i < books.size(); i++) {
-            Book book = (Book) books.get(i);
+            Book book = books.get(i);
             if (book.getIsbn().equals(isbn)) {
                 singleBook = books.get(i);
             }
@@ -51,15 +54,15 @@ public class MediaServiceImpl implements MediaService {
     }    
     
 	@Override
-	public Medium[] getBooks() {
-		return books.toArray(new Medium[books.size()]);
+	public Book[] getBooks() {
+		return books.toArray(new Book[books.size()]);
 	}
 	
 	@Override
-	public Medium getDisc(String barcode) {
-		Medium singleDisc = null;
+	public Disc getDisc(String barcode) {
+		Disc singleDisc = null;
 		for (int i = 0; i < discs.size(); i++) {
-			Disc disc = (Disc) discs.get(i);
+			Disc disc = discs.get(i);
 			if (disc.getBarcode().equals(barcode)) {
 				singleDisc = discs.get(i);
 			}
@@ -68,8 +71,8 @@ public class MediaServiceImpl implements MediaService {
 	}
 
 	@Override
-	public Medium[] getDiscs() {
-		return discs.toArray(new Medium[discs.size()]);
+	public Disc[] getDiscs() {
+		return discs.toArray(new Disc[discs.size()]);
 	}
 
 }

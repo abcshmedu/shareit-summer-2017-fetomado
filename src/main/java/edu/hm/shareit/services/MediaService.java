@@ -1,12 +1,13 @@
 package edu.hm.shareit.services;
 
 import edu.hm.shareit.models.Book;
+import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.models.Medium;
 
 public interface MediaService {
-	public Medium addBook(Book book);
-	public Medium getBook(String isbn);
-    public Medium[] getBooks();
-    public Medium getDisc(String barcode);
-    public Medium[] getDiscs();
+	public MediaServiceResult addBook(Book book);
+	public Book getBook(String isbn);
+    public Book[] getBooks();
+    public Disc getDisc(String barcode);
+    public Disc[] getDiscs();
 }

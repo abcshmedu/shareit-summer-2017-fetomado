@@ -2,6 +2,8 @@ package edu.hm.shareit.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
@@ -21,13 +23,13 @@ public class MediaServiceImpl implements MediaService {
 	public MediaServiceImpl() {
 		if (books == null) {
 			books = new ArrayList<>();
-			books.add(new Book("Die KÃ¤nguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
+			books.add(new Book("Die Känguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
 			books.add(new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"));
 		}
 
 		if (discs == null) {
 			discs = new ArrayList<>();
-			discs.add(new Disc("Rennschwein Rudi Rï¿½ssel", "123456789", "Peter Timm", 0));
+			discs.add(new Disc("Rennschwein Rudi Rüssel", "123456789", "Peter Timm", 0));
 			discs.add(new Disc("Deadpool", "456789123", "Tim Miller", 16));
 			discs.add(new Disc("Source Code", "101001011", "Duncan Jones", 12));
 		}
@@ -36,14 +38,22 @@ public class MediaServiceImpl implements MediaService {
 	
     @Override
     public MediaServiceResult addBook(Book book) {
-    	books.add(book);
-        return MediaServiceResult.TEST;
+        String regex = "^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(book.getIsbn());
+
+        if (!matcher.matches() || book.getAuthor() == "" || book.getTitle() == "") {
+            return MediaServiceResult.BAD_REQUEST;
+        } else {
+            books.add(book);
+            return MediaServiceResult.OK;
+        }
     }
     
     @Override
     public MediaServiceResult addDisc(Disc disc) {
         discs.add(disc);
-        return MediaServiceResult.TEST;
+        return MediaServiceResult.OK;
     }
 	
     @Override

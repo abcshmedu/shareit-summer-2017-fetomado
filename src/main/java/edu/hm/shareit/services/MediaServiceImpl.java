@@ -44,6 +44,8 @@ public class MediaServiceImpl implements MediaService {
 
         if (!matcher.matches() || book.getAuthor() == "" || book.getTitle() == "") {
             return MediaServiceResult.BAD_REQUEST;
+        } else if(books.containsKey(book.getIsbn())) {
+            return MediaServiceResult.DUPLICATE;
         } else {
             books.put(book.getIsbn(), book);
             return MediaServiceResult.OK;

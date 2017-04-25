@@ -22,8 +22,13 @@ public class Medium {
     public String getTitle() {
         return title;
     }
+    
+    /**
+     * Sets the title of the medium.
+     * @param title the medium's title
+     */
     public void setTitle(String title) {
-        this.title=title;
+        this.title = title;
     }
 
 }

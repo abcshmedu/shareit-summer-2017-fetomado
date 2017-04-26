@@ -28,19 +28,23 @@ public class Book extends Medium {
 
     /**
      * Returns the author of the book.
-     * @return the author
+     * @return author of the book
      */
     public String getAuthor() {
         return author;
     }
     
-    public void setAuthor(String author){
-        this.author=author;
+    /**
+     * Sets the author of the book.
+     * @param author of the book
+     */
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     /**
      * Returns the ISBN number of the book.
-     * @return the ISBN number
+     * @return isbn unique identifier of the book
      */
     public String getIsbn() {
         return isbn;

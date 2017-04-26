@@ -4,12 +4,19 @@ import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
 
 public interface MediaService {
-	public MediaServiceResult addBook(Book book);
-	public MediaServiceResult addDisc(Disc disc);
-	public Book getBook(String isbn);
-    public Book[] getBooks();
-    public MediaServiceResult updateBook(String isbn, Book book);
-    public Disc getDisc(String barcode);
-    public Disc[] getDiscs();
-    public MediaServiceResult updateDisc(String barcode, Disc disc);
+    ServiceResult addBook(Book book);
+
+    ServiceResult addDisc(Disc disc);
+
+    Book getBook(String isbn);
+
+    Book[] getBooks();
+
+    ServiceResult updateBook(String isbn, Book book);
+
+    Disc getDisc(String barcode);
+
+    Disc[] getDiscs();
+
+    ServiceResult updateDisc(String barcode, Disc disc);
 }

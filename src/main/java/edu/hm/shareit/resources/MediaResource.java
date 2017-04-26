@@ -6,7 +6,8 @@ import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.services.MediaService;
 import edu.hm.shareit.services.MediaServiceImpl;
-import edu.hm.shareit.services.MediaServiceResult;
+import edu.hm.shareit.services.ServiceResult;
+import edu.hm.shareit.services.ServiceResultContainer;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -45,10 +46,10 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createBook(Book book) {
-        MediaServiceResult msr = service.addBook(book);
+        ServiceResult sr = service.addBook(book);
         return Response
-                .status(msr.getStatus())
-                .entity(toJson(new ResourceResponse(msr.getDetail(), msr.getStatus())))
+                .status(sr.getStatus())
+                .entity(toJson(new ServiceResultContainer(sr)))
                 .build();
     }
     
@@ -62,10 +63,10 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createDisc(Disc disc) {
-        MediaServiceResult msr = service.addDisc(disc);
+        ServiceResult sr = service.addDisc(disc);
         return Response
-                .status(msr.getStatus())
-                .entity(toJson(new ResourceResponse(msr.getDetail(), msr.getStatus())))
+                .status(sr.getStatus())
+                .entity(toJson(new ServiceResultContainer(sr)))
                 .build();
     }
     
@@ -158,22 +159,5 @@ public class MediaResource {
         }
         return "";
     }
-    
-    private static class ResourceResponse {
-        final String detail;
-        final int code;
-        
-        public String getDetail() {
-            return detail;
-        }
-        public int getCode() {
-            return code;
-        }
-        public ResourceResponse(String detail, int code) {
-            super();
-            this.detail = detail;
-            this.code = code;
-        }
-    }
-    
+
 }

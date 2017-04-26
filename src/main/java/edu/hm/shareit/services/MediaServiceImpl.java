@@ -24,13 +24,13 @@ public class MediaServiceImpl implements MediaService {
     public MediaServiceImpl() {
         if (books == null) {
             books = new HashMap<>();
-            books.put("978-3-548-37623-3", new Book("Die Känguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
+            books.put("978-3-548-37623-3", new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
             books.put("978-3-8135-0625-5", new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"));
         }
 
         if (discs == null) {
             discs = new HashMap<>();
-            discs.put("123456789", new Disc("Rennschwein Rudi Rüssel", "123456789", "Peter Timm", 0));
+            discs.put("123456789", new Disc("Rennschwein Rudi Ruessel", "123456789", "Peter Timm", 0));
             discs.put("456789123", new Disc("Deadpool", "456789123", "Tim Miller", 16));
             discs.put("101001011", new Disc("Source Code", "101001011", "Duncan Jones", 12));
         }
@@ -38,35 +38,35 @@ public class MediaServiceImpl implements MediaService {
     }
     
     @Override
-    public MediaServiceResult addBook(Book book) {
+    public ServiceResult addBook(Book book) {
         String regex = "^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(book.getIsbn());
 
         if (!matcher.matches() || book.getAuthor() == "" || book.getTitle() == "") {
-            return MediaServiceResult.BAD_REQUEST;
+            return ServiceResult.BAD_REQUEST;
         } else if (books.containsKey(book.getIsbn())) {
-            return MediaServiceResult.DUPLICATE;
+            return ServiceResult.DUPLICATE;
         } else {
             books.put(book.getIsbn(), book);
-            return MediaServiceResult.OK;
+            return ServiceResult.OK;
         }
     }
     
     @Override
-    public MediaServiceResult addDisc(Disc disc) {
+    public ServiceResult addDisc(Disc disc) {
         String regex = "^[1-9][0-9]{8,14}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(disc.getBarcode());
 
         if (disc.getDirector().isEmpty() || disc.getTitle().isEmpty() || (disc.getFsk() < 0 || disc.getFsk() > FSK_MAX)
                 || !matcher.matches()) {
-            return MediaServiceResult.BAD_REQUEST;
+            return ServiceResult.BAD_REQUEST;
         } else if (discs.containsKey(disc.getBarcode())) {
-            return MediaServiceResult.DUPLICATE;
+            return ServiceResult.DUPLICATE;
         } else {
             discs.put(disc.getBarcode(), disc);
-            return MediaServiceResult.OK;
+            return ServiceResult.OK;
         }
     }
     
@@ -85,7 +85,7 @@ public class MediaServiceImpl implements MediaService {
     }
     
     @Override
-    public MediaServiceResult updateBook(String isbn, Book book) {
+    public ServiceResult updateBook(String isbn, Book book) {
         if (books.containsKey(isbn)) {
             Book existBook = books.get(isbn);
             if (existBook.getIsbn().equals(isbn)) {
@@ -97,7 +97,7 @@ public class MediaServiceImpl implements MediaService {
                 }
             }
         }
-        return MediaServiceResult.OK;
+        return ServiceResult.OK;
     }
     
     @Override
@@ -115,7 +115,7 @@ public class MediaServiceImpl implements MediaService {
     }
     
     @Override
-    public MediaServiceResult updateDisc(String barcode, Disc disc) {
+    public ServiceResult updateDisc(String barcode, Disc disc) {
         if (discs.containsKey(barcode)) {
             Disc existDisc = discs.get(barcode);
             if (existDisc.getBarcode().equals(barcode)) {
@@ -130,7 +130,7 @@ public class MediaServiceImpl implements MediaService {
                 }
             }
         }
-        return MediaServiceResult.OK;
+        return ServiceResult.OK;
     }
 
 }

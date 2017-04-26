@@ -3,7 +3,7 @@ package edu.hm.shareit.resources;
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.services.MediaService;
-import edu.hm.shareit.services.MediaServiceResult;
+import edu.hm.shareit.services.ServiceResult;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
@@ -61,7 +61,7 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void addBook() {
-        when(serviceMock.addBook(any(Book.class))).thenReturn(MediaServiceResult.OK);
+        when(serviceMock.addBook(any(Book.class))).thenReturn(ServiceResult.OK);
         Entity<Book> book = Entity.entity(books[0], MediaType.APPLICATION_JSON);
         Response resp = target("media/books").request().post(book);
         assertEquals(200, resp.getStatus());

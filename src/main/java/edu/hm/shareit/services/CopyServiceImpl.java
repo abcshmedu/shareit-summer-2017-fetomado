@@ -1,4 +1,4 @@
 package edu.hm.shareit.services;
 
-public class CopyServiceImpl {
+public class CopyServiceImpl implements CopyService {
 }

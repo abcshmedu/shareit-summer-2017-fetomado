@@ -70,7 +70,7 @@ public class MediaResourceTest extends JerseyTest {
     
     @Test
     public void addDisc() {
-        when(serviceMock.addDisc(any(Disc.class))).thenReturn(MediaServiceResult.OK);
+        when(serviceMock.addDisc(any(Disc.class))).thenReturn(ServiceResult.OK);
         Entity<Disc> disc = Entity.entity(discs[0], MediaType.APPLICATION_JSON);
         Response resp = target("media/discs").request().post(disc);
         assertEquals(200, resp.getStatus());

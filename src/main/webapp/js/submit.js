@@ -46,8 +46,9 @@ var submitChangeBook = function() {
 			isbn: $("input[name=isbn]").val()
 	});
 	var errorText = $("#errormessage");
+	var isbn = $("input[name=isbn]").val();
     $.ajax({
-        url: '/shareit/media/books/',
+        url: '/shareit/media/books/'+isbn,
         type:'PUT',
         contentType: 'application/json; charset=UTF-8',
         data: json
@@ -111,8 +112,9 @@ var submitChangeDisc = function() {
 			fsk: $("input[name=fsk]").val()
 	});
 	var errorText = $("#errormessage");
+	var barcode = $("input[name=barcode]").val();
     $.ajax({
-        url: '/shareit/media/discs/',
+        url: '/shareit/media/discs/'+barcode,
         type:'PUT',
         contentType: 'application/json; charset=UTF-8',
         data: json

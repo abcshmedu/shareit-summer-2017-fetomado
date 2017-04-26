@@ -88,16 +88,15 @@ public class MediaServiceImpl implements MediaService {
     public ServiceResult updateBook(String isbn, Book book) {
         if (books.containsKey(isbn)) {
             Book existBook = books.get(isbn);
-            if (existBook.getIsbn().equals(isbn)) {
-                if (book.getAuthor() != null && !book.getAuthor().equals("")) {
-                    existBook.setAuthor(book.getAuthor());
-                }
-                if (book.getTitle() != null && !book.getTitle().equals("")) {
-                    existBook.setTitle(book.getTitle());
-                }
+            if (book.getAuthor() != null && !book.getAuthor().equals("")) {
+                existBook.setAuthor(book.getAuthor());
             }
+            if (book.getTitle() != null && !book.getTitle().equals("")) {
+                existBook.setTitle(book.getTitle());
+            }
+            return ServiceResult.OK;
         }
-        return ServiceResult.OK;
+        return ServiceResult.NOT_FOUND;
     }
     
     @Override
@@ -118,19 +117,18 @@ public class MediaServiceImpl implements MediaService {
     public ServiceResult updateDisc(String barcode, Disc disc) {
         if (discs.containsKey(barcode)) {
             Disc existDisc = discs.get(barcode);
-            if (existDisc.getBarcode().equals(barcode)) {
-                if (disc.getDirector() != null && !disc.getDirector().equals("")) {
-                    existDisc.setDirector(disc.getDirector());
-                }
-                if (disc.getTitle() != null && !disc.getTitle().equals("")) {
-                    existDisc.setTitle(disc.getTitle());
-                }
-                if (disc.getFsk() != existDisc.getFsk() && (disc.getFsk() >= 0 && disc.getFsk() <= FSK_MAX)) {
-                    existDisc.setFsk(disc.getFsk());
-                }
+            if (disc.getDirector() != null && !disc.getDirector().equals("")) {
+                existDisc.setDirector(disc.getDirector());
             }
+            if (disc.getTitle() != null && !disc.getTitle().equals("")) {
+                existDisc.setTitle(disc.getTitle());
+            }
+            if (disc.getFsk() != existDisc.getFsk() && (disc.getFsk() >= 0 && disc.getFsk() <= FSK_MAX)) {
+                existDisc.setFsk(disc.getFsk());
+            }
+            return ServiceResult.OK;
         }
-        return ServiceResult.OK;
+        return ServiceResult.NOT_FOUND;
     }
 
 }

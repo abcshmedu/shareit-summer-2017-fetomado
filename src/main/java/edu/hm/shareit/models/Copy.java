@@ -5,8 +5,11 @@ package edu.hm.shareit.models;
  */
 public class Copy {
 
+    private static int idCounter = 1;
+
     private Medium medium;
     private String owner;
+    private int id;
 
     /**
      * Constructs a new copy of a medium.
@@ -16,6 +19,8 @@ public class Copy {
     public Copy(String owner, Medium medium) {
         this.owner = owner;
         this.medium = medium;
+        id = idCounter;
+        idCounter++;
     }
     
     /**
@@ -32,5 +37,13 @@ public class Copy {
      */
     public String getOwner() {
         return owner;
+    }
+
+    /**
+     * Returns the id of the copy.
+     * @return the id
+     */
+    public int getId() {
+        return id;
     }
 }

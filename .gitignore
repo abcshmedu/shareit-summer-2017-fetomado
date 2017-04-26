@@ -5,6 +5,7 @@
 .idea/
 ShareIt.iml
 target/
+.checkstyle
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

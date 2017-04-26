@@ -67,4 +67,13 @@ public class MediaResourceTest extends JerseyTest {
         assertEquals(200, resp.getStatus());
         assertEquals("{\"detail\":\"\",\"code\":200}", resp.readEntity(String.class));
     }
+    
+    @Test
+    public void addDisc() {
+        when(serviceMock.addDisc(any(Disc.class))).thenReturn(MediaServiceResult.OK);
+        Entity<Disc> disc = Entity.entity(discs[0], MediaType.APPLICATION_JSON);
+        Response resp = target("media/discs").request().post(disc);
+        assertEquals(200, resp.getStatus());
+        assertEquals("{\"detail\":\"\",\"code\":200}", resp.readEntity(String.class));
+    }
 }

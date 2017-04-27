@@ -81,17 +81,20 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public ServiceResult updateBook(String isbn, Book book) {
-        if (books.containsKey(isbn)) {
-            Book existBook = books.get(isbn);
-            if (book.getAuthor() != null && !book.getAuthor().equals("")) {
-                existBook.setAuthor(book.getAuthor());
-            }
-            if (book.getTitle() != null && !book.getTitle().equals("")) {
-                existBook.setTitle(book.getTitle());
-            }
-            return ServiceResult.OK;
+        if (!books.containsKey(isbn)) {
+            return ServiceResult.NOT_FOUND;
         }
-        return ServiceResult.NOT_FOUND;
+        if ((book.getAuthor() == null || book.getAuthor().equals("")) && (book.getTitle() == null || book.getTitle().equals(""))) {
+            return ServiceResult.BAD_REQUEST;
+        }
+        Book bookToEdit = books.get(isbn);
+        if (book.getAuthor() != null && !book.getAuthor().equals("")) {
+            bookToEdit.setAuthor(book.getAuthor());
+        }
+        if (book.getTitle() != null && !book.getTitle().equals("")) {
+            bookToEdit.setTitle(book.getTitle());
+        }
+        return ServiceResult.OK;
     }
 
     @Override

@@ -16,9 +16,7 @@ public class MediaServiceImplTest {
             new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"),
     };
     private Disc[] discs = {
-            new Disc("Rennschwein Rudi Ruessel", "123456789", "Peter Timm", 0),
-            new Disc("Deadpool", "456789123", "Tim Miller", 16),
-            new Disc("Source Code", "101001011", "Duncan Jones", 12),
+            new Disc("ValidDisc", "111111111", "Director", 0),
     };
 
     @Before
@@ -58,6 +56,40 @@ public class MediaServiceImplTest {
     @Test
     public void testAddInvalidISBNBook() {
         ServiceResult sr = service.addBook(new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623"));
+        assertEquals(ServiceResult.BAD_REQUEST, sr);
+    }
+
+    @Test
+    public void testAddValidDisc() {
+        int oldCount = service.getDiscs().length;
+        ServiceResult sr = service.addDisc(discs[0]);
+        assertEquals(ServiceResult.OK, sr);
+        assertEquals(oldCount + 1, service.getDiscs().length);
+    }
+
+    @Test
+    public void testAddDuplicateDisc() {
+        int oldCount = service.getDiscs().length;
+        ServiceResult sr = service.addDisc(discs[0]);
+        assertEquals(ServiceResult.DUPLICATE, sr);
+        assertEquals(oldCount, service.getDiscs().length);
+    }
+
+    @Test
+    public void testAddInvalidTitleDisc() {
+        ServiceResult sr = service.addDisc(new Disc("", "222222222", "Director", 0));
+        assertEquals(ServiceResult.BAD_REQUEST, sr);
+    }
+
+    @Test
+    public void testAddInvalidBarcodeDisc() {
+        ServiceResult sr = service.addDisc(new Disc("Title", "", "Director", 0));
+        assertEquals(ServiceResult.BAD_REQUEST, sr);
+    }
+
+    @Test
+    public void testAddInvalidFskDisc() {
+        ServiceResult sr = service.addDisc(new Disc("Title", "333333333", "Director", 99));
         assertEquals(ServiceResult.BAD_REQUEST, sr);
     }
 

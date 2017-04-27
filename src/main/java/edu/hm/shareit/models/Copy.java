@@ -22,6 +22,8 @@ public class Copy {
         id = idCounter;
         idCounter++;
     }
+
+    private Copy() {}
     
     /**
      * Returns the medium of the copy.

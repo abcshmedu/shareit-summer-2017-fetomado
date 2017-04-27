@@ -26,17 +26,37 @@ public class MediaServiceImplTest {
 
     @Test
     public void testAddValidBook() {
+        int oldCount = service.getBooks().length;
         ServiceResult sr = service.addBook(books[0]);
         assertEquals(ServiceResult.OK, sr);
-        assertEquals(1, service.getBooks().length);
+        assertEquals(oldCount + 1, service.getBooks().length);
     }
 
     @Test
     public void testAddDuplicateBook() {
         service.addBook(books[0]);
+        int oldCount = service.getBooks().length;
         ServiceResult sr = service.addBook(books[0]);
         assertEquals(ServiceResult.DUPLICATE, sr);
-        assertEquals(1, service.getBooks().length);
+        assertEquals(oldCount, service.getBooks().length);
+    }
+
+    @Test
+    public void testAddInvalidTitleBook() {
+        ServiceResult sr = service.addBook(new Book("", "Marc-Uwe Kling", "978-3-548-37623-3"));
+        assertEquals(ServiceResult.BAD_REQUEST, sr);
+    }
+
+    @Test
+    public void testAddInvalidAuthorBook() {
+        ServiceResult sr = service.addBook(new Book("Die Kaenguru-Chroniken", "", "978-3-548-37623-3"));
+        assertEquals(ServiceResult.BAD_REQUEST, sr);
+    }
+
+    @Test
+    public void testAddInvalidISBNBook() {
+        ServiceResult sr = service.addBook(new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623"));
+        assertEquals(ServiceResult.BAD_REQUEST, sr);
     }
 
     @Test

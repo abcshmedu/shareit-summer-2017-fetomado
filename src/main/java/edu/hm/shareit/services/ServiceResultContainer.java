@@ -1,7 +1,8 @@
 package edu.hm.shareit.services;
 
-import edu.hm.shareit.services.ServiceResult;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({"code", "detail"})
 public class ServiceResultContainer {
     private ServiceResult result;
 

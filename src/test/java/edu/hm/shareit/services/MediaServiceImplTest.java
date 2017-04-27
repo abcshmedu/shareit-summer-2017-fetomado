@@ -121,5 +121,10 @@ public class MediaServiceImplTest {
         assertNull(disc);
     }
 
+    @Test
+    public void testUpdateBookInvalidISBN() {
+        ServiceResult sr = service.updateBook("123", books[0]);
+        assertEquals(ServiceResult.NOT_FOUND, sr);
+    }
 
 }

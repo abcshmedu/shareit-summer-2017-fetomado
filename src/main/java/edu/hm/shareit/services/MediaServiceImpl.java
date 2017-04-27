@@ -1,12 +1,12 @@
 package edu.hm.shareit.services;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.HashMap;
-import java.util.Map;
-
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This is the implementation of the MediaService interface. It does the work
@@ -24,19 +24,14 @@ public class MediaServiceImpl implements MediaService {
     public MediaServiceImpl() {
         if (books == null) {
             books = new HashMap<>();
-            books.put("978-3-548-37623-3", new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"));
-            books.put("978-3-8135-0625-5", new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"));
         }
 
         if (discs == null) {
             discs = new HashMap<>();
-            discs.put("123456789", new Disc("Rennschwein Rudi Ruessel", "123456789", "Peter Timm", 0));
-            discs.put("456789123", new Disc("Deadpool", "456789123", "Tim Miller", 16));
-            discs.put("101001011", new Disc("Source Code", "101001011", "Duncan Jones", 12));
         }
 
     }
-    
+
     @Override
     public ServiceResult addBook(Book book) {
         String regex = "^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$";
@@ -52,7 +47,7 @@ public class MediaServiceImpl implements MediaService {
             return ServiceResult.OK;
         }
     }
-    
+
     @Override
     public ServiceResult addDisc(Disc disc) {
         String regex = "^[1-9][0-9]{8,14}$";
@@ -69,7 +64,7 @@ public class MediaServiceImpl implements MediaService {
             return ServiceResult.OK;
         }
     }
-    
+
     @Override
     public Book getBook(String isbn) {
         if (books.containsKey(isbn)) {
@@ -77,13 +72,13 @@ public class MediaServiceImpl implements MediaService {
         } else {
             return null;
         }
-    }   
-    
+    }
+
     @Override
     public Book[] getBooks() {
         return books.values().toArray(new Book[books.size()]);
     }
-    
+
     @Override
     public ServiceResult updateBook(String isbn, Book book) {
         if (books.containsKey(isbn)) {
@@ -98,7 +93,7 @@ public class MediaServiceImpl implements MediaService {
         }
         return ServiceResult.NOT_FOUND;
     }
-    
+
     @Override
     public Disc getDisc(String barcode) {
         if (discs.containsKey(barcode)) {
@@ -112,7 +107,7 @@ public class MediaServiceImpl implements MediaService {
     public Disc[] getDiscs() {
         return discs.values().toArray(new Disc[discs.size()]);
     }
-    
+
     @Override
     public ServiceResult updateDisc(String barcode, Disc disc) {
         if (discs.containsKey(barcode)) {

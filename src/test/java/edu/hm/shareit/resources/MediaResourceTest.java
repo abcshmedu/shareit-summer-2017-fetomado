@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 public class MediaResourceTest extends JerseyTest {
@@ -31,8 +32,8 @@ public class MediaResourceTest extends JerseyTest {
     };
     private Disc[] discs = {
             new Disc("Rennschwein Rudi Ruessel", "123456789", "Peter Timm", 0),
-			new Disc("Deadpool", "456789123", "Tim Miller", 16),
-			new Disc("Source Code", "101001011", "Duncan Jones", 12),
+            new Disc("Deadpool", "456789123", "Tim Miller", 16),
+            new Disc("Source Code", "101001011", "Duncan Jones", 12),
     };
 
     @Override
@@ -68,7 +69,7 @@ public class MediaResourceTest extends JerseyTest {
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
     }
-    
+
     @Test
     public void testCreateDisc() {
         when(serviceMock.addDisc(any(Disc.class))).thenReturn(ServiceResult.OK);
@@ -88,19 +89,27 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void testGetDisc() {
-            when(serviceMock.getDisc("456789123")).thenReturn(discs[1]);
-            Response resp = target("media/discs/456789123").request().get();
-            assertEquals(200, resp.getStatus());
-            assertEquals("{\"title\":\"Deadpool\",\"barcode\":\"456789123\",\"director\":\"Tim Miller\",\"fsk\":16}", resp.readEntity(String.class) );
+        when(serviceMock.getDisc("456789123")).thenReturn(discs[1]);
+        Response resp = target("media/discs/456789123").request().get();
+        assertEquals(200, resp.getStatus());
+        assertEquals("{\"title\":\"Deadpool\",\"barcode\":\"456789123\",\"director\":\"Tim Miller\",\"fsk\":16}", resp.readEntity(String.class));
     }
 
     @Test
     public void testUpdateBook() {
-
+        when(serviceMock.updateBook(eq("978-3-8135-0625-5"), any(Book.class))).thenReturn(ServiceResult.OK);
+        Entity<Book> book = Entity.entity(books[1], MediaType.APPLICATION_JSON);
+        Response resp = target("media/books/978-3-8135-0625-5").request().put(book);
+        assertEquals(200, resp.getStatus());
+        assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
     }
 
     @Test
     public void testUpdateDisc() {
-
+        when(serviceMock.updateDisc(eq("456789123"), any(Disc.class))).thenReturn(ServiceResult.OK);
+        Entity<Disc> disc = Entity.entity(discs[1], MediaType.APPLICATION_JSON);
+        Response resp = target("media/discs/456789123").request().put(disc);
+        assertEquals(200, resp.getStatus());
+        assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
     }
- }
+}

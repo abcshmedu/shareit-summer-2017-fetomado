@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class MediaServiceImplTest {
 
@@ -17,6 +18,7 @@ public class MediaServiceImplTest {
     };
     private Disc[] discs = {
             new Disc("ValidDisc", "111111111", "Director", 0),
+            new Disc("Deadpool", "456789123", "Tim Miller", 16),
     };
 
     @Before
@@ -92,5 +94,32 @@ public class MediaServiceImplTest {
         ServiceResult sr = service.addDisc(new Disc("Title", "333333333", "Director", 99));
         assertEquals(ServiceResult.BAD_REQUEST, sr);
     }
+
+    @Test
+    public void testGetValidBook() {
+        service.addBook(books[1]);
+        Book book = service.getBook("978-3-8135-0625-5");
+        assertEquals(books[1], book);
+    }
+
+    @Test
+    public void testGetInvalidBook() {
+        Book book = service.getBook("978-3-8135-0625-9");
+        assertNull(book);
+    }
+
+    @Test
+    public void testGetValidDisc() {
+        service.addDisc(discs[1]);
+        Disc disc = service.getDisc("456789123");
+        assertEquals(discs[1], disc);
+    }
+
+    @Test
+    public void testGetInvalidDisc() {
+        Disc disc = service.getDisc("99");
+        assertNull(disc);
+    }
+
 
 }

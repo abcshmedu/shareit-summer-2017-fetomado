@@ -30,14 +30,16 @@ public class MediaResource {
 
     /**
      * Constructs a new instance with a given MediaService implementation.
+     *
      * @param srv the MediaService object
      */
     MediaResource(MediaService srv) {
         service = srv;
     }
-    
+
     /**
      * This function handles POST requests to /media/book.
+     *
      * @param book the book to create
      * @return response including HTTP-Statuscode and details
      */
@@ -52,9 +54,10 @@ public class MediaResource {
                 .entity(toJson(new ServiceResultContainer(sr)))
                 .build();
     }
-    
+
     /**
      * This function handles POST requests to /media/disc.
+     *
      * @param disc the disc to create
      * @return response including HTTP-Statuscode and details
      */
@@ -69,16 +72,17 @@ public class MediaResource {
                 .entity(toJson(new ServiceResultContainer(sr)))
                 .build();
     }
-    
+
     /**
      * This function handles GET requests to /media/books/{isbn}.
+     *
      * @param isbn unique identifier of the book
      * @return response the book with the requested isbn
      */
     @GET
     @Path("/books/{isbn}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBook(@PathParam("isbn") String isbn){
+    public Response getBook(@PathParam("isbn") String isbn) {
         return Response.status(Response.Status.OK)
                 .entity(toJson(service.getBook(isbn)))
                 .build();
@@ -86,6 +90,7 @@ public class MediaResource {
 
     /**
      * This function handles GET requests to /media/books/.
+     *
      * @return response list of all books
      */
     @GET
@@ -96,23 +101,25 @@ public class MediaResource {
                 .entity(toJson(service.getBooks()))
                 .build();
     }
-    
+
     /**
-     *  This function handles GET requests to /media/discs/{barcode}.
+     * This function handles GET requests to /media/discs/{barcode}.
+     *
      * @param barcode unique identifier of the disc
      * @return response a disc with the requested barcode
      */
     @GET
     @Path("/discs/{barcode}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDisc(@PathParam("barcode") String barcode){
+    public Response getDisc(@PathParam("barcode") String barcode) {
         return Response.status(Response.Status.OK)
-                        .entity(toJson(service.getDisc(barcode)))
-                        .build();
+                .entity(toJson(service.getDisc(barcode)))
+                .build();
     }
-    
+
     /**
      * This function handles GET requests to /media/discs/.
+     *
      * @return response with a list of all discs
      */
     @GET
@@ -126,6 +133,7 @@ public class MediaResource {
 
     /**
      * This function edits the values of an existing book.
+     *
      * @param isbn unique identifier of the book to be changed
      * @param book the book to be changed
      * @return response including HTTP-Statuscode and details
@@ -134,8 +142,8 @@ public class MediaResource {
     @Path("/books/{isbn}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateBook(@PathParam("isbn") String isbn,Book book){
-        ServiceResult sr = service.updateBook(isbn,book);
+    public Response updateBook(@PathParam("isbn") String isbn, Book book) {
+        ServiceResult sr = service.updateBook(isbn, book);
         return Response.status(sr.getStatus())
                 .entity(toJson(new ServiceResultContainer(sr)))
                 .build();
@@ -143,23 +151,25 @@ public class MediaResource {
 
     /**
      * This function edits the values of an existing disc.
+     *
      * @param barcode unique identifier of the disc to be changed
-     * @param disc the disc to be changed
+     * @param disc    the disc to be changed
      * @return response including HTTP-Statuscode and details
      */
     @PUT
     @Path("/discs/{barcode}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateDisc(@PathParam("barcode") String barcode, Disc disc){
+    public Response updateDisc(@PathParam("barcode") String barcode, Disc disc) {
         ServiceResult sr = service.updateDisc(barcode, disc);
         return Response.status(sr.getStatus())
-                       .entity(toJson(new ServiceResultContainer(sr)))
-                       .build();
+                .entity(toJson(new ServiceResultContainer(sr)))
+                .build();
     }
-    
+
     /**
      * This function converts an Object to JSON and returns the string-representation.
+     *
      * @param obj Object to convert
      * @return String representation of the JSON-Object
      */

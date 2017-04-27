@@ -1,7 +1,5 @@
 package edu.hm.shareit.services;
 
-import edu.hm.shareit.services.ServiceResult;
-
 public class ServiceResultContainer {
     private ServiceResult result;
 

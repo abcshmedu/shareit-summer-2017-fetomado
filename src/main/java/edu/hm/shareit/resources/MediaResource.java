@@ -13,6 +13,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import static edu.hm.shareit.resources.ResourceHelper.toJson;
+
 /**
  * This class is the API-layer for all requests to the resource media.
  */
@@ -157,20 +159,4 @@ public class MediaResource {
                        .entity(toJson(new ServiceResultContainer(sr)))
                        .build();
     }
-    
-    /**
-     * This function converts an Object to JSON and returns the string-representation.
-     * @param obj Object to convert
-     * @return String representation of the JSON-Object
-     */
-    private String toJson(Object obj) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.writeValueAsString(obj);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
 }

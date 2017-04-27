@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import javax.ws.rs.PathParam;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
@@ -76,4 +77,30 @@ public class MediaResourceTest extends JerseyTest {
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
     }
-}
+
+    @Test
+    public void testGetBook() {
+        when(serviceMock.getBook("978-3-8135-0625-5")).thenReturn(books[1]);
+        Response resp = target("media/books/978-3-8135-0625-5").request().get();
+        assertEquals(200, resp.getStatus());
+        assertEquals("{\"title\":\"what if?\",\"author\":\"Randall Munroe\",\"isbn\":\"978-3-8135-0625-5\"}", resp.readEntity(String.class));
+    }
+
+    @Test
+    public void testGetDisc() {
+            when(serviceMock.getDisc("456789123")).thenReturn(discs[1]);
+            Response resp = target("media/discs/456789123").request().get();
+            assertEquals(200, resp.getStatus());
+            assertEquals("{\"title\":\"Deadpool\",\"barcode\":\"456789123\",\"director\":\"Tim Miller\",\"fsk\":16}", resp.readEntity(String.class) );
+    }
+
+    @Test
+    public void testUpdateBook() {
+
+    }
+
+    @Test
+    public void testUpdateDisc() {
+
+    }
+ }

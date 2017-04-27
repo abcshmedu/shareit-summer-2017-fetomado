@@ -1,12 +1,11 @@
 package edu.hm.shareit.services;
 
 import edu.hm.shareit.models.Copy;
-import edu.hm.shareit.models.Medium;
 
 public interface CopyService {
-    ServiceResult addCopy(Copy copy);
+    ServiceResult addCopy(String owner, String medium);
 
-    Copy [] getCopys();
+    Copy[] getCopys();
 
     Copy getCopy(int id);
 

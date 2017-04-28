@@ -36,7 +36,7 @@ public class CopyServiceImpl implements CopyService {
     }
 
     @Override
-    public ServiceResult updateCopy(int id, String owner, String medium) {
+    public ServiceResult updateCopy(int id, String owner) {
         return null;
     }
 }

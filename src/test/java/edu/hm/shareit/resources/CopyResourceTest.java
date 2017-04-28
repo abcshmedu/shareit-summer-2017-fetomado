@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 public class CopyResourceTest extends JerseyTest {
@@ -55,16 +56,30 @@ public class CopyResourceTest extends JerseyTest {
         Response resp = target("copys").request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("[{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Test User\",\"id\":1}," +
-                "{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Egon\",\"id\":2}]",
+                        "{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Egon\",\"id\":2}]",
                 resp.readEntity(String.class));
     }
 
     @Test
     public void testGetCopy() {
+        int id = copies[1].getId();
+        when(serviceMock.getCopy(id)).thenReturn(copies[1]);
+        Response resp = target("copys/" + id).request().get();
+        assertEquals(200, resp.getStatus());
+        assertEquals("{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Egon\",\"id\":" + id + "}",
+                resp.readEntity(String.class));
     }
 
     @Test
     public void testUpdateCopy() {
+        int id = copies[1].getId();
+        when(serviceMock.updateCopy(eq(id), any(String.class))).thenReturn(ServiceResult.OK);
+        ObjectNode root = new ObjectMapper().createObjectNode();
+        root.put("owner", "Test User");
+        Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
+        Response resp = target("copys" + id).request().post(json);
+        assertEquals(200, resp.getStatus());
+        assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
     }
 
 }

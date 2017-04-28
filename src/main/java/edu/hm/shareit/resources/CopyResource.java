@@ -62,9 +62,8 @@ public class CopyResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCopy(@PathParam("id") int id, JsonNode json) {
-        String medium = json.path("medium").asText();
         String owner = json.path("owner").asText();
-        ServiceResult sr = service.updateCopy(id, owner, medium);
+        ServiceResult sr = service.updateCopy(id, owner);
         return Response.status(sr.getStatus())
                 .entity(toJson(new ServiceResultContainer(sr)))
                 .build();

@@ -9,6 +9,6 @@ public interface CopyService {
 
     Copy getCopy(int id);
 
-    ServiceResult updateCopy(int id, Copy copy);
+    ServiceResult updateCopy(int id, String owner, String medium);
 }
 

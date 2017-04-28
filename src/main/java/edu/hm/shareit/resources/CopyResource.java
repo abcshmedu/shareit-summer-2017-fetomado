@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import static edu.hm.shareit.resources.ResourceHelper.toJson;
 
 
-@Path("/copys")
+@Path("/copies")
 public class CopyResource {
     private CopyService service;
 
@@ -41,9 +41,9 @@ public class CopyResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCopys() {
+    public Response getCopies() {
         return Response.status(Response.Status.OK)
-                .entity(toJson(service.getCopys()))
+                .entity(toJson(service.getCopies()))
                 .build();
     }
 

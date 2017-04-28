@@ -5,7 +5,7 @@ import edu.hm.shareit.models.Copy;
 public interface CopyService {
     ServiceResult addCopy(String owner, String medium);
 
-    Copy[] getCopys();
+    Copy[] getCopies();
 
     Copy getCopy(int id);
 

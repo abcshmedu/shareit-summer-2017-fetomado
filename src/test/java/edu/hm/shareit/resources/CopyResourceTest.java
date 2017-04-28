@@ -45,15 +45,15 @@ public class CopyResourceTest extends JerseyTest {
         root.put("medium", "978-3-548-37623-3");
         root.put("owner", "Test User");
         Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
-        Response resp = target("copys").request().post(json);
+        Response resp = target("copies").request().post(json);
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
     }
 
     @Test
-    public void testGetCopys() {
-        when(serviceMock.getCopys()).thenReturn(copies);
-        Response resp = target("copys").request().get();
+    public void testGetCopies() {
+        when(serviceMock.getCopies()).thenReturn(copies);
+        Response resp = target("copies").request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("[{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Test User\",\"id\":1}," +
                         "{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Egon\",\"id\":2}]",
@@ -64,7 +64,7 @@ public class CopyResourceTest extends JerseyTest {
     public void testGetCopy() {
         int id = copies[1].getId();
         when(serviceMock.getCopy(id)).thenReturn(copies[1]);
-        Response resp = target("copys/" + id).request().get();
+        Response resp = target("copies/" + id).request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Egon\",\"id\":" + id + "}",
                 resp.readEntity(String.class));
@@ -77,7 +77,7 @@ public class CopyResourceTest extends JerseyTest {
         ObjectNode root = new ObjectMapper().createObjectNode();
         root.put("owner", "Test User");
         Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
-        Response resp = target("copys" + id).request().post(json);
+        Response resp = target("copies" + id).request().post(json);
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
     }

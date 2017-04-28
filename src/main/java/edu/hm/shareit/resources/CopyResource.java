@@ -1,7 +1,6 @@
 package edu.hm.shareit.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import edu.hm.shareit.models.Copy;
 import edu.hm.shareit.services.CopyService;
 import edu.hm.shareit.services.CopyServiceImpl;
 import edu.hm.shareit.services.ServiceResult;
@@ -62,8 +61,10 @@ public class CopyResource {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateCopy(@PathParam("id") int id, Copy copy) {
-        ServiceResult sr = service.updateCopy(id, copy);
+    public Response updateCopy(@PathParam("id") int id, JsonNode json) {
+        String medium = json.path("medium").asText();
+        String owner = json.path("owner").asText();
+        ServiceResult sr = service.updateCopy(id, owner, medium);
         return Response.status(sr.getStatus())
                 .entity(toJson(new ServiceResultContainer(sr)))
                 .build();

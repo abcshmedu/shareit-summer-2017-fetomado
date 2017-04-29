@@ -12,20 +12,36 @@ import javax.ws.rs.core.Response;
 
 import static edu.hm.shareit.resources.ResourceHelper.toJson;
 
-
+/**
+ * This class is the API-layer for all requests to the resource copies.
+ */
 @Path("/copies")
 public class CopyResource {
+
     private CopyService service;
 
+    /**
+     * Constructs a new instance.
+     */
     public CopyResource() {
         service = new CopyServiceImpl();
     }
 
+    /**
+     * Constructs a new instance with a given CopyService implementation.
+     *
+     * @param srv the CopyService object
+     */
     CopyResource(CopyService srv) {
         service = srv;
     }
 
-
+    /**
+     * This function handles POST requests to /copies.
+     *
+     * @param json the json object with required arguments
+     * @return response including HTTP-Statuscode and details
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -38,6 +54,11 @@ public class CopyResource {
                 .build();
     }
 
+    /**
+     * This function handles GET requests to /copies.
+     *
+     * @return response list of all copies
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCopies() {
@@ -46,6 +67,12 @@ public class CopyResource {
                 .build();
     }
 
+    /**
+     * This function handles GET requests to /copies/{id}.
+     *
+     * @param id unique identifier of the book
+     * @return response the copy with the requested id
+     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,6 +82,13 @@ public class CopyResource {
                 .build();
     }
 
+    /**
+     * This function edits the values of an existing copy.
+     *
+     * @param id unique identifier of the copy to be changed
+     * @param json the json object with required arguments
+     * @return response including HTTP-Statuscode and details
+     */
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)

@@ -51,8 +51,7 @@ public class MediaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createBook(Book book) {
         ServiceResult sr = service.addBook(book);
-        return Response
-                .status(sr.getStatus())
+        return Response.status(sr.getStatus())
                 .entity(toJson(new ServiceResultContainer(sr)))
                 .build();
     }
@@ -69,8 +68,7 @@ public class MediaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createDisc(Disc disc) {
         ServiceResult sr = service.addDisc(disc);
-        return Response
-                .status(sr.getStatus())
+        return Response.status(sr.getStatus())
                 .entity(toJson(new ServiceResultContainer(sr)))
                 .build();
     }

@@ -23,7 +23,11 @@ public class Copy {
         idCounter++;
     }
 
-    private Copy() {}
+    /**
+     * Private constructor needed for Jackson compatibility
+     */
+    private Copy() {
+    }
     
     /**
      * Returns the medium of the copy.
@@ -41,6 +45,13 @@ public class Copy {
         return owner;
     }
 
+    /**
+     * Sets the owner of the copy.
+     * @param owner of the copy
+     */
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
     /**
      * Returns the id of the copy.
      * @return the id

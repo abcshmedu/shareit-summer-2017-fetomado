@@ -56,6 +56,16 @@ public class CopyServiceImpl implements CopyService {
 
     @Override
     public ServiceResult updateCopy(int id, String owner) {
-        return null;
+        if (!copies.containsKey(id)) {
+            return ServiceResult.NOT_FOUND;
+        }
+        if ((owner == null || owner.equals(""))) {
+            return ServiceResult.BAD_REQUEST;
+        }
+        Copy copyToEdit = copies.get(id);
+        if (owner != null && !owner.equals("")) {
+            copyToEdit.setOwner(owner);
+        }
+        return ServiceResult.OK;
     }
 }

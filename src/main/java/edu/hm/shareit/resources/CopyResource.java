@@ -33,8 +33,7 @@ public class CopyResource {
         String medium = json.path("medium").asText();
         String owner = json.path("owner").asText();
         ServiceResult sr = service.addCopy(owner, medium);
-        return Response
-                .status(sr.getStatus())
+        return Response.status(sr.getStatus())
                 .entity(toJson(new ServiceResultContainer(sr)))
                 .build();
     }
@@ -51,8 +50,7 @@ public class CopyResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCopy(@PathParam("id") int id) {
-        return Response
-                .status(Response.Status.OK)
+        return Response.status(Response.Status.OK)
                 .entity(toJson(service.getCopy(id)))
                 .build();
     }

@@ -1,6 +1,5 @@
 package edu.hm.shareit.services;
 
-import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Copy;
 import edu.hm.shareit.models.Medium;
 
@@ -8,19 +7,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+/**
+ * This is the implementation of the CopyService interface. It does the work
+ * behind the /copies/ resource.
+ */
 public class CopyServiceImpl implements CopyService {
 
     private static Map<Integer, Copy> copies;
 
+    /**
+     * Constructs a new instance.
+     */
     public CopyServiceImpl() {
         if (copies == null) {
             copies = new HashMap<>();
-            Book book = new Book("what if?", "Randall Munroe", "978-3-8135-0625-5");
-            Copy copy = new Copy("Egon", book);
-            copies.put(copy.getId(), copy);
         }
     }
-
 
     @Override
     public ServiceResult addCopy(String owner, String medium) {

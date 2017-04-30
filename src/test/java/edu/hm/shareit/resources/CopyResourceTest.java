@@ -77,7 +77,7 @@ public class CopyResourceTest extends JerseyTest {
         ObjectNode root = new ObjectMapper().createObjectNode();
         root.put("owner", "Test User");
         Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
-        Response resp = target("copies" + id).request().post(json);
+        Response resp = target("copies/" + id).request().put(json);
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
     }

@@ -123,8 +123,25 @@ public class MediaServiceImplTest {
 
     @Test
     public void testUpdateBookInvalidISBN() {
+        service.addBook(books[0]);
         ServiceResult sr = service.updateBook("123", books[0]);
         assertEquals(ServiceResult.NOT_FOUND, sr);
+    }
+
+    @Test
+    public void testUpdateBookInvalidData() {
+        Book bookToEdit = service.getBook(books[0].getIsbn());
+        ServiceResult sr = service.updateBook(bookToEdit.getIsbn(), new Book("", "", bookToEdit.getIsbn()));
+        assertEquals(ServiceResult.BAD_REQUEST, sr);
+    }
+
+    @Test
+    public void testUpdateBookValidData() {
+        Book bookToEdit = service.getBook(books[0].getIsbn());
+        ServiceResult sr = service.updateBook(bookToEdit.getIsbn(), new Book("Being Hans Sarpei", "Hans Sarpei", bookToEdit.getIsbn()));
+        assertEquals(ServiceResult.OK, sr);
+        assertEquals("Being Hans Sarpei", bookToEdit.getTitle());
+        assertEquals("Hans Sarpei", bookToEdit.getAuthor());
     }
 
 }

@@ -144,4 +144,30 @@ public class MediaServiceImplTest {
         assertEquals("Hans Sarpei", bookToEdit.getAuthor());
     }
 
+    @Test
+    public void testUpdateDiscInvalidBarcode() {
+        service.addDisc(discs[0]);
+        ServiceResult sr = service.updateDisc("123", discs[0]);
+        assertEquals(ServiceResult.NOT_FOUND, sr);
+    }
+
+    @Test
+    public void testUpdateDiscInvalidData() {
+        service.addDisc(discs[0]);
+        Disc discToEdit = service.getDisc(discs[0].getBarcode());
+        ServiceResult sr = service.updateDisc(discToEdit.getBarcode(), new Disc("", "", "", null));
+        assertEquals(ServiceResult.BAD_REQUEST, sr);
+    }
+
+    @Test
+    public void testUpdateDiscValidData() {
+        service.addDisc((discs[0]));
+        Disc discToEdit = service.getDisc(discs[0].getBarcode());
+        ServiceResult sr = service.updateDisc(discToEdit.getBarcode(), new Disc("Test", discToEdit.getBarcode(), "TestDirector", 18));
+        assertEquals(ServiceResult.OK, sr);
+        assertEquals("Test", discToEdit.getTitle());
+        assertEquals("TestDirector", discToEdit.getDirector());
+        assertEquals(new Integer(18), discToEdit.getFsk());
+    }
+
 }

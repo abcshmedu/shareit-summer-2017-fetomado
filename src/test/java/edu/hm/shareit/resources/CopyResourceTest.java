@@ -52,11 +52,13 @@ public class CopyResourceTest extends JerseyTest {
 
     @Test
     public void testGetCopies() {
+        int id1 = copies[0].getId();
+        int id2 = copies[1].getId();
         when(serviceMock.getCopies()).thenReturn(copies);
         Response resp = target("copies").request().get();
         assertEquals(200, resp.getStatus());
-        assertEquals("[{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Test User\",\"id\":1}," +
-                        "{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Egon\",\"id\":2}]",
+        assertEquals("[{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Test User\",\"id\":"+id1+"}," +
+                        "{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Egon\",\"id\":"+id2+"}]",
                 resp.readEntity(String.class));
     }
 

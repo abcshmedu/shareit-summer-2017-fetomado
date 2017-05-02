@@ -130,4 +130,9 @@ public class MediaServiceImpl implements MediaService {
         return ServiceResult.NOT_FOUND;
     }
 
+    void flushDataforTesting() {
+        books = new HashMap<>();
+        discs = new HashMap<>();
+    }
+
 }

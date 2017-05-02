@@ -28,7 +28,7 @@ public class Copy {
      */
     private Copy() {
     }
-    
+
     /**
      * Returns the medium of the copy.
      * @return the medium
@@ -36,7 +36,7 @@ public class Copy {
     public Medium getMedium() {
         return medium;
     }
-    
+
     /**
      * Returns the owner of the copy.
      * @return the owner

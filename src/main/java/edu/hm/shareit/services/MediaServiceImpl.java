@@ -84,7 +84,8 @@ public class MediaServiceImpl implements MediaService {
         if (!books.containsKey(isbn)) {
             return ServiceResult.NOT_FOUND;
         }
-        if ((book.getAuthor() == null || book.getAuthor().equals("")) && (book.getTitle() == null || book.getTitle().equals(""))) {
+        if ((book.getAuthor() == null || book.getAuthor().equals("")) &&
+                (book.getTitle() == null || book.getTitle().equals(""))) {
             return ServiceResult.BAD_REQUEST;
         }
         Book bookToEdit = books.get(isbn);
@@ -121,7 +122,7 @@ public class MediaServiceImpl implements MediaService {
             if (disc.getTitle() != null && !disc.getTitle().equals("")) {
                 existDisc.setTitle(disc.getTitle());
             }
-            if (disc.getFsk() != existDisc.getFsk() && (disc.getFsk() >= 0 && disc.getFsk() <= FSK_MAX)) {
+            if (disc.getFsk() != null && disc.getFsk() != existDisc.getFsk() && (disc.getFsk() >= 0 && disc.getFsk() <= FSK_MAX)) {
                 existDisc.setFsk(disc.getFsk());
             }
             return ServiceResult.OK;

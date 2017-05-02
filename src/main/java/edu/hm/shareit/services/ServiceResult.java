@@ -1,4 +1,4 @@
- package edu.hm.shareit.services;
+package edu.hm.shareit.services;
 
 import javax.ws.rs.core.Response;
 
@@ -16,7 +16,7 @@ public enum ServiceResult {
 
     /**
      * Constructs a new ServiceResult instance.
-     * @param code HTTP-Response-Code
+     * @param code   HTTP-Response-Code
      * @param detail Info about response
      */
     ServiceResult(int code, String detail) {
@@ -31,7 +31,7 @@ public enum ServiceResult {
     public int getStatus() {
         return code;
     }
-    
+
     /**
      * Returns the object's detail.
      * @return detail info about the response

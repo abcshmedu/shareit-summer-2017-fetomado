@@ -26,7 +26,7 @@ public class ServiceResultContainer {
     }
 
     /**
-     * Constucts a new ServiceResultContainer encapsulating a given ServiceResult.
+     * Constructs a new ServiceResultContainer encapsulating a given ServiceResult.
      * @param sr the ServiceResult to encapsulate.
      */
     public ServiceResultContainer(ServiceResult sr) {

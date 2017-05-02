@@ -22,7 +22,7 @@ public class Medium {
     public String getTitle() {
         return title;
     }
-    
+
     /**
      * Sets the title of the medium.
      * @param title the medium's title

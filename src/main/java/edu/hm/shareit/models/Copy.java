@@ -13,7 +13,7 @@ public class Copy {
 
     /**
      * Constructs a new copy of a medium.
-     * @param owner the owner of the copy
+     * @param owner  the owner of the copy
      * @param medium the medium of the copy
      */
     public Copy(String owner, Medium medium) {
@@ -52,6 +52,7 @@ public class Copy {
     public void setOwner(String owner) {
         this.owner = owner;
     }
+
     /**
      * Returns the id of the copy.
      * @return the id

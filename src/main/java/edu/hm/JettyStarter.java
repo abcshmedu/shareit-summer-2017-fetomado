@@ -1,13 +1,12 @@
 // CHECKSTYLE:OFF
 package edu.hm;
 
-import org.eclipse.jetty.server.*;
-import org.eclipse.jetty.webapp.*;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
  * Start the application without an AppServer like tomcat.
  * @author <a mailto:axel.boettcher@hm.edu>Axel B&ouml;ttcher</a>
- *
  */
 public class JettyStarter {
 

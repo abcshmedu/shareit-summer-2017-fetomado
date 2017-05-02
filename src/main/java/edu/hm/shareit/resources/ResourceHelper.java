@@ -11,7 +11,8 @@ public final class ResourceHelper {
     /**
      * Private constructor for helper classes.
      */
-    private ResourceHelper() { }
+    private ResourceHelper() {
+    }
 
     /**
      * This function converts an Object to JSON and returns the string-representation.

@@ -29,7 +29,6 @@ public class CopyResource {
 
     /**
      * Constructs a new instance with a given CopyService implementation.
-     *
      * @param srv the CopyService object
      */
     CopyResource(CopyService srv) {
@@ -38,7 +37,6 @@ public class CopyResource {
 
     /**
      * This function handles POST requests to /copies.
-     *
      * @param json the json object with required arguments
      * @return response including HTTP-Statuscode and details
      */
@@ -56,7 +54,6 @@ public class CopyResource {
 
     /**
      * This function handles GET requests to /copies.
-     *
      * @return response list of all copies
      */
     @GET
@@ -69,7 +66,6 @@ public class CopyResource {
 
     /**
      * This function handles GET requests to /copies/{id}.
-     *
      * @param id unique identifier of the book
      * @return response the copy with the requested id
      */
@@ -84,8 +80,7 @@ public class CopyResource {
 
     /**
      * This function edits the values of an existing copy.
-     *
-     * @param id unique identifier of the copy to be changed
+     * @param id   unique identifier of the copy to be changed
      * @param json the json object with required arguments
      * @return response including HTTP-Statuscode and details
      */

@@ -30,7 +30,6 @@ public class MediaResource {
 
     /**
      * Constructs a new instance with a given MediaService implementation.
-     *
      * @param srv the MediaService object
      */
     MediaResource(MediaService srv) {
@@ -39,7 +38,6 @@ public class MediaResource {
 
     /**
      * This function handles POST requests to /media/book.
-     *
      * @param book the book to create
      * @return response including HTTP-Statuscode and details
      */
@@ -56,7 +54,6 @@ public class MediaResource {
 
     /**
      * This function handles POST requests to /media/disc.
-     *
      * @param disc the disc to create
      * @return response including HTTP-Statuscode and details
      */
@@ -73,7 +70,6 @@ public class MediaResource {
 
     /**
      * This function handles GET requests to /media/books/{isbn}.
-     *
      * @param isbn unique identifier of the book
      * @return response the book with the requested isbn
      */
@@ -88,7 +84,6 @@ public class MediaResource {
 
     /**
      * This function handles GET requests to /media/books/.
-     *
      * @return response list of all books
      */
     @GET
@@ -102,7 +97,6 @@ public class MediaResource {
 
     /**
      * This function handles GET requests to /media/discs/{barcode}.
-     *
      * @param barcode unique identifier of the disc
      * @return response a disc with the requested barcode
      */
@@ -117,7 +111,6 @@ public class MediaResource {
 
     /**
      * This function handles GET requests to /media/discs/.
-     *
      * @return response with a list of all discs
      */
     @GET
@@ -131,7 +124,6 @@ public class MediaResource {
 
     /**
      * This function edits the values of an existing book.
-     *
      * @param isbn unique identifier of the book to be changed
      * @param book the book to be changed
      * @return response including HTTP-Statuscode and details
@@ -149,7 +141,6 @@ public class MediaResource {
 
     /**
      * This function edits the values of an existing disc.
-     *
      * @param barcode unique identifier of the disc to be changed
      * @param disc    the disc to be changed
      * @return response including HTTP-Statuscode and details

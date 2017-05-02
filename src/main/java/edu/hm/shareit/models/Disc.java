@@ -10,11 +10,10 @@ public class Disc extends Medium {
 
     /**
      * Constructs a new disc object.
-     *
-     * @param title the title of the disc
-     * @param barcode the barcode of the disc
+     * @param title    the title of the disc
+     * @param barcode  the barcode of the disc
      * @param director the director of the disc
-     * @param fsk the FSK of the disc
+     * @param fsk      the FSK of the disc
      */
     public Disc(String title, String barcode, String director, Integer fsk) {
         super(title);

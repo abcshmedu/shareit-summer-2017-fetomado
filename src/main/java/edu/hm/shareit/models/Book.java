@@ -9,9 +9,9 @@ public class Book extends Medium {
 
     /**
      * Constructs a new book object.
-     * @param title the title of the book
+     * @param title  the title of the book
      * @param author the author of the book
-     * @param isbn the ISBN number of the book
+     * @param isbn   the ISBN number of the book
      */
     public Book(String title, String author, String isbn) {
         super(title);
@@ -33,7 +33,7 @@ public class Book extends Medium {
     public String getAuthor() {
         return author;
     }
-    
+
     /**
      * Sets the author of the book.
      * @param author of the book

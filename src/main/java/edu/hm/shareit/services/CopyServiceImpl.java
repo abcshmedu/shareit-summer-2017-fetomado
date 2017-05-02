@@ -71,7 +71,7 @@ public class CopyServiceImpl implements CopyService {
         return ServiceResult.OK;
     }
 
-    void flushDataforTesting() {
+    void flushDataForTesting() {
         copies = new HashMap<>();
     }
 }

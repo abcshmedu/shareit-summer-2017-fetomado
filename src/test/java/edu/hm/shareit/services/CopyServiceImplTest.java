@@ -78,12 +78,19 @@ public class CopyServiceImplTest {
     }
 
     @Test
-    public void testUpdateInvalidIDCopy() {
-        assert (true);
+    public void testUpdateCopy() {
+        tmpMs.addBook(book);
+        service.addCopy(copyOwner[0], book.getIsbn());
+        ServiceResult sr = service.updateCopy(service.getCopies()[0].getId(), copyOwner[1]);
+        assertEquals(ServiceResult.OK, sr);
+        assertEquals(copyOwner[1], service.getCopies()[0].getOwner());
     }
 
     @Test
-    public void testUpdateInvalidOwnerCopy() {
-        assert (true);
+    public void testUpdateCopyInvalidId() {
+        tmpMs.addBook(book);
+        service.addCopy(copyOwner[0], book.getIsbn());
+        ServiceResult sr = service.updateCopy(99, copyOwner[1]);
+        assertEquals(ServiceResult.NOT_FOUND, sr);
     }
 }

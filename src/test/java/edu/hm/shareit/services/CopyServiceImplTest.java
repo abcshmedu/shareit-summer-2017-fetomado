@@ -93,4 +93,12 @@ public class CopyServiceImplTest {
         ServiceResult sr = service.updateCopy(99, copyOwner[1]);
         assertEquals(ServiceResult.NOT_FOUND, sr);
     }
+
+    @Test
+    public void testUpdateCopyInvalidOwner() {
+        tmpMs.addBook(book);
+        service.addCopy(copyOwner[0], book.getIsbn());
+        ServiceResult sr = service.updateCopy(service.getCopies()[0].getId(), null);
+        assertEquals(ServiceResult.BAD_REQUEST, sr);
+    }
 }

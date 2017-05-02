@@ -22,8 +22,8 @@ public class CopyServiceImplTest {
     public void before() {
         service = new CopyServiceImpl();
         tmpMs = new MediaServiceImpl();
-        service.flushDataforTesting();
-        tmpMs.flushDataforTesting();
+        service.flushDataForTesting();
+        tmpMs.flushDataForTesting();
     }
 
     @Test

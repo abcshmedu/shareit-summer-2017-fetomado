@@ -121,7 +121,7 @@ public class MediaServiceImpl implements MediaService {
             if (disc.getTitle() != null && !disc.getTitle().equals("")) {
                 existDisc.setTitle(disc.getTitle());
             }
-            if (disc.getFsk() != existDisc.getFsk() && (disc.getFsk() >= 0 && disc.getFsk() <= FSK_MAX)) {
+            if (disc.getFsk() != null && disc.getFsk() != existDisc.getFsk() && (disc.getFsk() >= 0 && disc.getFsk() <= FSK_MAX)) {
                 existDisc.setFsk(disc.getFsk());
             }
             return ServiceResult.OK;

@@ -6,17 +6,17 @@ package edu.hm.shareit.models;
 public class Disc extends Medium {
 
     private String barcode, director;
-    private int fsk;
+    private Integer fsk;
 
     /**
      * Constructs a new disc object.
-     * 
+     *
      * @param title the title of the disc
      * @param barcode the barcode of the disc
      * @param director the director of the disc
      * @param fsk the FSK of the disc
      */
-    public Disc(String title, String barcode, String director, int fsk) {
+    public Disc(String title, String barcode, String director, Integer fsk) {
         super(title);
         this.barcode = barcode;
         this.director = director;
@@ -58,7 +58,7 @@ public class Disc extends Medium {
      * Returns the FSK number of the disc.
      * @return fsk of the disc
      */
-    public int getFsk() {
+    public Integer getFsk() {
         return fsk;
     }
 
@@ -66,7 +66,7 @@ public class Disc extends Medium {
      * Sets the FSK number of the disc.
      * @param fsk of the disc
      */
-    public void setFsk(int fsk) {
+    public void setFsk(Integer fsk) {
         this.fsk = fsk;
     }
 }

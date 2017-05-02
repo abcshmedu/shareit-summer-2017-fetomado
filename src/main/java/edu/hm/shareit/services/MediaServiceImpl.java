@@ -84,7 +84,8 @@ public class MediaServiceImpl implements MediaService {
         if (!books.containsKey(isbn)) {
             return ServiceResult.NOT_FOUND;
         }
-        if ((book.getAuthor() == null || book.getAuthor().equals("")) && (book.getTitle() == null || book.getTitle().equals(""))) {
+        if ((book.getAuthor() == null || book.getAuthor().equals("")) &&
+                (book.getTitle() == null || book.getTitle().equals(""))) {
             return ServiceResult.BAD_REQUEST;
         }
         Book bookToEdit = books.get(isbn);

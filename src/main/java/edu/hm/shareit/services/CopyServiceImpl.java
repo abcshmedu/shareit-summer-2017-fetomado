@@ -71,6 +71,9 @@ public class CopyServiceImpl implements CopyService {
         return ServiceResult.OK;
     }
 
+    /**
+     * Removes the data stored in this service. This method should mainly be used in tests.
+     */
     void flushDataForTesting() {
         copies = new HashMap<>();
     }

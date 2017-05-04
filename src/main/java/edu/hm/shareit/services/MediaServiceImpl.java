@@ -121,18 +121,29 @@ public class MediaServiceImpl implements MediaService {
                     && disc.getFsk() == null) {
                 return ServiceResult.BAD_REQUEST;
             }
-            if (disc.getDirector() != null && !disc.getDirector().equals("")) {
-                existDisc.setDirector(disc.getDirector());
+            if (changeDisc(barcode, disc)) {
+                return ServiceResult.OK;
             }
-            if (disc.getTitle() != null && !disc.getTitle().equals("")) {
-                existDisc.setTitle(disc.getTitle());
-            }
-            if (disc.getFsk() != null && disc.getFsk() != existDisc.getFsk() && (disc.getFsk() >= 0 && disc.getFsk() <= FSK_MAX)) {
-                existDisc.setFsk(disc.getFsk());
-            }
-            return ServiceResult.OK;
         }
         return ServiceResult.NOT_FOUND;
+    }
+
+    private boolean changeDisc(String barcode, Disc disc) {
+        boolean change = false;
+        Disc existDisc = discs.get(barcode);
+        if (disc.getDirector() != null && !disc.getDirector().equals("")) {
+            existDisc.setDirector(disc.getDirector());
+            change = true;
+        }
+        if (disc.getTitle() != null && !disc.getTitle().equals("")) {
+            existDisc.setTitle(disc.getTitle());
+            change = true;
+        }
+        if (disc.getFsk() != null && !disc.getFsk().equals(existDisc.getFsk()) && (disc.getFsk() >= 0 && disc.getFsk() <= FSK_MAX)) {
+            existDisc.setFsk(disc.getFsk());
+            change = true;
+        }
+        return change;
     }
 
     void flushDataForTesting() {

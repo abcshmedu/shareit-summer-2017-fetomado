@@ -30,7 +30,7 @@ public interface CopyService {
 
     /**
      * Update the data of a specific copy.
-     * @param id the ID of the copy to update
+     * @param id    the ID of the copy to update
      * @param owner the new owner of the copy
      * @return the result of the operation
      */

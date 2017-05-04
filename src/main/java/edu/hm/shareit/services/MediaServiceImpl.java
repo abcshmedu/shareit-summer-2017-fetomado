@@ -115,7 +115,6 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public ServiceResult updateDisc(String barcode, Disc disc) {
         if (discs.containsKey(barcode)) {
-            Disc existDisc = discs.get(barcode);
             if ((disc.getDirector() == null || disc.getDirector().equals(""))
                     && (disc.getTitle() == null || disc.getTitle().equals(""))
                     && disc.getFsk() == null) {

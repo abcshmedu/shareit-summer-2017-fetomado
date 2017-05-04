@@ -127,6 +127,13 @@ public class MediaServiceImpl implements MediaService {
         return ServiceResult.NOT_FOUND;
     }
 
+    /**
+     * Change the data of a disk. A disk with the given barcode has to exist. This has to be checked prior to calling this function.
+     * Information that are left out or are empty will not be changed.
+     * @param barcode the identifying barcode of the disc to change
+     * @param disc    a Disc object containing the new information.
+     * @return true if some data has been changed successfully, false otherwise
+     */
     private boolean changeDisc(String barcode, Disc disc) {
         boolean change = false;
         Disc existDisc = discs.get(barcode);
@@ -145,6 +152,9 @@ public class MediaServiceImpl implements MediaService {
         return change;
     }
 
+    /**
+     * Removes the data stored in this service. This method should mainly be used in tests.
+     */
     void flushDataForTesting() {
         books = new HashMap<>();
         discs = new HashMap<>();

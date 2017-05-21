@@ -8,27 +8,41 @@ import java.util.Map;
 
 public class UserServiceImpl implements UserService {
 
-    Map<String, User> users, tokens;
+    private Map<String, User> users;
+    private static Map<String, User> tokens;
 
     public UserServiceImpl() {
         users = new HashMap<>();
         users.put("testuser", new User("testuser", "Test123"));
-        tokens = new HashMap<>();
+        if (tokens == null) {
+            tokens = new HashMap<>();
+        }
     }
 
     @Override
     public ServiceResult checkUser(User user) {
-        return null;
+        if (users.containsKey(user.getUsername())) {
+            if (user.getPassword().equals(users.get(user.getUsername()).getPassword())) {
+                return ServiceResult.OK;
+            }
+        }
+        return ServiceResult.UNAUTHORIZED;
     }
 
     @Override
-    public ServiceResult checkToken(String token) {
-        return null;
+    public User checkToken(String token) {
+        return tokens.getOrDefault(token, null);
     }
 
     @Override
     public Token getNewToken(User user) {
-        return null;
+        Token token = new Token();
+        tokens.put(token.getToken(), users.get(user.getUsername()));
+        return token;
+    }
+
+    void flushAllData() {
+        tokens = new HashMap<>();
     }
 
 }

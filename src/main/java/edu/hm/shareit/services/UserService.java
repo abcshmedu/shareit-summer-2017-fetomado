@@ -5,6 +5,6 @@ import edu.hm.shareit.models.User;
 
 public interface UserService {
     ServiceResult checkUser(User user);
-    ServiceResult checkToken(String token);
+    User checkToken(String token);
     Token getNewToken(User user);
 }

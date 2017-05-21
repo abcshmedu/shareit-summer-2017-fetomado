@@ -7,9 +7,10 @@ import javax.ws.rs.core.Response;
  */
 public enum ServiceResult {
     OK(Response.Status.OK.getStatusCode(), ""),
-    BAD_REQUEST(Response.Status.BAD_REQUEST.getStatusCode(), "Fehlerhafte Eingabe!"),
-    DUPLICATE(Response.Status.BAD_REQUEST.getStatusCode(), "Dieses Medium existiert bereits!"),
-    NOT_FOUND(Response.Status.NOT_FOUND.getStatusCode(), "Medium nicht gefunden!");
+    BAD_REQUEST(Response.Status.BAD_REQUEST.getStatusCode(), "Fehlerhafte Eingabe."),
+    DUPLICATE(Response.Status.BAD_REQUEST.getStatusCode(), "Dieses Medium existiert bereits."),
+    UNAUTHORIZED(Response.Status.UNAUTHORIZED.getStatusCode(), "Keine Berechtigung."),
+    NOT_FOUND(Response.Status.NOT_FOUND.getStatusCode(), "Medium nicht gefunden.");
 
     private int code;
     private String detail;

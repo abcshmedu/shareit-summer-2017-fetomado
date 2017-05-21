@@ -1,7 +1,10 @@
 package edu.hm.shareit.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import edu.hm.shareit.models.Token;
+import edu.hm.shareit.models.User;
 import edu.hm.shareit.services.ServiceResult;
+import edu.hm.shareit.services.ServiceResultContainer;
 import edu.hm.shareit.services.UserService;
 import edu.hm.shareit.services.UserServiceImpl;
 
@@ -26,12 +29,16 @@ public class UserResource {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(JsonNode json) {
-        String user = json.path("username").asText();
-        String pwd = json.path("password").asText();
-        service.getToken(user, pwd);
-        return Response.status(200)
-                .entity("foo")
+    public Response login(User user) {
+        ServiceResult sr = service.checkUser(user);
+        if (sr == ServiceResult.OK) {
+            Token token = service.getNewToken(user);
+            return Response.status(sr.getStatus())
+                    .entity(token)
+                    .build();
+        }
+        return Response.status(sr.getStatus())
+                .entity(new ServiceResultContainer(sr))
                 .build();
     }
 }

@@ -1,0 +1,48 @@
+package edu.hm.shareit.resources;
+
+import edu.hm.shareit.models.Disc;
+import edu.hm.shareit.models.Token;
+import edu.hm.shareit.models.User;
+import edu.hm.shareit.services.ServiceResult;
+import edu.hm.shareit.services.UserService;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+
+public class UserResourceTest extends JerseyTest {
+
+    @Mock
+    private UserService serviceMock;
+
+    private User testuser = new User("testuser","Test123");
+
+    @Override
+    protected Application configure() {
+        MockitoAnnotations.initMocks(this);
+        return new ResourceConfig().register(new UserResource(serviceMock));
+    }
+
+    @Test
+    public void testLogin() {
+        when(serviceMock.checkUser(any(User.class))).thenReturn(ServiceResult.OK);
+      //when(serviceMock.getNewToken(any(User.class))).thenReturn(new Token());
+        Entity<User> user = Entity.entity(testuser, MediaType.APPLICATION_JSON);
+        Response resp = target("users/login").request().post(user);
+        assertEquals(200, resp.getStatus());
+        assertNotNull(resp.readEntity(String.class));
+    }
+
+}

@@ -1,8 +1,11 @@
 package edu.hm.shareit.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * This is the model class representing a disc.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Disc extends Medium {
 
     private String barcode, director;

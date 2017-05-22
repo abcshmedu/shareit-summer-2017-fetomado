@@ -19,6 +19,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public Map getUsers() {
+        return users;
+    }
+
     @Override
     public ServiceResult checkUser(User user) {
         if (users.containsKey(user.getUsername())) {

@@ -1,11 +1,8 @@
 package edu.hm.shareit.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
  * This is the model class representing a book.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Book extends Medium {
 
     private String author, isbn;

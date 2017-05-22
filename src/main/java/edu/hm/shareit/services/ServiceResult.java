@@ -6,7 +6,7 @@ import javax.ws.rs.core.Response;
  * This enum contains all valid response-codes.
  */
 public enum ServiceResult {
-    OK(Response.Status.OK.getStatusCode(), ""),
+    OK(Response.Status.OK.getStatusCode(), "Erfolgreich."),
     BAD_REQUEST(Response.Status.BAD_REQUEST.getStatusCode(), "Fehlerhafte Eingabe."),
     DUPLICATE(Response.Status.BAD_REQUEST.getStatusCode(), "Dieses Medium existiert bereits."),
     UNAUTHORIZED(Response.Status.UNAUTHORIZED.getStatusCode(), "Keine Berechtigung."),

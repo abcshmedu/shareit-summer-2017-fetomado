@@ -1,8 +1,11 @@
 package edu.hm.shareit.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * This class represents a copy of a medium.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Copy {
 
     private static int idCounter = 1;

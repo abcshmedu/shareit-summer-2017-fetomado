@@ -45,6 +45,7 @@ public class MediaResource {
     @Path("/books")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @CheckToken
     public Response createBook(Book book) {
         ServiceResult sr = service.addBook(book);
         return Response.status(sr.getStatus())

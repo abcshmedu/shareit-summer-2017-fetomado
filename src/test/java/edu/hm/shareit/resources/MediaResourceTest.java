@@ -66,7 +66,7 @@ public class MediaResourceTest extends JerseyTest {
         Entity<Book> book = Entity.entity(books[0], MediaType.APPLICATION_JSON);
         Response resp = target("media/books").request().post(book);
         assertEquals(200, resp.getStatus());
-        assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
+        assertEquals("{\"code\":200,\"detail\":\"Erfolgreich.\"}", resp.readEntity(String.class));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class MediaResourceTest extends JerseyTest {
         Entity<Disc> disc = Entity.entity(discs[0], MediaType.APPLICATION_JSON);
         Response resp = target("media/discs").request().post(disc);
         assertEquals(200, resp.getStatus());
-        assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
+        assertEquals("{\"code\":200,\"detail\":\"Erfolgreich.\"}", resp.readEntity(String.class));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class MediaResourceTest extends JerseyTest {
         Entity<Book> book = Entity.entity(books[1], MediaType.APPLICATION_JSON);
         Response resp = target("media/books/978-3-8135-0625-5").request().put(book);
         assertEquals(200, resp.getStatus());
-        assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
+        assertEquals("{\"code\":200,\"detail\":\"Erfolgreich.\"}", resp.readEntity(String.class));
     }
 
     @Test
@@ -109,6 +109,6 @@ public class MediaResourceTest extends JerseyTest {
         Entity<Disc> disc = Entity.entity(discs[1], MediaType.APPLICATION_JSON);
         Response resp = target("media/discs/456789123").request().put(disc);
         assertEquals(200, resp.getStatus());
-        assertEquals("{\"code\":200,\"detail\":\"\"}", resp.readEntity(String.class));
+        assertEquals("{\"code\":200,\"detail\":\"Erfolgreich.\"}", resp.readEntity(String.class));
     }
 }

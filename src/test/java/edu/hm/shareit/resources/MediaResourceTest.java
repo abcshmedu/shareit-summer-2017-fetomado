@@ -38,7 +38,8 @@ public class MediaResourceTest extends JerseyTest {
     @Override
     protected Application configure() {
         MockitoAnnotations.initMocks(this);
-        return new ResourceConfig().register(new MediaResource(serviceMock));
+        return new ResourceConfig().register(new MediaResource(serviceMock))
+                .register(CheckTokenRequestFilter.class);
     }
 
     @Test

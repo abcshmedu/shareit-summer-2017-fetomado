@@ -35,7 +35,8 @@ public class CopyResourceTest extends JerseyTest {
     @Override
     protected Application configure() {
         MockitoAnnotations.initMocks(this);
-        return new ResourceConfig().register(new CopyResource(serviceMock));
+        return new ResourceConfig().register(new CopyResource(serviceMock))
+                .register(CheckTokenRequestFilter.class);
     }
 
     @Test

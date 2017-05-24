@@ -43,6 +43,7 @@ public class CopyResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @CheckToken
     public Response createCopy(JsonNode json) {
         String medium = json.path("medium").asText();
         String owner = json.path("owner").asText();
@@ -88,6 +89,7 @@ public class CopyResource {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @CheckToken
     public Response updateCopy(@PathParam("id") int id, JsonNode json) {
         String owner = json.path("owner").asText();
         ServiceResult sr = service.updateCopy(id, owner);

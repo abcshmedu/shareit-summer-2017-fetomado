@@ -62,6 +62,7 @@ public class MediaResource {
     @Path("/discs")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @CheckToken
     public Response createDisc(Disc disc) {
         ServiceResult sr = service.addDisc(disc);
         return Response.status(sr.getStatus())
@@ -133,6 +134,7 @@ public class MediaResource {
     @Path("/books/{isbn}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @CheckToken
     public Response updateBook(@PathParam("isbn") String isbn, Book book) {
         ServiceResult sr = service.updateBook(isbn, book);
         return Response.status(sr.getStatus())
@@ -150,6 +152,7 @@ public class MediaResource {
     @Path("/discs/{barcode}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @CheckToken
     public Response updateDisc(@PathParam("barcode") String barcode, Disc disc) {
         ServiceResult sr = service.updateDisc(barcode, disc);
         return Response.status(sr.getStatus())

@@ -73,11 +73,10 @@ public class MediaResourceTest extends JerseyTest {
     public void testCreateBook() {
         when(MediaServiceMock.addBook(any(Book.class))).thenReturn(ServiceResult.OK);
         when(UserServiceMock.checkToken("abc")).thenReturn(new User("TestU", "Test"));
-        Entity<Book> book = Entity.entity(books[0], MediaType.APPLICATION_JSON);
         ObjectNode root = new ObjectMapper().createObjectNode();
         root.put("title", "testtitel");
         root.put("author", "testautor");
-        root.put("isbn", "978-3-548-37623-3");
+        root.put("isbn", "978-3-548-37623-3 ");
         root.put("token", "abc");
         Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
         Response resp = target("media/books").request().post(json);
@@ -88,8 +87,15 @@ public class MediaResourceTest extends JerseyTest {
     @Test
     public void testCreateDisc() {
         when(MediaServiceMock.addDisc(any(Disc.class))).thenReturn(ServiceResult.OK);
-        Entity<Disc> disc = Entity.entity(discs[0], MediaType.APPLICATION_JSON);
-        Response resp = target("media/discs").request().post(disc);
+        when(UserServiceMock.checkToken("abc")).thenReturn(new User("TestU", "Test"));
+        ObjectNode root = new ObjectMapper().createObjectNode();
+        root.put("title", "testTitel");
+        root.put("barcode", "123456789");
+        root.put("director", "testDirector");
+        root.put("fsk", "12");
+        root.put("token", "abc");
+        Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
+        Response resp = target("media/discs").request().post(json);
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"Erfolgreich.\"}", resp.readEntity(String.class));
     }
@@ -113,8 +119,14 @@ public class MediaResourceTest extends JerseyTest {
     @Test
     public void testUpdateBook() {
         when(MediaServiceMock.updateBook(eq("978-3-8135-0625-5"), any(Book.class))).thenReturn(ServiceResult.OK);
-        Entity<Book> book = Entity.entity(books[1], MediaType.APPLICATION_JSON);
-        Response resp = target("media/books/978-3-8135-0625-5").request().put(book);
+        when(UserServiceMock.checkToken("abc")).thenReturn(new User("TestU", "Test"));
+        ObjectNode root = new ObjectMapper().createObjectNode();
+        root.put("title", "testtitel");
+        root.put("author", "testautor");
+        root.put("isbn", "978-3-548-37623-3 ");
+        root.put("token", "abc");
+        Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
+        Response resp = target("media/books/978-3-8135-0625-5").request().put(json);
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"Erfolgreich.\"}", resp.readEntity(String.class));
     }
@@ -122,8 +134,15 @@ public class MediaResourceTest extends JerseyTest {
     @Test
     public void testUpdateDisc() {
         when(MediaServiceMock.updateDisc(eq("456789123"), any(Disc.class))).thenReturn(ServiceResult.OK);
-        Entity<Disc> disc = Entity.entity(discs[1], MediaType.APPLICATION_JSON);
-        Response resp = target("media/discs/456789123").request().put(disc);
+        when(UserServiceMock.checkToken("abc")).thenReturn(new User("TestU", "Test"));
+        ObjectNode root = new ObjectMapper().createObjectNode();
+        root.put("title", "testTitel");
+        root.put("barcode", "123456789");
+        root.put("director", "testDirector");
+        root.put("fsk", "12");
+        root.put("token", "abc");
+        Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
+        Response resp = target("media/discs/456789123").request().put(json);
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"Erfolgreich.\"}", resp.readEntity(String.class));
     }

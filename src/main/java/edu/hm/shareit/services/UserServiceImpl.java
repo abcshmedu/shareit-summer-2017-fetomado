@@ -49,4 +49,7 @@ public class UserServiceImpl implements UserService {
         tokens = new HashMap<>();
     }
 
+    public int getTokensSize() {
+        return tokens.size();
+    }
 }

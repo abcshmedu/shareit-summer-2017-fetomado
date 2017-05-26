@@ -1,9 +1,11 @@
 package edu.hm.shareit.services;
 
+import edu.hm.shareit.models.Token;
 import edu.hm.shareit.models.User;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -32,4 +34,10 @@ public class UserServiceImplTest {
         assertEquals(ServiceResult.UNAUTHORIZED, sr);
     }
 
+    @Test
+    public void testGetNewToken() {
+        int oldSize = service.getTokensSize();
+        Token testToken = service.getNewToken(testUsers.get("testuser"));
+        assertEquals(oldSize + 1, service.getTokensSize());
+    }
 }

@@ -1,9 +1,13 @@
 package edu.hm.shareit.resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
+import edu.hm.shareit.models.User;
 import edu.hm.shareit.services.MediaService;
 import edu.hm.shareit.services.ServiceResult;
+import edu.hm.shareit.services.UserService;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
@@ -23,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class MediaResourceTest extends JerseyTest {
 
     @Mock
-    private MediaService serviceMock;
+    private MediaService MediaServiceMock;
 
     private Book[] books = {
             new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"),
@@ -35,16 +39,20 @@ public class MediaResourceTest extends JerseyTest {
             new Disc("Source Code", "101001011", "Duncan Jones", 12),
     };
 
+    @Mock
+    private UserService UserServiceMock;
+
+
     @Override
     protected Application configure() {
         MockitoAnnotations.initMocks(this);
-        return new ResourceConfig().register(new MediaResource(serviceMock))
-                .register(CheckTokenRequestFilter.class);
+        return new ResourceConfig().register(new MediaResource(MediaServiceMock))
+                .register(new CheckTokenRequestFilter(UserServiceMock));
     }
 
     @Test
     public void testGetBooks() {
-        when(serviceMock.getBooks()).thenReturn(books);
+        when(MediaServiceMock.getBooks()).thenReturn(books);
         Response resp = target("media/books").request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("[{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"}," +
@@ -53,7 +61,7 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void testGetDiscs() {
-        when(serviceMock.getDiscs()).thenReturn(discs);
+        when(MediaServiceMock.getDiscs()).thenReturn(discs);
         Response resp = target("media/discs").request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("[{\"title\":\"Rennschwein Rudi Ruessel\",\"barcode\":\"123456789\",\"director\":\"Peter Timm\",\"fsk\":0}," +
@@ -63,16 +71,23 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void testCreateBook() {
-        when(serviceMock.addBook(any(Book.class))).thenReturn(ServiceResult.OK);
+        when(MediaServiceMock.addBook(any(Book.class))).thenReturn(ServiceResult.OK);
+        when(UserServiceMock.checkToken("abc")).thenReturn(new User("TestU", "Test"));
         Entity<Book> book = Entity.entity(books[0], MediaType.APPLICATION_JSON);
-        Response resp = target("media/books").request().post(book);
+        ObjectNode root = new ObjectMapper().createObjectNode();
+        root.put("title", "testtitel");
+        root.put("author", "testautor");
+        root.put("isbn", "978-3-548-37623-3");
+        root.put("token", "abc");
+        Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
+        Response resp = target("media/books").request().post(json);
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"Erfolgreich.\"}", resp.readEntity(String.class));
     }
 
     @Test
     public void testCreateDisc() {
-        when(serviceMock.addDisc(any(Disc.class))).thenReturn(ServiceResult.OK);
+        when(MediaServiceMock.addDisc(any(Disc.class))).thenReturn(ServiceResult.OK);
         Entity<Disc> disc = Entity.entity(discs[0], MediaType.APPLICATION_JSON);
         Response resp = target("media/discs").request().post(disc);
         assertEquals(200, resp.getStatus());
@@ -81,7 +96,7 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void testGetBook() {
-        when(serviceMock.getBook("978-3-8135-0625-5")).thenReturn(books[1]);
+        when(MediaServiceMock.getBook("978-3-8135-0625-5")).thenReturn(books[1]);
         Response resp = target("media/books/978-3-8135-0625-5").request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("{\"title\":\"what if?\",\"author\":\"Randall Munroe\",\"isbn\":\"978-3-8135-0625-5\"}", resp.readEntity(String.class));
@@ -89,7 +104,7 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void testGetDisc() {
-        when(serviceMock.getDisc("456789123")).thenReturn(discs[1]);
+        when(MediaServiceMock.getDisc("456789123")).thenReturn(discs[1]);
         Response resp = target("media/discs/456789123").request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("{\"title\":\"Deadpool\",\"barcode\":\"456789123\",\"director\":\"Tim Miller\",\"fsk\":16}", resp.readEntity(String.class));
@@ -97,7 +112,7 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void testUpdateBook() {
-        when(serviceMock.updateBook(eq("978-3-8135-0625-5"), any(Book.class))).thenReturn(ServiceResult.OK);
+        when(MediaServiceMock.updateBook(eq("978-3-8135-0625-5"), any(Book.class))).thenReturn(ServiceResult.OK);
         Entity<Book> book = Entity.entity(books[1], MediaType.APPLICATION_JSON);
         Response resp = target("media/books/978-3-8135-0625-5").request().put(book);
         assertEquals(200, resp.getStatus());
@@ -106,7 +121,7 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void testUpdateDisc() {
-        when(serviceMock.updateDisc(eq("456789123"), any(Disc.class))).thenReturn(ServiceResult.OK);
+        when(MediaServiceMock.updateDisc(eq("456789123"), any(Disc.class))).thenReturn(ServiceResult.OK);
         Entity<Disc> disc = Entity.entity(discs[1], MediaType.APPLICATION_JSON);
         Response resp = target("media/discs/456789123").request().put(disc);
         assertEquals(200, resp.getStatus());

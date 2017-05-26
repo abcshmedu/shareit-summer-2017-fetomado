@@ -1,6 +1,5 @@
 package edu.hm.shareit.resources;
 
-import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.models.Token;
 import edu.hm.shareit.models.User;
 import edu.hm.shareit.services.ServiceResult;
@@ -16,8 +15,7 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -38,11 +36,12 @@ public class UserResourceTest extends JerseyTest {
     @Test
     public void testLogin() {
         when(serviceMock.checkUser(any(User.class))).thenReturn(ServiceResult.OK);
-      //when(serviceMock.getNewToken(any(User.class))).thenReturn(new Token());
+        Token token = new Token();
+        when(serviceMock.getNewToken(any(User.class))).thenReturn(token);
         Entity<User> user = Entity.entity(testuser, MediaType.APPLICATION_JSON);
         Response resp = target("users/login").request().post(user);
         assertEquals(200, resp.getStatus());
-        assertNotNull(resp.readEntity(String.class));
+        assertEquals("{\"token\":\"" + token.getToken() + "\"}", resp.readEntity(String.class));
     }
 
 }

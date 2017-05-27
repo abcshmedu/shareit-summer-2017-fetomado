@@ -40,4 +40,10 @@ public class UserServiceImplTest {
         Token testToken = service.getNewToken(testUsers.get("testuser"));
         assertEquals(oldSize + 1, service.getTokensSize());
     }
+
+    @Test
+    public void testFlushAllData() {
+        service.flushAllData();
+        assertEquals( 0, service.getTokensSize());
+    }
 }

@@ -34,7 +34,7 @@ public class UserResourceTest extends JerseyTest {
     }
 
     @Test
-    public void testLogin() {
+    public void testValidLogin() {
         when(serviceMock.checkUser(any(User.class))).thenReturn(ServiceResult.OK);
         Token token = new Token();
         when(serviceMock.getNewToken(any(User.class))).thenReturn(token);
@@ -44,4 +44,12 @@ public class UserResourceTest extends JerseyTest {
         assertEquals("{\"token\":\"" + token.getToken() + "\"}", resp.readEntity(String.class));
     }
 
+    @Test
+    public void testInvalidLogin(){
+        when(serviceMock.checkUser(any(User.class))).thenReturn(ServiceResult.UNAUTHORIZED);
+        Entity<User> user = Entity.entity(testuser, MediaType.APPLICATION_JSON);
+        Response resp = target("users/login").request().post(user);
+        assertEquals(401, resp.getStatus());
+        assertEquals("{\"code\":401,\"detail\":\"Keine Berechtigung.\"}", resp.readEntity(String.class));
+    }
 }

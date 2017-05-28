@@ -28,6 +28,7 @@ public class CopyResourceTest extends JerseyTest {
 
     @Mock
     private CopyService CopyServiceMock;
+
     private Book book = new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3");
     private Copy[] copies = {
             new Copy("Test User", book),
@@ -41,7 +42,7 @@ public class CopyResourceTest extends JerseyTest {
     protected Application configure() {
         MockitoAnnotations.initMocks(this);
         return new ResourceConfig().register(new CopyResource(CopyServiceMock))
-                .register(CheckTokenRequestFilter.class);
+                .register(new CheckTokenRequestFilter(UserServiceMock));
     }
 
     @Test

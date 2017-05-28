@@ -1,6 +1,5 @@
 package edu.hm.shareit.resources;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import edu.hm.shareit.models.Token;
 import edu.hm.shareit.models.User;
 import edu.hm.shareit.services.ServiceResult;
@@ -12,19 +11,34 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ * This class is the API-layer for all requests to the resource users.
+ */
 @Path("/users")
 public class UserResource {
 
     private UserService service;
 
+    /**
+     * Constructs a new instance.
+     */
     public UserResource() {
         service = new UserServiceImpl();
     }
 
+    /**
+     * Constructs a new instance with a given UserService implementation.
+     * @param srv the UserService object
+     */
     UserResource(UserService srv) {
         service = srv;
     }
 
+    /**
+     * This function handles POST requests to /users/login.
+     * @param user the user to login
+     * @return response including HTTP-Statuscode, details and token
+     */
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)

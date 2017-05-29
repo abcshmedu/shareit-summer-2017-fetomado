@@ -15,18 +15,18 @@ public class UserServiceImplTest {
     private User user = new User("testuser", "Test123");
 
     @Before
-    public void before(){
+    public void before() {
         service = new UserServiceImpl();
     }
 
     @Test
-    public void testCheckValidUser(){
+    public void testCheckValidUser() {
         ServiceResult sr = service.checkUser(user);
         assertEquals(ServiceResult.OK, sr);
     }
 
     @Test
-    public void testCheckInvalidUser(){
+    public void testCheckInvalidUser() {
         User invalidUser = new User("invalidUser", "qwertz");
         ServiceResult sr = service.checkUser(invalidUser);
         assertEquals(ServiceResult.UNAUTHORIZED, sr);

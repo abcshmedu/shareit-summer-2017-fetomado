@@ -25,7 +25,7 @@ public class UserResourceTest extends JerseyTest {
     @Mock
     private UserService serviceMock;
 
-    private User testuser = new User("testuser","Test123");
+    private User testuser = new User("testuser", "Test123");
 
     @Override
     protected Application configure() {
@@ -45,7 +45,7 @@ public class UserResourceTest extends JerseyTest {
     }
 
     @Test
-    public void testInvalidLogin(){
+    public void testInvalidLogin() {
         when(serviceMock.checkUser(any(User.class))).thenReturn(ServiceResult.UNAUTHORIZED);
         Entity<User> user = Entity.entity(testuser, MediaType.APPLICATION_JSON);
         Response resp = target("users/login").request().post(user);

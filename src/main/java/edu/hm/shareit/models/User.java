@@ -10,12 +10,13 @@ public class User {
     /**
      * Private constructor needed for Jackson compatibility
      */
-    private User() { };
+    private User() {
+    }
 
     /**
      * Constructs a new user object.
      * @param username the username of the user
-     * @param pwd the password of the user
+     * @param pwd      the password of the user
      */
     public User(String username, String pwd) {
         this.username = username;

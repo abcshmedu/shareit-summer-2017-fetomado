@@ -52,7 +52,7 @@ public class CheckTokenRequestFilter implements ContainerRequestFilter {
                     .entity(toJson(new ServiceResultContainer(ServiceResult.UNAUTHORIZED)))
                     .build());
         } else {
-            ((ObjectNode)json).remove("token");
+            ((ObjectNode) json).remove("token");
             requestContext.setEntityStream(IOUtils.toInputStream(json.toString(), (Charset) null));
         }
     }

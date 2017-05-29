@@ -5,25 +5,23 @@ import edu.hm.shareit.models.User;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class UserServiceImplTest {
 
     private UserServiceImpl service;
-    private Map<String, User> testUsers;
+
+    private User user = new User("testuser", "Test123");
 
     @Before
     public void before(){
         service = new UserServiceImpl();
-        testUsers = service.getUsers();
     }
 
     @Test
     public void testCheckValidUser(){
-        ServiceResult sr = service.checkUser(testUsers.get("testuser"));
+        ServiceResult sr = service.checkUser(user);
         assertEquals(ServiceResult.OK, sr);
     }
 
@@ -36,14 +34,9 @@ public class UserServiceImplTest {
 
     @Test
     public void testGetNewToken() {
-        int oldSize = service.getTokensSize();
-        Token testToken = service.getNewToken(testUsers.get("testuser"));
-        assertEquals(oldSize + 1, service.getTokensSize());
+        Token testToken = service.getNewToken(user);
+        assertNotNull(testToken);
+        assertNotNull(service.checkToken(testToken.getToken()));
     }
 
-    @Test
-    public void testFlushAllData() {
-        service.flushAllData();
-        assertEquals( 0, service.getTokensSize());
-    }
 }

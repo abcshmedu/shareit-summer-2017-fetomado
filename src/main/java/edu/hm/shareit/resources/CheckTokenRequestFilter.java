@@ -18,16 +18,26 @@ import java.nio.charset.Charset;
 
 import static edu.hm.shareit.resources.ResourceHelper.toJson;
 
+/**
+ * This filter checks tokens sent to the server and rejects invalid ones.
+ */
 @Provider
 @CheckToken
 public class CheckTokenRequestFilter implements ContainerRequestFilter {
 
     private UserService service;
 
+    /**
+     * Constructs a new instance using the default implementation of a UserService.
+     */
     public CheckTokenRequestFilter() {
         service = new UserServiceImpl();
     }
 
+    /**
+     * Constructs a new instance using a given service implementation.
+     * @param srv the UserService to use
+     */
     CheckTokenRequestFilter(UserService srv) {
         service = srv;
     }

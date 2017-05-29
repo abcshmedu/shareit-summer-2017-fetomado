@@ -6,21 +6,23 @@ import edu.hm.shareit.models.User;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Our default implementation of a UserService.
+ */
 public class UserServiceImpl implements UserService {
 
     private Map<String, User> users;
     private static Map<String, User> tokens;
 
+    /**
+     * Default constructor (generates stub data).
+     */
     public UserServiceImpl() {
         users = new HashMap<>();
         users.put("testuser", new User("testuser", "Test123"));
         if (tokens == null) {
             tokens = new HashMap<>();
         }
-    }
-
-    public Map getUsers() {
-        return users;
     }
 
     @Override
@@ -45,11 +47,4 @@ public class UserServiceImpl implements UserService {
         return token;
     }
 
-    void flushAllData() {
-        tokens = new HashMap<>();
-    }
-
-    public int getTokensSize() {
-        return tokens.size();
-    }
 }

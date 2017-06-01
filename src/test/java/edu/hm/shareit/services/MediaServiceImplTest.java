@@ -13,8 +13,8 @@ public class MediaServiceImplTest {
     private MediaService service;
 
     private Book[] books = {
-            new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"),
-            new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"),
+            new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "9783548376233"),
+            new Book("what if?", "Randall Munroe", "9783813506255"),
     };
     private Disc[] discs = {
             new Disc("ValidDisc", "111111111", "Director", 0),
@@ -98,13 +98,13 @@ public class MediaServiceImplTest {
     @Test
     public void testGetValidBook() {
         service.addBook(books[1]);
-        Book book = service.getBook("978-3-8135-0625-5");
+        Book book = service.getBook("9783813506255");
         assertEquals(books[1], book);
     }
 
     @Test
     public void testGetInvalidBook() {
-        Book book = service.getBook("978-3-8135-0625-9");
+        Book book = service.getBook("9783813506259");
         assertNull(book);
     }
 

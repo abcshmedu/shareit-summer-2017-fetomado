@@ -14,7 +14,7 @@ public class CopyServiceImplTest {
     private CopyServiceImpl service;
     private MediaServiceImpl tmpMs;
 
-    private Book book = new Book("Das Leben des Brian", "Peter Lustig", "979-5-648-37723-3");
+    private Book book = new Book("Das Leben des Brian", "Peter Lustig", "9795648377233");
     private Disc disc = new Disc("Interstellar", "999999987", "Christopher Nolan", 12);
     private String[] copyOwner = {"Hans", "Egon"};
 

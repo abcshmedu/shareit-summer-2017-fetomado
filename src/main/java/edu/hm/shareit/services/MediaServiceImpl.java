@@ -34,7 +34,10 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public ServiceResult addBook(Book book) {
-        String regex = "^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$";
+        book = new Book(book.getTitle(),
+                book.getAuthor(),
+                book.getIsbn().replace("-", ""));
+        String regex = "^[0-9]{13}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(book.getIsbn());
 
@@ -50,7 +53,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public ServiceResult addDisc(Disc disc) {
-        String regex = "^[1-9][0-9]{8,14}$";
+        String regex = "^[0-9]{8,14}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(disc.getBarcode());
 

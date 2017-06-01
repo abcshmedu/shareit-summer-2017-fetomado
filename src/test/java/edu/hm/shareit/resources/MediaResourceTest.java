@@ -52,8 +52,13 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void testGetBooks() {
-        when(MediaServiceMock.getBooks()).thenReturn(books);
+        when(MediaServiceMock.getBooks()).thenReturn(new Book[0]);
         Response resp = target("media/books").request().get();
+        assertEquals(200, resp.getStatus());
+        assertEquals("[]", resp.readEntity(String.class));
+
+        when(MediaServiceMock.getBooks()).thenReturn(books);
+        resp = target("media/books").request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("[{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"}," +
                 "{\"title\":\"what if?\",\"author\":\"Randall Munroe\",\"isbn\":\"978-3-8135-0625-5\"}]", resp.readEntity(String.class));
@@ -61,8 +66,13 @@ public class MediaResourceTest extends JerseyTest {
 
     @Test
     public void testGetDiscs() {
-        when(MediaServiceMock.getDiscs()).thenReturn(discs);
+        when(MediaServiceMock.getDiscs()).thenReturn(new Disc[0]);
         Response resp = target("media/discs").request().get();
+        assertEquals(200, resp.getStatus());
+        assertEquals("[]", resp.readEntity(String.class));
+
+        when(MediaServiceMock.getDiscs()).thenReturn(discs);
+        resp = target("media/discs").request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("[{\"title\":\"Rennschwein Rudi Ruessel\",\"barcode\":\"123456789\",\"director\":\"Peter Timm\",\"fsk\":0}," +
                 "{\"title\":\"Deadpool\",\"barcode\":\"456789123\",\"director\":\"Tim Miller\",\"fsk\":16}," +

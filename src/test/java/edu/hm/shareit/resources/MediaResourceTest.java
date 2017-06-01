@@ -47,7 +47,8 @@ public class MediaResourceTest extends JerseyTest {
     protected Application configure() {
         MockitoAnnotations.initMocks(this);
         return new ResourceConfig().register(new MediaResource(MediaServiceMock))
-                .register(new CheckTokenRequestFilter(UserServiceMock));
+                .register(new CheckTokenRequestFilter(UserServiceMock))
+                .register(CustomExceptionMapper.class);
     }
 
     @Test
@@ -92,6 +93,22 @@ public class MediaResourceTest extends JerseyTest {
         Response resp = target("media/books").request().post(json);
         assertEquals(200, resp.getStatus());
         assertEquals("{\"code\":200,\"detail\":\"Erfolgreich.\"}", resp.readEntity(String.class));
+    }
+
+    @Test
+    public void testCreateBookInvalidJSON() {
+        when(MediaServiceMock.addBook(any(Book.class))).thenReturn(ServiceResult.OK);
+        when(UserServiceMock.checkToken("abc")).thenReturn(new User("TestU", "Test"));
+        ObjectNode root = new ObjectMapper().createObjectNode();
+        // Names are not correct
+        root.put("titel", "testtitel");
+        root.put("autor", "testautor");
+        root.put("isbn", "978-3-548-37623-3 ");
+        root.put("token", "abc");
+        Entity<ObjectNode> json = Entity.entity(root, MediaType.APPLICATION_JSON);
+        Response resp = target("media/books").request().post(json);
+        assertEquals(400, resp.getStatus());
+        assertEquals("{\"code\":400,\"detail\":\"Fehlerhafte Eingabe.\"}", resp.readEntity(String.class));
     }
 
     @Test

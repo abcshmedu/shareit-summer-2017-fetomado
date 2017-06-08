@@ -7,6 +7,7 @@ import edu.hm.shareit.services.ServiceResultContainer;
 import edu.hm.shareit.services.UserService;
 import edu.hm.shareit.services.UserServiceImpl;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -23,17 +24,11 @@ public class UserResource {
     private UserService service;
 
     /**
-     * Constructs a new instance.
-     */
-    public UserResource() {
-        service = new UserServiceImpl();
-    }
-
-    /**
      * Constructs a new instance with a given UserService implementation.
      * @param srv the UserService object
      */
-    UserResource(UserService srv) {
+    @Inject
+    public UserResource(UserService srv) {
         service = srv;
     }
 

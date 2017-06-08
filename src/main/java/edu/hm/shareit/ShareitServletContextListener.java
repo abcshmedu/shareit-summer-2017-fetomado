@@ -7,8 +7,8 @@ import com.google.inject.servlet.ServletModule;
 
 //import edu.hm.shareit.persistence.MediaPersistence;
 //import edu.hm.shareit.persistence.MediaPersistenceImpl;
-import edu.hm.shareit.services.MediaService;
-import edu.hm.shareit.services.MediaServiceImpl;
+import edu.hm.shareit.resources.UserResource;
+import edu.hm.shareit.services.*;
 
 /**
  * Context Listener to enable usage of google guice together with jersey.
@@ -21,6 +21,8 @@ public class ShareitServletContextListener extends GuiceServletContextListener {
         @Override
         protected void configureServlets() {
             bind(MediaService.class).to(MediaServiceImpl.class);
+            bind(CopyService.class).to(CopyServiceImpl.class);
+            bind(UserService.class).to(UserServiceImpl.class);
         }
     });
 

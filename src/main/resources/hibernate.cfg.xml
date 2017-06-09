@@ -6,7 +6,7 @@
 <hibernate-configuration>
 
     <session-factory>
-        <property name="connection.url">jdbc:hsqldb:file:shareit-db;shutdown=true;hsqldb.write_delay=false;</property>
+        <property name="connection.url">jdbc:hsqldb:file:./shareit-db;shutdown=true;hsqldb.write_delay=false;</property>
         <property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
         <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
         <property name="connection.username">sa</property>
@@ -17,9 +17,7 @@
         <property name="hbm2ddl.auto">create</property>
         <property name="transaction.auto_close_session">true</property>
 
-        <mapping class="edu.hm.shareit.persistence.TBook" />
-        <mapping class="edu.hm.shareit.persistence.TDisc" />
-        <mapping class="edu.hm.shareit.persistence.TMedium" />
+        <mapping class="edu.hm.shareit.models.Book" />
 
     </session-factory>
 

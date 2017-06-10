@@ -1,6 +1,8 @@
 package edu.hm.shareit;
 
 import edu.hm.shareit.models.Book;
+import edu.hm.shareit.models.Disc;
+import edu.hm.shareit.models.Medium;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -40,6 +42,8 @@ public class TestTest {
     public void test() {
         Book book = new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3");
         entityManager.persist(book);
+        Disc disc =  new Disc("Deadpool", "456789123", "Tim Miller", 16);
+        entityManager.persist(disc);
     }
 
 }

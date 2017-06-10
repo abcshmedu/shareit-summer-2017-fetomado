@@ -1,11 +1,20 @@
 package edu.hm.shareit.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import java.io.Serializable;
+
 /**
  * This is the model class representing a disc.
  */
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Disc extends Medium {
 
-    private String barcode, director;
+    @Id private String barcode;
+    private String director;
     private Integer fsk;
 
     /**

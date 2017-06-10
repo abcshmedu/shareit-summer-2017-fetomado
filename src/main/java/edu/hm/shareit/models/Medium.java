@@ -1,9 +1,13 @@
 package edu.hm.shareit.models;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
  * This is a class representing some kind of media.
  */
-public class Medium {
+@MappedSuperclass
+public class Medium implements Serializable {
 
     private String title;
 

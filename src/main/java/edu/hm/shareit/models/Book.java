@@ -1,11 +1,19 @@
 package edu.hm.shareit.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 /**
  * This is the model class representing a book.
  */
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Book extends Medium {
 
-    private String author, isbn;
+    @Id private String isbn;
+    private String author;
 
     /**
      * Constructs a new book object.

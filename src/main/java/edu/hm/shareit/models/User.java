@@ -1,5 +1,7 @@
 package edu.hm.shareit.models;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  * This is the model class representing an user.
  */
@@ -20,7 +22,7 @@ public class User {
      */
     public User(String username, String pwd) {
         this.username = username;
-        this.password = pwd;
+        this.password = hashPassword(pwd);
     }
 
     /**
@@ -37,5 +39,13 @@ public class User {
      */
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = hashPassword(password);
+    }
+
+    private String hashPassword(String pwd) {
+        return DigestUtils.sha256Hex("foobar");
     }
 }

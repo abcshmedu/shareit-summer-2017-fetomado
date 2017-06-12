@@ -13,15 +13,17 @@ import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.ext.Provider;
 
+import static org.mockito.Mockito.mock;
+
 @Provider
-public class GuiceInjectionFeature implements Feature {
+public class GuiceInjectionTestFeature implements Feature {
 
     private static final Injector injector = Guice.createInjector(new AbstractModule() {
         @Override
         protected void configure() {
-            bind(MediaService.class).to(MediaServiceImpl.class);
-            bind(CopyService.class).to(CopyServiceImpl.class);
-            bind(UserService.class).to(UserServiceImpl.class);
+            bind(MediaService.class).toInstance(mock(MediaService.class));
+            bind(CopyService.class).toInstance(mock(CopyService.class));
+            bind(UserService.class).toInstance(mock(UserService.class));
         }
     });
 

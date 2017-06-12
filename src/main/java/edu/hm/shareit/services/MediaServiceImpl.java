@@ -93,6 +93,7 @@ public class MediaServiceImpl implements MediaService {
         if (book.getTitle() != null && !book.getTitle().equals("")) {
             bookToEdit.setTitle(book.getTitle());
         }
+        persist.updateBook(bookToEdit);
         return ServiceResult.OK;
     }
 
@@ -149,6 +150,7 @@ public class MediaServiceImpl implements MediaService {
             existDisc.setFsk(disc.getFsk());
             change = true;
         }
+        persist.updateDisc(existDisc);
         return change;
     }
 

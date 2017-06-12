@@ -16,6 +16,8 @@ public interface MediaPersistence {
 
     List<Book> getBooks();
 
+    void updateBook(Book book);
+
     boolean discExist(String barcode);
 
     void putDisc(Disc disc);
@@ -23,4 +25,6 @@ public interface MediaPersistence {
     List<Disc> getDiscs();
 
     Disc getDisc(String barcode);
+
+    void updateDisc(Disc disc);
 }

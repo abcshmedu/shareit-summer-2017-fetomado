@@ -45,23 +45,37 @@ public class MediaPersistenceImpl implements MediaPersistence {
     }
 
     @Override
+    public void updateBook(Book book) {
+        entityManager.update(book);
+    }
+
+    @Override
     public boolean discExist(String barcode) {
-        return false;
+        return entityManager.get(Disc.class, barcode) != null;
     }
 
     @Override
     public void putDisc(Disc disc) {
+        if(!discExist(disc.getBarcode())) {
+            entityManager.persist(disc);
+        }
 
     }
 
     @Override
     public List<Disc> getDiscs() {
-        return null;
+        String queryString = "from Disc";
+        return entityManager.createQuery(queryString).list();
     }
 
     @Override
     public Disc getDisc(String barcode) {
-        return null;
+        return entityManager.get(Disc.class, barcode);
+    }
+
+    @Override
+    public void updateDisc(Disc disc) {
+        entityManager.update(disc);
     }
 
 }

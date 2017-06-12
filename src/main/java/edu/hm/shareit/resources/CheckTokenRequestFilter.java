@@ -9,6 +9,7 @@ import edu.hm.shareit.services.UserService;
 import edu.hm.shareit.services.UserServiceImpl;
 import org.apache.commons.io.IOUtils;
 
+import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
@@ -28,17 +29,11 @@ public class CheckTokenRequestFilter implements ContainerRequestFilter {
     private UserService service;
 
     /**
-     * Constructs a new instance using the default implementation of a UserService.
-     */
-    public CheckTokenRequestFilter() {
-        service = new UserServiceImpl();
-    }
-
-    /**
      * Constructs a new instance using a given service implementation.
      * @param srv the UserService to use
      */
-    CheckTokenRequestFilter(UserService srv) {
+    @Inject
+    public CheckTokenRequestFilter(UserService srv) {
         service = srv;
     }
 

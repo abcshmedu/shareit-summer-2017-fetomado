@@ -7,6 +7,7 @@ import edu.hm.shareit.services.MediaServiceImpl;
 import edu.hm.shareit.services.ServiceResult;
 import edu.hm.shareit.services.ServiceResultContainer;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,17 +23,11 @@ public class MediaResource {
     private MediaService service;
 
     /**
-     * Constructs a new instance.
-     */
-    public MediaResource() {
-        service = new MediaServiceImpl();
-    }
-
-    /**
      * Constructs a new instance with a given MediaService implementation.
      * @param srv the MediaService object
      */
-    MediaResource(MediaService srv) {
+    @Inject
+    public MediaResource(MediaService srv) {
         service = srv;
     }
 

@@ -6,6 +6,7 @@ import edu.hm.shareit.services.CopyServiceImpl;
 import edu.hm.shareit.services.ServiceResult;
 import edu.hm.shareit.services.ServiceResultContainer;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,17 +22,11 @@ public class CopyResource {
     private CopyService service;
 
     /**
-     * Constructs a new instance.
-     */
-    public CopyResource() {
-        service = new CopyServiceImpl();
-    }
-
-    /**
      * Constructs a new instance with a given CopyService implementation.
      * @param srv the CopyService object
      */
-    CopyResource(CopyService srv) {
+    @Inject
+    public CopyResource(CopyService srv) {
         service = srv;
     }
 

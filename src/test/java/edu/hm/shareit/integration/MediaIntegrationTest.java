@@ -38,4 +38,54 @@ public class MediaIntegrationTest extends IntegrationTestWithJetty {
                 .extract().jsonPath().getList("").size());
     }
 
+    @Test
+    public void testUpdatingBook() {
+        String isbn = "9783548376233";
+        JSONObject book = new JSONObject()
+                .put("title", "Die Kaenguru-Chroniken")
+                .put("author", "Marc-Uwe Kling")
+                .put("isbn", isbn);
+        String token = given().contentType(ContentType.JSON).body(login.toString()).when().post("/users/login").then()
+                .statusCode(200)
+                .extract().jsonPath().getString("token");
+        book.put("token", token);
+        given().contentType(ContentType.JSON).body(book.toString()).when().post("/media/books").then()
+                .statusCode(200)
+                .body("detail", is("Erfolgreich."));
+        get("/media/books/" + isbn).then()
+                .statusCode(200)
+                .body("title", is("Die Kaenguru-Chroniken"))
+                .body("author", is("Marc-Uwe Kling"));
+
+        JSONObject body = new JSONObject().put("author", "J.K. Rowling").put("token", token);
+        given().contentType(ContentType.JSON).body(body.toString())
+                .when().put("/media/books/" + isbn).then()
+                .statusCode(200)
+                .body("detail", is("Erfolgreich."));
+        get("/media/books/" + isbn).then()
+                .statusCode(200)
+                .body("title", is("Die Kaenguru-Chroniken"))
+                .body("author", is("J.K. Rowling"));
+
+        body.put("title", "Harry Potter").remove("author");
+        given().contentType(ContentType.JSON).body(body.toString())
+                .when().put("/media/books/" + isbn).then()
+                .statusCode(200)
+                .body("detail", is("Erfolgreich."));
+        get("/media/books/" + isbn).then()
+                .statusCode(200)
+                .body("title", is("Harry Potter"))
+                .body("author", is("J.K. Rowling"));
+
+        body.put("title", "Die Kaenguru-Chroniken").put("author", "Marc-Uwe Kling");
+        given().contentType(ContentType.JSON).body(body.toString())
+                .when().put("/media/books/" + isbn).then()
+                .statusCode(200)
+                .body("detail", is("Erfolgreich."));
+        get("/media/books/" + isbn).then()
+                .statusCode(200)
+                .body("title", is("Die Kaenguru-Chroniken"))
+                .body("author", is("Marc-Uwe Kling"));
+    }
+
 }

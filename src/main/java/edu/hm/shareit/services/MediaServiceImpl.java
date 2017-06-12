@@ -2,6 +2,8 @@ package edu.hm.shareit.services;
 
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
+import edu.hm.shareit.persit.MediaPersistence;
+import edu.hm.shareit.persit.MediaPersistenceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,8 @@ import java.util.regex.Pattern;
  */
 public class MediaServiceImpl implements MediaService {
 
-    private static Map<String, Book> books;
+
+    private MediaPersistence persist;
     private static Map<String, Disc> discs;
     private static final int FSK_MAX = 18;
 
@@ -22,10 +25,7 @@ public class MediaServiceImpl implements MediaService {
      * Constructs a new instance.
      */
     public MediaServiceImpl() {
-        if (books == null) {
-            books = new HashMap<>();
-        }
-
+        persist = new MediaPersistenceImpl();
         if (discs == null) {
             discs = new HashMap<>();
         }
@@ -40,10 +40,10 @@ public class MediaServiceImpl implements MediaService {
 
         if (!matcher.matches() || book.getAuthor() == "" || book.getTitle() == "") {
             return ServiceResult.BAD_REQUEST;
-        } else if (books.containsKey(book.getIsbn())) {
+        } else if (persist.bookExist(book.getIsbn())) {
             return ServiceResult.DUPLICATE;
         } else {
-            books.put(book.getIsbn(), book);
+            persist.putBook(book.getIsbn(), book);
             return ServiceResult.OK;
         }
     }
@@ -67,8 +67,8 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Book getBook(String isbn) {
-        if (books.containsKey(isbn)) {
-            return books.get(isbn);
+        if (persist.bookExist(isbn)) {
+            return persist.getBook(isbn);
         } else {
             return null;
         }
@@ -76,19 +76,19 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Book[] getBooks() {
-        return books.values().toArray(new Book[books.size()]);
+        return persist.getBooks();
     }
 
     @Override
     public ServiceResult updateBook(String isbn, Book book) {
-        if (!books.containsKey(isbn)) {
+        if (!persist.bookExist(isbn)) {
             return ServiceResult.NOT_FOUND;
         }
         if ((book.getAuthor() == null || book.getAuthor().equals(""))
                 && (book.getTitle() == null || book.getTitle().equals(""))) {
             return ServiceResult.BAD_REQUEST;
         }
-        Book bookToEdit = books.get(isbn);
+        Book bookToEdit = persist.getBook(isbn);
         if (book.getAuthor() != null && !book.getAuthor().equals("")) {
             bookToEdit.setAuthor(book.getAuthor());
         }
@@ -150,14 +150,6 @@ public class MediaServiceImpl implements MediaService {
             change = true;
         }
         return change;
-    }
-
-    /**
-     * Removes the data stored in this service. This method should mainly be used in tests.
-     */
-    void flushDataForTesting() {
-        books = new HashMap<>();
-        discs = new HashMap<>();
     }
 
 }

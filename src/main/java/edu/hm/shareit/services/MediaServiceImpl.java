@@ -6,6 +6,7 @@ import edu.hm.shareit.persit.MediaPersistence;
 import edu.hm.shareit.persit.MediaPersistenceImpl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,7 +77,8 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Book[] getBooks() {
-        return persist.getBooks();
+        List<Book> books = persist.getBooks();
+        return books.toArray(new Book[books.size()]);
     }
 
     @Override

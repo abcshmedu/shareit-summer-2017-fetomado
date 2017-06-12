@@ -2,6 +2,8 @@ package edu.hm.shareit.persit;
 
 import edu.hm.shareit.models.Book;
 
+import java.util.List;
+
 public interface MediaPersistence {
 
 
@@ -11,5 +13,6 @@ public interface MediaPersistence {
 
     void putBook(String isbn, Book book);
 
-    Book[] getBooks();
+    List<Book> getBooks();
+
 }

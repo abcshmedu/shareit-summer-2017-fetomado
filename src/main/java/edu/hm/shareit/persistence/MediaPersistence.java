@@ -12,7 +12,7 @@ public interface MediaPersistence {
 
     Book getBook(String isbn);
 
-    void putBook(Book book);
+    void addBook(Book book);
 
     List<Book> getBooks();
 
@@ -20,7 +20,7 @@ public interface MediaPersistence {
 
     boolean discExist(String barcode);
 
-    void putDisc(Disc disc);
+    void addDisc(Disc disc);
 
     List<Disc> getDiscs();
 

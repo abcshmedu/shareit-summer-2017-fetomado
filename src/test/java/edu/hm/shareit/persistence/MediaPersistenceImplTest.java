@@ -3,7 +3,6 @@ package edu.hm.shareit.persistence;
 
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
-import org.hsqldb.Session;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,7 +28,7 @@ public class MediaPersistenceImplTest {
     @BeforeClass
     public static void initialize() {
         MediaPersistence persist = new MediaPersistenceImpl();
-        persist.putBook(books[0]);
+        persist.addBook(books[0]);
     }
 
     @Before
@@ -38,16 +37,16 @@ public class MediaPersistenceImplTest {
     }
 
     @Test
-    public void testPutBook() {
+    public void testAddBook() {
         List<Book> book = persistence.getBooks();
-        persistence.putBook(books[1]);
+        persistence.addBook(books[1]);
         assertEquals(book.size() + 1, persistence.getBooks().size());
     }
 
     @Test
-    public void testPutDuplicateBook() {
+    public void testAddDuplicateBook() {
         int count = persistence.getBooks().size();
-        persistence.putBook(books[0]);
+        persistence.addBook(books[0]);
         assertEquals(count, persistence.getBooks().size());
     }
 

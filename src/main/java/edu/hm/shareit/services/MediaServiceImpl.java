@@ -5,9 +5,7 @@ import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.persistence.MediaPersistence;
 import edu.hm.shareit.persistence.MediaPersistenceImpl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,7 +38,7 @@ public class MediaServiceImpl implements MediaService {
         } else if (persist.bookExist(book.getIsbn())) {
             return ServiceResult.DUPLICATE;
         } else {
-            persist.putBook(book);
+            persist.addBook(book);
             return ServiceResult.OK;
         }
     }
@@ -57,7 +55,7 @@ public class MediaServiceImpl implements MediaService {
         } else if (persist.discExist(disc.getBarcode())) {
             return ServiceResult.DUPLICATE;
         } else {
-            persist.putDisc(disc);
+            persist.addDisc(disc);
             return ServiceResult.OK;
         }
     }

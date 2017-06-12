@@ -6,7 +6,6 @@ import edu.hm.shareit.models.Disc;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class MediaPersistenceImpl implements MediaPersistence {
     }
 
     @Override
-    public void putBook(Book book) {
+    public void addBook(Book book) {
         entityManager = sessionFactory.getCurrentSession();
         Transaction tx = entityManager.beginTransaction();
         if (entityManager.get(Book.class, book.getIsbn()) == null) {
@@ -72,11 +71,10 @@ public class MediaPersistenceImpl implements MediaPersistence {
     }
 
     @Override
-    public void putDisc(Disc disc) {
+    public void addDisc(Disc disc) {
         if (!discExist(disc.getBarcode())) {
             entityManager.save(disc);
         }
-
     }
 
     @Override

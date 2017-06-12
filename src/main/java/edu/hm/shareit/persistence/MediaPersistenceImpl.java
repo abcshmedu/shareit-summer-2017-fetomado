@@ -1,5 +1,6 @@
 package edu.hm.shareit.persistence;
 
+import edu.hm.HibernateUtils;
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
 import org.hibernate.Session;
@@ -16,37 +17,53 @@ public class MediaPersistenceImpl implements MediaPersistence {
     private Transaction tx;
 
     public MediaPersistenceImpl() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-        entityManager = sessionFactory.getCurrentSession();
-        tx = entityManager.beginTransaction();
+        sessionFactory = HibernateUtils.getSessionFactory();
     }
 
     @Override
     public boolean bookExist(String isbn) {
-        return entityManager.get(Book.class, isbn) != null;
+        entityManager = sessionFactory.getCurrentSession();
+        tx = entityManager.beginTransaction();
+        Book book = entityManager.get(Book.class, isbn);
+        tx.commit();
+        return book != null;
     }
 
     @Override
     public Book getBook(String isbn) {
-        return entityManager.get(Book.class, isbn);
+        entityManager = sessionFactory.getCurrentSession();
+        Transaction tx = entityManager.beginTransaction();
+        Book book = entityManager.get(Book.class, isbn);
+        tx.commit();
+        return book;
     }
 
     @Override
     public void putBook(Book book) {
-        if(!bookExist(book.getIsbn())) {
-            entityManager.persist(book);
+        entityManager = sessionFactory.getCurrentSession();
+        Transaction tx = entityManager.beginTransaction();
+        if (entityManager.get(Book.class, book.getIsbn()) == null) {
+            entityManager.save(book);
         }
+        tx.commit();
     }
 
     @Override
     public List<Book> getBooks() {
+        entityManager = sessionFactory.getCurrentSession();
+        Transaction tx = entityManager.beginTransaction();
         String queryString = "from Book";
-        return entityManager.createQuery(queryString).list();
+        List<Book> books = entityManager.createQuery(queryString).list();
+        tx.commit();
+        return books;
     }
 
     @Override
     public void updateBook(Book book) {
-        entityManager.update(book);
+        entityManager = sessionFactory.getCurrentSession();
+        Transaction tx = entityManager.beginTransaction();
+        entityManager.saveOrUpdate(book);
+        tx.commit();
     }
 
     @Override
@@ -56,8 +73,8 @@ public class MediaPersistenceImpl implements MediaPersistence {
 
     @Override
     public void putDisc(Disc disc) {
-        if(!discExist(disc.getBarcode())) {
-            entityManager.persist(disc);
+        if (!discExist(disc.getBarcode())) {
+            entityManager.save(disc);
         }
 
     }
@@ -75,7 +92,7 @@ public class MediaPersistenceImpl implements MediaPersistence {
 
     @Override
     public void updateDisc(Disc disc) {
-        entityManager.update(disc);
+        entityManager.saveOrUpdate(disc);
     }
 
 }

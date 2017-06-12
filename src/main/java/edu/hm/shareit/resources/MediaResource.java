@@ -19,16 +19,8 @@ import static edu.hm.shareit.resources.ResourceHelper.toJson;
 @Path("/media")
 public class MediaResource {
 
-    private MediaService service;
-
-    /**
-     * Constructs a new instance with a given MediaService implementation.
-     * @param srv the MediaService object
-     */
     @Inject
-    public MediaResource(MediaService srv) {
-        service = srv;
-    }
+    private MediaService service;
 
     /**
      * This function handles POST requests to /media/book.

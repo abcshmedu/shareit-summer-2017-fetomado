@@ -18,16 +18,8 @@ import static edu.hm.shareit.resources.ResourceHelper.toJson;
 @Path("/copies")
 public class CopyResource {
 
-    private CopyService service;
-
-    /**
-     * Constructs a new instance with a given CopyService implementation.
-     * @param srv the CopyService object
-     */
     @Inject
-    public CopyResource(CopyService srv) {
-        service = srv;
-    }
+    private CopyService service;
 
     /**
      * This function handles POST requests to /copies.

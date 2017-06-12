@@ -25,16 +25,8 @@ import static edu.hm.shareit.resources.ResourceHelper.toJson;
 @CheckToken
 public class CheckTokenRequestFilter implements ContainerRequestFilter {
 
-    private UserService service;
-
-    /**
-     * Constructs a new instance using a given service implementation.
-     * @param srv the UserService to use
-     */
     @Inject
-    public CheckTokenRequestFilter(UserService srv) {
-        service = srv;
-    }
+    private UserService service;
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {

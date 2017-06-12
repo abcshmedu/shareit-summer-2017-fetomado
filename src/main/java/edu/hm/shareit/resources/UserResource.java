@@ -20,16 +20,8 @@ import javax.ws.rs.core.Response;
 @Path("/users")
 public class UserResource {
 
-    private UserService service;
-
-    /**
-     * Constructs a new instance with a given UserService implementation.
-     * @param srv the UserService object
-     */
     @Inject
-    public UserResource(UserService srv) {
-        service = srv;
-    }
+    private UserService service;
 
     /**
      * This function handles POST requests to /users/login.

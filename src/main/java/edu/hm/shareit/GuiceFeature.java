@@ -1,23 +1,23 @@
 package edu.hm.shareit;
 
-import javax.inject.Inject;
-
 import org.glassfish.hk2.api.ServiceLocator;
-import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.ServiceLocatorProvider;
 import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
 import org.jvnet.hk2.guice.bridge.api.GuiceIntoHK2Bridge;
 
-/**
- * Application class to enable guice within jersey.
- * @author <a mailto:axel.boettcher@hm.edu>Axel B&ouml;ttcher</a>
- */
-public class ShareItApplication extends ResourceConfig {
+import javax.ws.rs.core.Feature;
+import javax.ws.rs.core.FeatureContext;
+import javax.ws.rs.ext.Provider;
 
-    @Inject
-    public ShareItApplication(ServiceLocator serviceLocator) {
+@Provider
+public class GuiceFeature implements Feature {
+
+    public boolean configure(FeatureContext context) {
+        ServiceLocator serviceLocator = ServiceLocatorProvider.getServiceLocator(context);
         GuiceBridge.getGuiceBridge().initializeGuiceBridge(serviceLocator);
         GuiceIntoHK2Bridge guiceBridge = serviceLocator.getService(GuiceIntoHK2Bridge.class);
         guiceBridge.bridgeGuiceInjector(ShareitServletContextListener.getInjectorInstance());
+        return true;
     }
 
 }

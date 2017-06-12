@@ -29,6 +29,9 @@ public class MediaResourceTest extends JerseyTest {
     @Mock
     private MediaService MediaServiceMock;
 
+    @Mock
+    private UserService UserServiceMock;
+
     private Book[] books = {
             new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"),
             new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"),
@@ -38,10 +41,6 @@ public class MediaResourceTest extends JerseyTest {
             new Disc("Deadpool", "456789123", "Tim Miller", 16),
             new Disc("Source Code", "101001011", "Duncan Jones", 12),
     };
-
-    @Mock
-    private UserService UserServiceMock;
-
 
     @Override
     protected Application configure() {

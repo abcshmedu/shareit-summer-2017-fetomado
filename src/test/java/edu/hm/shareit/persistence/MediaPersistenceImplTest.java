@@ -20,7 +20,7 @@ public class MediaPersistenceImplTest {
             new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"),
     };
 
-    Disc[] discs = {
+    static Disc[] discs = {
             new Disc("ValidDisc", "111111111", "Director", 0),
             new Disc("Deadpool", "456789123", "Tim Miller", 16),
     };
@@ -29,6 +29,8 @@ public class MediaPersistenceImplTest {
     public static void initialize() {
         MediaPersistence persist = new MediaPersistenceImpl();
         persist.addBook(books[0]);
+        persist = new MediaPersistenceImpl();
+        persist.addDisc(discs[0]);
     }
 
     @Before
@@ -64,5 +66,32 @@ public class MediaPersistenceImplTest {
         assertEquals(book, persistence.getBook(book.getIsbn()));
     }
 
+    @Test
+    public void testAddDisc() {
+        int count = persistence.getDiscs().size();
+        persistence.addDisc(discs[1]);
+        assertEquals(count + 1, persistence.getDiscs().size());
+    }
+
+    @Test
+    public void testAddDuplicateDisc() {
+        int count = persistence.getDiscs().size();
+        persistence.addDisc(discs[0]);
+        assertEquals(count, persistence.getDiscs().size());
+    }
+
+    @Test
+    public void testGetDisc() {
+        assertEquals(persistence.getDisc(discs[0].getBarcode()).getBarcode(), discs[0].getBarcode());
+    }
+
+    @Test
+    public void testUpdateDisc() {
+        Disc disc = new Disc(discs[0].getTitle(), discs[0].getBarcode(), discs[0].getDirector(), discs[0].getFsk());
+        disc.setTitle("Felix Maurer");
+        disc.setDirector("Blaaaa");
+        persistence.updateDisc(disc);
+        assertEquals(disc, persistence.getDisc(disc.getBarcode()));
+    }
 
 }

@@ -67,30 +67,48 @@ public class MediaPersistenceImpl implements MediaPersistence {
 
     @Override
     public boolean discExist(String barcode) {
-        return entityManager.get(Disc.class, barcode) != null;
+        entityManager = sessionFactory.getCurrentSession();
+        Transaction tx = entityManager.beginTransaction();
+        tx.commit();
+        Disc disc = entityManager.get(Disc.class, barcode);
+        return disc != null;
     }
 
     @Override
     public void addDisc(Disc disc) {
-        if (!discExist(disc.getBarcode())) {
+        entityManager = sessionFactory.getCurrentSession();
+        Transaction tx = entityManager.beginTransaction();
+        if (entityManager.get(Disc.class, disc.getBarcode()) == null) {
             entityManager.save(disc);
         }
+        tx.commit();
     }
 
     @Override
     public List<Disc> getDiscs() {
+        entityManager = sessionFactory.getCurrentSession();
+        Transaction tx = entityManager.beginTransaction();
         String queryString = "from Disc";
-        return entityManager.createQuery(queryString).list();
+        tx.commit();
+        List<Disc> disc = entityManager.createQuery(queryString).list();
+        return disc;
     }
 
     @Override
     public Disc getDisc(String barcode) {
-        return entityManager.get(Disc.class, barcode);
+        entityManager = sessionFactory.getCurrentSession();
+        Transaction tx = entityManager.beginTransaction();
+        tx.commit();
+        Disc disc =  entityManager.get(Disc.class, barcode);
+        return disc;
     }
 
     @Override
     public void updateDisc(Disc disc) {
+        entityManager = sessionFactory.getCurrentSession();
+        Transaction tx = entityManager.beginTransaction();
         entityManager.saveOrUpdate(disc);
+        tx.commit();
     }
 
 }

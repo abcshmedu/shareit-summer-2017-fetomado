@@ -1,4 +1,4 @@
-package edu.hm.shareit.persit;
+package edu.hm.shareit.persistence;
 
 import edu.hm.shareit.models.Book;
 import org.hibernate.Session;
@@ -42,4 +42,6 @@ public class MediaPersistenceImpl implements MediaPersistence {
         String queryString = "from Book";
         return entityManager.createQuery(queryString).list();
     }
+
+
 }

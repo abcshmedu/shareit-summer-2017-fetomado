@@ -1,6 +1,7 @@
-package edu.hm.shareit.persit;
+package edu.hm.shareit.persistence;
 
 import edu.hm.shareit.models.Book;
+import org.hsqldb.Session;
 
 import java.util.List;
 

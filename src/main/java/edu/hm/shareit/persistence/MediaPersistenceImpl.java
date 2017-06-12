@@ -89,8 +89,8 @@ public class MediaPersistenceImpl implements MediaPersistence {
         entityManager = sessionFactory.getCurrentSession();
         Transaction tx = entityManager.beginTransaction();
         String queryString = "from Disc";
-        tx.commit();
         List<Disc> disc = entityManager.createQuery(queryString).list();
+        tx.commit();
         return disc;
     }
 
@@ -98,8 +98,8 @@ public class MediaPersistenceImpl implements MediaPersistence {
     public Disc getDisc(String barcode) {
         entityManager = sessionFactory.getCurrentSession();
         Transaction tx = entityManager.beginTransaction();
-        tx.commit();
         Disc disc =  entityManager.get(Disc.class, barcode);
+        tx.commit();
         return disc;
     }
 

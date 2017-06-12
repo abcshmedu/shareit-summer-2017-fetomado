@@ -29,7 +29,6 @@ public class MediaPersistenceImplTest {
     public static void initialize() {
         MediaPersistence persist = new MediaPersistenceImpl();
         persist.addBook(books[0]);
-        persist = new MediaPersistenceImpl();
         persist.addDisc(discs[0]);
     }
 

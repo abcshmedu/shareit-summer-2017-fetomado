@@ -5,7 +5,6 @@ import edu.hm.shareit.models.User;
 import edu.hm.shareit.services.ServiceResult;
 import edu.hm.shareit.services.ServiceResultContainer;
 import edu.hm.shareit.services.UserService;
-import edu.hm.shareit.services.UserServiceImpl;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

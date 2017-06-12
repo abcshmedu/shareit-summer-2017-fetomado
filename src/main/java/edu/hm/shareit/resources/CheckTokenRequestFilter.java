@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import edu.hm.shareit.services.ServiceResult;
 import edu.hm.shareit.services.ServiceResultContainer;
 import edu.hm.shareit.services.UserService;
-import edu.hm.shareit.services.UserServiceImpl;
 import org.apache.commons.io.IOUtils;
 
 import javax.inject.Inject;

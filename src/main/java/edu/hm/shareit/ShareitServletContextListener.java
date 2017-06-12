@@ -4,16 +4,11 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
-
-//import edu.hm.shareit.persistence.MediaPersistence;
-//import edu.hm.shareit.persistence.MediaPersistenceImpl;
-import edu.hm.shareit.resources.UserResource;
 import edu.hm.shareit.services.*;
 
 /**
  * Context Listener to enable usage of google guice together with jersey.
  * @author <a mailto:axel.boettcher@hm.edu>Axel B&ouml;ttcher</a>
- *
  */
 public class ShareitServletContextListener extends GuiceServletContextListener {
 

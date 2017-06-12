@@ -2,7 +2,6 @@ package edu.hm.shareit.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import edu.hm.shareit.services.CopyService;
-import edu.hm.shareit.services.CopyServiceImpl;
 import edu.hm.shareit.services.ServiceResult;
 import edu.hm.shareit.services.ServiceResultContainer;
 

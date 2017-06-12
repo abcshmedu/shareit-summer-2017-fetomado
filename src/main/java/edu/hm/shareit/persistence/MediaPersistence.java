@@ -1,4 +1,4 @@
-package edu.hm.shareit.persit;
+package edu.hm.shareit.persistence;
 
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;

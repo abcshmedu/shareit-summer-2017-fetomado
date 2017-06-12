@@ -2,8 +2,8 @@ package edu.hm.shareit.services;
 
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
-import edu.hm.shareit.persit.MediaPersistence;
-import edu.hm.shareit.persit.MediaPersistenceImpl;
+import edu.hm.shareit.persistence.MediaPersistence;
+import edu.hm.shareit.persistence.MediaPersistenceImpl;
 
 import java.util.HashMap;
 import java.util.List;

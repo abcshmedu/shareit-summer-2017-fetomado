@@ -19,7 +19,7 @@ public class MediaServiceImpl implements MediaService {
 
 
     private MediaPersistence persist;
-    private static Map<String, Disc> discs;
+    //private static Map<String, Disc> discs;
     private static final int FSK_MAX = 18;
 
     /**
@@ -27,10 +27,6 @@ public class MediaServiceImpl implements MediaService {
      */
     public MediaServiceImpl() {
         persist = new MediaPersistenceImpl();
-        if (discs == null) {
-            discs = new HashMap<>();
-        }
-
     }
 
     @Override
@@ -44,7 +40,7 @@ public class MediaServiceImpl implements MediaService {
         } else if (persist.bookExist(book.getIsbn())) {
             return ServiceResult.DUPLICATE;
         } else {
-            persist.putBook(book.getIsbn(), book);
+            persist.putBook(book);
             return ServiceResult.OK;
         }
     }
@@ -58,10 +54,10 @@ public class MediaServiceImpl implements MediaService {
         if (disc.getDirector().isEmpty() || disc.getTitle().isEmpty() || (disc.getFsk() < 0 || disc.getFsk() > FSK_MAX)
                 || !matcher.matches()) {
             return ServiceResult.BAD_REQUEST;
-        } else if (discs.containsKey(disc.getBarcode())) {
+        } else if (persist.discExist(disc.getBarcode())) {
             return ServiceResult.DUPLICATE;
         } else {
-            discs.put(disc.getBarcode(), disc);
+            persist.putDisc(disc);
             return ServiceResult.OK;
         }
     }
@@ -102,8 +98,8 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Disc getDisc(String barcode) {
-        if (discs.containsKey(barcode)) {
-            return discs.get(barcode);
+        if (persist.discExist(barcode)) {
+            return persist.getDisc(barcode);
         } else {
             return null;
         }
@@ -111,12 +107,14 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Disc[] getDiscs() {
-        return discs.values().toArray(new Disc[discs.size()]);
+
+        List<Disc> discs = persist.getDiscs();
+        return discs.toArray(new Disc[discs.size()]);
     }
 
     @Override
     public ServiceResult updateDisc(String barcode, Disc disc) {
-        if (discs.containsKey(barcode)) {
+        if (persist.discExist(barcode)) {
             if ((disc.getDirector() == null || disc.getDirector().equals(""))
                     && (disc.getTitle() == null || disc.getTitle().equals(""))
                     && disc.getFsk() == null) {
@@ -138,7 +136,7 @@ public class MediaServiceImpl implements MediaService {
      */
     private boolean changeDisc(String barcode, Disc disc) {
         boolean change = false;
-        Disc existDisc = discs.get(barcode);
+        Disc existDisc = persist.getDisc(barcode);
         if (disc.getDirector() != null && !disc.getDirector().equals("")) {
             existDisc.setDirector(disc.getDirector());
             change = true;

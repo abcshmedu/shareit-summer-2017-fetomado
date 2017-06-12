@@ -1,6 +1,7 @@
 package edu.hm.shareit.persit;
 
 import edu.hm.shareit.models.Book;
+import edu.hm.shareit.models.Disc;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -31,8 +32,8 @@ public class MediaPersistenceImpl implements MediaPersistence {
     }
 
     @Override
-    public void putBook(String isbn, Book book) {
-        if(!bookExist(isbn)) {
+    public void putBook(Book book) {
+        if(!bookExist(book.getIsbn())) {
             entityManager.persist(book);
         }
     }
@@ -41,5 +42,25 @@ public class MediaPersistenceImpl implements MediaPersistence {
     public List<Book> getBooks() {
         String queryString = "from Book";
         return entityManager.createQuery(queryString).list();
+    }
+
+    @Override
+    public boolean discExist(String barcode) {
+        return false;
+    }
+
+    @Override
+    public void putDisc(Disc disc) {
+
+    }
+
+    @Override
+    public List<Disc> getDiscs() {
+        return null;
+    }
+
+    @Override
+    public Disc getDisc(String barcode) {
+        return null;
     }
 }

@@ -1,30 +1,24 @@
 package edu.hm.shareit;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.servlet.GuiceServletContextListener;
-import com.google.inject.servlet.ServletModule;
 import edu.hm.shareit.services.*;
 
 /**
  * Context Listener to enable usage of google guice together with jersey.
  * @author <a mailto:axel.boettcher@hm.edu>Axel B&ouml;ttcher</a>
  */
-public class ShareitServletContextListener extends GuiceServletContextListener {
+public class ShareitInjector {
 
-    private static final Injector injector = Guice.createInjector(new ServletModule() {
+    private static final Injector injector = Guice.createInjector(new AbstractModule() {
         @Override
-        protected void configureServlets() {
+        protected void configure() {
             bind(MediaService.class).to(MediaServiceImpl.class);
             bind(CopyService.class).to(CopyServiceImpl.class);
             bind(UserService.class).to(UserServiceImpl.class);
         }
     });
-
-    @Override
-    protected Injector getInjector() {
-        return injector;
-    }
 
     /**
      * This method is only required for the HK2-Guice-Bridge in the Application class.

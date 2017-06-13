@@ -1,5 +1,6 @@
 package edu.hm.shareit.services;
 
+import edu.hm.shareit.GuiceInjectionTestFeature;
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
 import org.junit.Before;
@@ -24,6 +25,7 @@ public class MediaServiceImplTest {
     @Before
     public void before() {
         service = new MediaServiceImpl();
+        GuiceInjectionTestFeature.getInjectorInstance().injectMembers(service);
     }
 
     @Test

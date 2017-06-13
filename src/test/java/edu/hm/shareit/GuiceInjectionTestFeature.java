@@ -31,7 +31,10 @@ public class GuiceInjectionTestFeature implements Feature {
             bind(UserService.class).toInstance(mock(UserService.class));
             bind(Persistence.class).toInstance(mock(Persistence.class));
             bind(SessionFactory.class).toInstance(
-                    new Configuration().configure().buildSessionFactory());
+                    new Configuration()
+                            .configure()
+                            .setProperty("hibernate.connection.url", "jdbc:hsqldb:mem:shareit-test-db;shutdown=true;")
+                            .buildSessionFactory());
         }
     });
 

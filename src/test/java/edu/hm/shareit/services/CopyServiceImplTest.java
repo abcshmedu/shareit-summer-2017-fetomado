@@ -1,5 +1,6 @@
 package edu.hm.shareit.services;
 
+import edu.hm.shareit.GuiceInjectionTestFeature;
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Copy;
 import edu.hm.shareit.models.Disc;
@@ -11,8 +12,8 @@ import static org.junit.Assert.assertNull;
 
 public class CopyServiceImplTest {
 
-    private CopyServiceImpl service;
-    private MediaServiceImpl tmpMs;
+    private CopyService service;
+    private MediaService mediaServiceMock;
 
     private Book book = new Book("Das Leben des Brian", "Peter Lustig", "9795648377233");
     private Disc disc = new Disc("Interstellar", "999999987", "Christopher Nolan", 12);
@@ -21,15 +22,13 @@ public class CopyServiceImplTest {
     @Before
     public void before() {
         service = new CopyServiceImpl();
-        tmpMs = new MediaServiceImpl();
-        service.flushDataForTesting();
-        // TODO Mock object via injection
-        //tmpMs.flushDataForTesting();
+        GuiceInjectionTestFeature.getInjectorInstance().injectMembers(service);
+        mediaServiceMock = GuiceInjectionTestFeature.getInjectorInstance().getInstance(MediaService.class);
     }
 
     @Test
     public void testAddValidISBNCopy() {
-        tmpMs.addBook(book);
+        mediaServiceMock.addBook(book);
         int oldCount = service.getCopies().length;
         ServiceResult sr = service.addCopy(copyOwner[0], book.getIsbn());
         assertEquals(ServiceResult.OK, sr);
@@ -38,7 +37,7 @@ public class CopyServiceImplTest {
 
     @Test
     public void testAddValidBarcodeCopy() {
-        tmpMs.addDisc(disc);
+        mediaServiceMock.addDisc(disc);
         int oldCount = service.getCopies().length;
         ServiceResult sr = service.addCopy(copyOwner[1], disc.getBarcode());
         assertEquals(ServiceResult.OK, sr);
@@ -47,7 +46,7 @@ public class CopyServiceImplTest {
 
     @Test
     public void testAddInvalidISBNCopy() {
-        tmpMs.addBook(book);
+        mediaServiceMock.addBook(book);
         int oldCount = service.getCopies().length;
         ServiceResult sr = service.addCopy(copyOwner[0], "123");
         assertEquals(ServiceResult.NOT_FOUND, sr);
@@ -56,7 +55,7 @@ public class CopyServiceImplTest {
 
     @Test
     public void testAddInvalidBarcodeCopy() {
-        tmpMs.addDisc(disc);
+        mediaServiceMock.addDisc(disc);
         int oldCount = service.getCopies().length;
         ServiceResult sr = service.addCopy(copyOwner[1], "456");
         assertEquals(ServiceResult.NOT_FOUND, sr);
@@ -65,7 +64,7 @@ public class CopyServiceImplTest {
 
     @Test
     public void testGetValidCopy() {
-        tmpMs.addBook(book);
+        mediaServiceMock.addBook(book);
         service.addCopy(copyOwner[0], book.getIsbn());
         Copy copy = service.getCopy(service.getCopies()[0].getId());
         assertEquals(copyOwner[0], copy.getOwner());
@@ -80,7 +79,7 @@ public class CopyServiceImplTest {
 
     @Test
     public void testUpdateCopy() {
-        tmpMs.addBook(book);
+        mediaServiceMock.addBook(book);
         service.addCopy(copyOwner[0], book.getIsbn());
         ServiceResult sr = service.updateCopy(service.getCopies()[0].getId(), copyOwner[1]);
         assertEquals(ServiceResult.OK, sr);
@@ -89,7 +88,7 @@ public class CopyServiceImplTest {
 
     @Test
     public void testUpdateCopyInvalidId() {
-        tmpMs.addBook(book);
+        mediaServiceMock.addBook(book);
         service.addCopy(copyOwner[0], book.getIsbn());
         ServiceResult sr = service.updateCopy(99, copyOwner[1]);
         assertEquals(ServiceResult.NOT_FOUND, sr);
@@ -97,7 +96,7 @@ public class CopyServiceImplTest {
 
     @Test
     public void testUpdateCopyInvalidOwner() {
-        tmpMs.addBook(book);
+        mediaServiceMock.addBook(book);
         service.addCopy(copyOwner[0], book.getIsbn());
         ServiceResult sr = service.updateCopy(service.getCopies()[0].getId(), null);
         assertEquals(ServiceResult.BAD_REQUEST, sr);

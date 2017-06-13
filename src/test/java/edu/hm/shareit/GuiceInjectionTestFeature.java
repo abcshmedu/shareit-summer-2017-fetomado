@@ -33,7 +33,7 @@ public class GuiceInjectionTestFeature implements Feature {
             bind(SessionFactory.class).toInstance(
                     new Configuration()
                             .configure()
-                            .setProperty("hibernate.connection.url", "jdbc:hsqldb:mem:shareit-test-db;shutdown=true;")
+                            .setProperty("hibernate.connection.url", "jdbc:hsqldb:mem:shareit-test-db")
                             .buildSessionFactory());
         }
     });

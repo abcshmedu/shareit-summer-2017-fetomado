@@ -7,7 +7,6 @@ import edu.hm.shareit.models.Medium;
 import edu.hm.shareit.persistence.Persistence;
 
 import javax.inject.Inject;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -23,7 +22,7 @@ public class CopyServiceImpl implements CopyService {
     @Override
     public ServiceResult addCopy(String owner, String medium) {
         Medium mediumToCopy = null;
-        String regexISBN = "^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89][- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$";
+        String regexISBN = "^[0-9]{13}$";
         String regexBarcode = "^[1-9][0-9]{8,14}$";
         Pattern patternISBN = Pattern.compile(regexISBN);
         Pattern patternBarcode = Pattern.compile(regexBarcode);

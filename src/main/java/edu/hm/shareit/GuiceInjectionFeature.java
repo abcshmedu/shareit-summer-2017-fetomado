@@ -8,6 +8,8 @@ import edu.hm.shareit.persistence.PersistenceImpl;
 import edu.hm.shareit.services.*;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.jersey.ServiceLocatorProvider;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
 import org.jvnet.hk2.guice.bridge.api.GuiceIntoHK2Bridge;
 
@@ -25,6 +27,8 @@ public class GuiceInjectionFeature implements Feature {
             bind(CopyService.class).to(CopyServiceImpl.class);
             bind(UserService.class).to(UserServiceImpl.class);
             bind(Persistence.class).to(PersistenceImpl.class);
+            bind(SessionFactory.class).toInstance(
+                    new Configuration().configure().buildSessionFactory());
         }
     });
 

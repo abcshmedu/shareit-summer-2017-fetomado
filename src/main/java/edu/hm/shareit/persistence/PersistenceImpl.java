@@ -1,25 +1,19 @@
 package edu.hm.shareit.persistence;
 
-import edu.hm.HibernateUtils;
-import edu.hm.shareit.models.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.exception.ConstraintViolationException;
 
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
 
 public class PersistenceImpl implements Persistence {
 
-    private static SessionFactory sessionFactory;
+    @Inject
+    private SessionFactory sessionFactory;
     private Session entityManager;
     private Transaction tx;
-
-    public PersistenceImpl() {
-        sessionFactory = HibernateUtils.getSessionFactory();
-    }
-
 
     @Override
     public <T, K extends Serializable> boolean exist(Class<T> tClass, K key) {

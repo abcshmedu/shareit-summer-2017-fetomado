@@ -1,8 +1,8 @@
 package edu.hm.shareit.persistence;
 
 
+import edu.hm.shareit.GuiceInjectionTestFeature;
 import edu.hm.shareit.models.Book;
-import edu.hm.shareit.models.Disc;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,12 +23,14 @@ public class PersistenceImplTest {
     @BeforeClass
     public static void initialize() {
         Persistence persist = new PersistenceImpl();
+        GuiceInjectionTestFeature.getInjectorInstance().injectMembers(persist);
         persist.add(books[0]);
     }
 
     @Before
     public void setUp() {
         persistence = new PersistenceImpl();
+        GuiceInjectionTestFeature.getInjectorInstance().injectMembers(persistence);
     }
 
     @Test

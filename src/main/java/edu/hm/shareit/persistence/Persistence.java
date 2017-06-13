@@ -1,7 +1,5 @@
 package edu.hm.shareit.persistence;
 
-import edu.hm.shareit.models.Book;
-
 import java.io.Serializable;
 import java.util.List;
 

@@ -1,5 +1,7 @@
 package edu.hm.shareit.models;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -11,6 +13,7 @@ import java.io.Serializable;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@JsonPropertyOrder({"title","barcode","director","fsk"})
 public class Disc extends Medium {
 
     @Id private String barcode;

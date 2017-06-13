@@ -1,5 +1,7 @@
 package edu.hm.shareit.models;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -9,7 +11,7 @@ import javax.persistence.InheritanceType;
  * This class represents a copy of a medium.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@JsonPropertyOrder({"medium", "owner"})
 public class Copy {
 
     private static int idCounter = 1;

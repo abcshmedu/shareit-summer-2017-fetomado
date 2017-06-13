@@ -1,5 +1,7 @@
 package edu.hm.shareit.models;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -10,6 +12,7 @@ import javax.persistence.InheritanceType;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@JsonPropertyOrder({"title", "author", "isbn"})
 public class Book extends Medium {
 
     @Id private String isbn;

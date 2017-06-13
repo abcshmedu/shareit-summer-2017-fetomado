@@ -2,10 +2,16 @@ package edu.hm.shareit.models;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import javax.persistence.*;
+
 /**
  * This is the model class representing an user.
  */
+@Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String username, password;
 

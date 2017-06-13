@@ -1,13 +1,18 @@
 package edu.hm.shareit.models;
 
+import javax.persistence.*;
 import java.util.UUID;
 
 /**
  * This class creates a token with a random UUID.
  */
+@Entity
 public class Token {
 
-    private String token;
+    @Id private String token;
+
+    @ManyToOne
+    private User user;
 
     /**
      * Constructs a new token object with a random UUID.

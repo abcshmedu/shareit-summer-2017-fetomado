@@ -4,6 +4,8 @@ import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.persistence.MediaPersistence;
 import edu.hm.shareit.persistence.MediaPersistenceImpl;
+import edu.hm.shareit.persistence.Persistence;
+import edu.hm.shareit.persistence.PersistenceImpl;
 
 import java.util.List;
 import java.util.regex.Matcher;

@@ -4,101 +4,91 @@ import edu.hm.shareit.GuiceInjectionTestFeature;
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Copy;
 import edu.hm.shareit.models.Disc;
+import edu.hm.shareit.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.when;
 
 public class CopyServiceImplTest {
 
     private CopyService service;
-    private MediaService mediaServiceMock;
+    private Persistence persistenceMock;
 
     private Book book = new Book("Das Leben des Brian", "Peter Lustig", "9795648377233");
     private Disc disc = new Disc("Interstellar", "999999987", "Christopher Nolan", 12);
-    private String[] copyOwner = {"Hans", "Egon"};
+    private String[] owners = {"Hans", "Egon"};
+    private Copy[] copies = {new Copy(owners[0], book),
+            new Copy(owners[1], disc)};
 
     @Before
     public void before() {
         service = new CopyServiceImpl();
         GuiceInjectionTestFeature.getInjectorInstance().injectMembers(service);
-        mediaServiceMock = GuiceInjectionTestFeature.getInjectorInstance().getInstance(MediaService.class);
+        persistenceMock = GuiceInjectionTestFeature.getInjectorInstance().getInstance(Persistence.class);
     }
 
     @Test
     public void testAddValidISBNCopy() {
-        mediaServiceMock.addBook(book);
-        int oldCount = service.getCopies().length;
-        ServiceResult sr = service.addCopy(copyOwner[0], book.getIsbn());
+        when(persistenceMock.get(Book.class, book.getIsbn())).thenReturn(book);
+        ServiceResult sr = service.addCopy(owners[0], book.getIsbn());
         assertEquals(ServiceResult.OK, sr);
-        assertEquals(oldCount + 1, service.getCopies().length);
     }
 
     @Test
     public void testAddValidBarcodeCopy() {
-        mediaServiceMock.addDisc(disc);
-        int oldCount = service.getCopies().length;
-        ServiceResult sr = service.addCopy(copyOwner[1], disc.getBarcode());
+        when(persistenceMock.get(Disc.class, disc.getBarcode())).thenReturn(disc);
+        ServiceResult sr = service.addCopy(owners[1], disc.getBarcode());
         assertEquals(ServiceResult.OK, sr);
-        assertEquals(oldCount + 1, service.getCopies().length);
     }
 
     @Test
-    public void testAddInvalidISBNCopy() {
-        mediaServiceMock.addBook(book);
-        int oldCount = service.getCopies().length;
-        ServiceResult sr = service.addCopy(copyOwner[0], "123");
+    public void testAddInvalidIdentifierCopy() {
+        when(persistenceMock.get(Book.class, "123")).thenReturn(null);
+        when(persistenceMock.get(Disc.class, "123")).thenReturn(null);
+        ServiceResult sr = service.addCopy(owners[0], "123");
         assertEquals(ServiceResult.NOT_FOUND, sr);
-        assertEquals(oldCount, service.getCopies().length);
-    }
-
-    @Test
-    public void testAddInvalidBarcodeCopy() {
-        mediaServiceMock.addDisc(disc);
-        int oldCount = service.getCopies().length;
-        ServiceResult sr = service.addCopy(copyOwner[1], "456");
-        assertEquals(ServiceResult.NOT_FOUND, sr);
-        assertEquals(oldCount, service.getCopies().length);
     }
 
     @Test
     public void testGetValidCopy() {
-        mediaServiceMock.addBook(book);
-        service.addCopy(copyOwner[0], book.getIsbn());
-        Copy copy = service.getCopy(service.getCopies()[0].getId());
-        assertEquals(copyOwner[0], copy.getOwner());
+        when(persistenceMock.get(Copy.class, copies[0].getId())).thenReturn(copies[0]);
+        when(persistenceMock.exist(Copy.class, copies[0].getId())).thenReturn(true);
+        Copy copy = service.getCopy(copies[0].getId());
+        assertEquals(owners[0], copy.getOwner());
         assertEquals(book, copy.getMedium());
     }
 
     @Test
     public void testGetInvalidCopy() {
-        Copy copy = service.getCopy(0);
+        when(persistenceMock.exist(Copy.class, 23)).thenReturn(false);
+        Copy copy = service.getCopy(23);
         assertNull(copy);
     }
 
     @Test
     public void testUpdateCopy() {
-        mediaServiceMock.addBook(book);
-        service.addCopy(copyOwner[0], book.getIsbn());
-        ServiceResult sr = service.updateCopy(service.getCopies()[0].getId(), copyOwner[1]);
+        when(persistenceMock.get(Book.class, book.getIsbn())).thenReturn(book);
+        when(persistenceMock.get(Copy.class, copies[0].getId())).thenReturn(copies[0]);
+        when(persistenceMock.exist(Copy.class, copies[0].getId())).thenReturn(true);
+        ServiceResult sr = service.updateCopy(copies[0].getId(), owners[1]);
         assertEquals(ServiceResult.OK, sr);
-        assertEquals(copyOwner[1], service.getCopies()[0].getOwner());
     }
 
     @Test
     public void testUpdateCopyInvalidId() {
-        mediaServiceMock.addBook(book);
-        service.addCopy(copyOwner[0], book.getIsbn());
-        ServiceResult sr = service.updateCopy(99, copyOwner[1]);
+        when(persistenceMock.exist(Copy.class, 23)).thenReturn(false);
+        ServiceResult sr = service.updateCopy(23, owners[1]);
         assertEquals(ServiceResult.NOT_FOUND, sr);
     }
 
     @Test
     public void testUpdateCopyInvalidOwner() {
-        mediaServiceMock.addBook(book);
-        service.addCopy(copyOwner[0], book.getIsbn());
-        ServiceResult sr = service.updateCopy(service.getCopies()[0].getId(), null);
+        when(persistenceMock.get(Copy.class, copies[0].getId())).thenReturn(copies[0]);
+        when(persistenceMock.exist(Copy.class, copies[0].getId())).thenReturn(true);
+        ServiceResult sr = service.updateCopy(copies[0].getId(), null);
         assertEquals(ServiceResult.BAD_REQUEST, sr);
     }
 }

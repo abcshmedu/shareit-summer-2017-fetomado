@@ -2,6 +2,7 @@ package edu.hm.shareit.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import edu.hm.shareit.GuiceInjectionTestFeature;
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Copy;
 import edu.hm.shareit.models.User;
@@ -26,29 +27,30 @@ import static org.mockito.Mockito.when;
 
 public class CopyResourceTest extends JerseyTest {
 
-    @Mock
-    private CopyService CopyServiceMock;
+
+    private UserService userServiceMock;
+    private CopyService copyServiceMock;
 
     private Book book = new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3");
+
     private Copy[] copies = {
             new Copy("Test User", book),
             new Copy("Egon", book),
     };
 
-    @Mock
-    private UserService UserServiceMock;
-
     @Override
     protected Application configure() {
-        MockitoAnnotations.initMocks(this);
-        return new ResourceConfig().register(new CopyResource(CopyServiceMock))
-                .register(new CheckTokenRequestFilter(UserServiceMock));
+        userServiceMock = GuiceInjectionTestFeature.getInjectorInstance().getInstance(UserService.class);
+        copyServiceMock = GuiceInjectionTestFeature.getInjectorInstance().getInstance(CopyService.class);
+        return new ResourceConfig().register(CopyResource.class)
+                .register(CheckTokenRequestFilter.class)
+                .register(GuiceInjectionTestFeature.class);
     }
 
     @Test
     public void testCreateCopy() {
-        when(CopyServiceMock.addCopy(any(String.class), any(String.class))).thenReturn(ServiceResult.OK);
-        when(UserServiceMock.checkToken("abc")).thenReturn(new User("TestU", "Test"));
+        when(copyServiceMock.addCopy(any(String.class), any(String.class))).thenReturn(ServiceResult.OK);
+        when(userServiceMock.checkToken("abc")).thenReturn(new User("TestU", "Test"));
         ObjectNode root = new ObjectMapper().createObjectNode();
         root.put("medium", "978-3-548-37623-3");
         root.put("owner", "Test User");
@@ -63,7 +65,7 @@ public class CopyResourceTest extends JerseyTest {
     public void testGetCopies() {
         int id1 = copies[0].getId();
         int id2 = copies[1].getId();
-        when(CopyServiceMock.getCopies()).thenReturn(copies);
+        when(copyServiceMock.getCopies()).thenReturn(copies);
         Response resp = target("copies").request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("[{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Test User\",\"id\":" + id1 + "}," +
@@ -74,7 +76,7 @@ public class CopyResourceTest extends JerseyTest {
     @Test
     public void testGetCopy() {
         int id = copies[1].getId();
-        when(CopyServiceMock.getCopy(id)).thenReturn(copies[1]);
+        when(copyServiceMock.getCopy(id)).thenReturn(copies[1]);
         Response resp = target("copies/" + id).request().get();
         assertEquals(200, resp.getStatus());
         assertEquals("{\"medium\":{\"title\":\"Die Kaenguru-Chroniken\",\"author\":\"Marc-Uwe Kling\",\"isbn\":\"978-3-548-37623-3\"},\"owner\":\"Egon\",\"id\":" + id + "}",
@@ -84,8 +86,8 @@ public class CopyResourceTest extends JerseyTest {
     @Test
     public void testUpdateCopy() {
         int id = copies[1].getId();
-        when(CopyServiceMock.updateCopy(eq(id), any(String.class))).thenReturn(ServiceResult.OK);
-        when(UserServiceMock.checkToken("testToken")).thenReturn(new User("TestUser", "testPw"));
+        when(copyServiceMock.updateCopy(eq(id), any(String.class))).thenReturn(ServiceResult.OK);
+        when(userServiceMock.checkToken("testToken")).thenReturn(new User("TestUser", "testPw"));
         ObjectNode root = new ObjectMapper().createObjectNode();
         root.put("owner", "Test User");
         root.put("token", "testToken");

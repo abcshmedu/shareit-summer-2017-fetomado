@@ -1,5 +1,6 @@
 package edu.hm.shareit.resources;
 
+import edu.hm.shareit.GuiceInjectionTestFeature;
 import edu.hm.shareit.models.Token;
 import edu.hm.shareit.models.User;
 import edu.hm.shareit.services.ServiceResult;
@@ -22,22 +23,22 @@ import static org.mockito.Mockito.when;
 
 public class UserResourceTest extends JerseyTest {
 
-    @Mock
-    private UserService serviceMock;
+    private UserService userServiceMock;
 
     private User testuser = new User("testuser", "Test123");
 
     @Override
     protected Application configure() {
-        MockitoAnnotations.initMocks(this);
-        return new ResourceConfig().register(new UserResource(serviceMock));
+        userServiceMock = GuiceInjectionTestFeature.getInjectorInstance().getInstance(UserService.class);
+        return new ResourceConfig().register(UserResource.class)
+                .register(GuiceInjectionTestFeature.class);
     }
 
     @Test
     public void testValidLogin() {
-        when(serviceMock.checkUser(any(User.class))).thenReturn(ServiceResult.OK);
+        when(userServiceMock.checkUser(any(User.class))).thenReturn(ServiceResult.OK);
         Token token = new Token();
-        when(serviceMock.getNewToken(any(User.class))).thenReturn(token);
+        when(userServiceMock.getNewToken(any(User.class))).thenReturn(token);
         Entity<User> user = Entity.entity(testuser, MediaType.APPLICATION_JSON);
         Response resp = target("users/login").request().post(user);
         assertEquals(200, resp.getStatus());
@@ -46,7 +47,7 @@ public class UserResourceTest extends JerseyTest {
 
     @Test
     public void testInvalidLogin() {
-        when(serviceMock.checkUser(any(User.class))).thenReturn(ServiceResult.UNAUTHORIZED);
+        when(userServiceMock.checkUser(any(User.class))).thenReturn(ServiceResult.UNAUTHORIZED);
         Entity<User> user = Entity.entity(testuser, MediaType.APPLICATION_JSON);
         Response resp = target("users/login").request().post(user);
         assertEquals(401, resp.getStatus());

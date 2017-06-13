@@ -49,6 +49,11 @@ public class MediaIntegrationTest extends IntegrationTestWithJetty {
                 .statusCode(200)
                 .extract().jsonPath().getString("token");
         book.put("token", token);
+
+        get("/media/books/" + isbn).then()
+                .statusCode(404)
+                .body("detail", is("Medium nicht gefunden."));
+
         given().contentType(ContentType.JSON).body(book.toString()).when().post("/media/books").then()
                 .statusCode(200)
                 .body("detail", is("Erfolgreich."));

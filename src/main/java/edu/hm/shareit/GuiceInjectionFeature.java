@@ -3,6 +3,8 @@ package edu.hm.shareit;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import edu.hm.shareit.persistence.Persistence;
+import edu.hm.shareit.persistence.PersistenceImpl;
 import edu.hm.shareit.services.*;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.jersey.ServiceLocatorProvider;
@@ -22,6 +24,7 @@ public class GuiceInjectionFeature implements Feature {
             bind(MediaService.class).to(MediaServiceImpl.class);
             bind(CopyService.class).to(CopyServiceImpl.class);
             bind(UserService.class).to(UserServiceImpl.class);
+            bind(Persistence.class).to(PersistenceImpl.class);
         }
     });
 

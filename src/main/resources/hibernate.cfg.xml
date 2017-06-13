@@ -23,6 +23,9 @@
         <mapping class="edu.hm.shareit.models.Disc" />
         <mapping class="edu.hm.shareit.models.Copy" />
 
+        <mapping class="edu.hm.shareit.models.User" />
+        <mapping class="edu.hm.shareit.models.Token" />
+
     </session-factory>
 
 </hibernate-configuration>

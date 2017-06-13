@@ -3,9 +3,14 @@ package edu.hm.shareit;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import edu.hm.shareit.services.*;
+import edu.hm.shareit.persistence.Persistence;
+import edu.hm.shareit.services.CopyService;
+import edu.hm.shareit.services.MediaService;
+import edu.hm.shareit.services.UserService;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.jersey.ServiceLocatorProvider;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
 import org.jvnet.hk2.guice.bridge.api.GuiceIntoHK2Bridge;
 
@@ -24,6 +29,9 @@ public class GuiceInjectionTestFeature implements Feature {
             bind(MediaService.class).toInstance(mock(MediaService.class));
             bind(CopyService.class).toInstance(mock(CopyService.class));
             bind(UserService.class).toInstance(mock(UserService.class));
+            bind(Persistence.class).toInstance(mock(Persistence.class));
+            bind(SessionFactory.class).toInstance(
+                    new Configuration().configure().buildSessionFactory());
         }
     });
 

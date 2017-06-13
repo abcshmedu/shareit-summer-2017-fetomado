@@ -65,9 +65,17 @@ public class MediaResource {
     @Path("/books/{isbn}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBook(@PathParam("isbn") String isbn) {
-        return Response.status(Response.Status.OK)
-                .entity(toJson(service.getBook(isbn)))
-                .build();
+        Book book = service.getBook(isbn);
+        if (book != null) {
+            return Response.status(Response.Status.OK)
+                    .entity(toJson(book))
+                    .build();
+        } else {
+            ServiceResult sr = ServiceResult.NOT_FOUND;
+            return Response.status(sr.getStatus())
+                    .entity(toJson(new ServiceResultContainer(sr)))
+                    .build();
+        }
     }
 
     /**
@@ -92,9 +100,17 @@ public class MediaResource {
     @Path("/discs/{barcode}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDisc(@PathParam("barcode") String barcode) {
-        return Response.status(Response.Status.OK)
-                .entity(toJson(service.getDisc(barcode)))
-                .build();
+        Disc disc = service.getDisc(barcode);
+        if (disc != null) {
+            return Response.status(Response.Status.OK)
+                    .entity(toJson(disc))
+                    .build();
+        } else {
+            ServiceResult sr = ServiceResult.NOT_FOUND;
+            return Response.status(sr.getStatus())
+                    .entity(toJson(new ServiceResultContainer(sr)))
+                    .build();
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package edu.hm.shareit.services;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Copy;
 import edu.hm.shareit.models.Disc;
@@ -23,7 +24,8 @@ public class CopyServiceImplTest {
         service = new CopyServiceImpl();
         tmpMs = new MediaServiceImpl();
         service.flushDataForTesting();
-        tmpMs.flushDataForTesting();
+        // TODO Mock object via injection
+        //tmpMs.flushDataForTesting();
     }
 
     @Test

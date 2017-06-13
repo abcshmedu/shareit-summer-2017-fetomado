@@ -1,15 +1,22 @@
 package edu.hm.shareit.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 /**
  * This class represents a copy of a medium.
  */
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Copy {
 
     private static int idCounter = 1;
 
+    @Id private int id;
     private Medium medium;
     private String owner;
-    private int id;
 
     /**
      * Constructs a new copy of a medium.

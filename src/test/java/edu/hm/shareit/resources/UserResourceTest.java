@@ -37,7 +37,7 @@ public class UserResourceTest extends JerseyTest {
     @Test
     public void testValidLogin() {
         when(userServiceMock.checkUser(any(User.class))).thenReturn(ServiceResult.OK);
-        Token token = new Token();
+        Token token = new Token(testuser);
         when(userServiceMock.getNewToken(any(User.class))).thenReturn(token);
         Entity<User> user = Entity.entity(testuser, MediaType.APPLICATION_JSON);
         Response resp = target("users/login").request().post(user);

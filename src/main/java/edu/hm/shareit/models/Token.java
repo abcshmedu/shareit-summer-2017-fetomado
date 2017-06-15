@@ -17,8 +17,9 @@ public class Token {
     /**
      * Constructs a new token object with a random UUID.
      */
-    public Token() {
+    public Token(User user) {
         token = UUID.randomUUID().toString();
+        this.user = user;
     }
 
     /**
@@ -27,5 +28,13 @@ public class Token {
      */
     public String getToken() {
         return token;
+    }
+
+    /**
+     * Returns the user with this token.
+     * @return the user
+     */
+    public User getUser() {
+        return user;
     }
 }

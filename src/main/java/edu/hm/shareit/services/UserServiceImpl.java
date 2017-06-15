@@ -13,13 +13,14 @@ import java.util.Map;
  */
 public class UserServiceImpl implements UserService {
 
-    @Inject
     private Persistence persist;
 
     /**
      * Default constructor (generates stub data).
      */
-    public UserServiceImpl() {
+    @Inject
+    public UserServiceImpl(Persistence persist) {
+        this.persist = persist;
         if(persist.getAll(User.class).size() == 0) {
             persist.add(new User("testuser", "Test123"));
         }

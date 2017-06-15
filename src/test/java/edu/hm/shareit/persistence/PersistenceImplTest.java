@@ -3,6 +3,8 @@ package edu.hm.shareit.persistence;
 
 import edu.hm.shareit.GuiceInjectionTestFeature;
 import edu.hm.shareit.models.Book;
+import edu.hm.shareit.models.Token;
+import edu.hm.shareit.models.User;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -59,6 +61,15 @@ public class PersistenceImplTest {
         book.setTitle("Blaaaa");
         persistence.update(book);
         assertEquals(book, persistence.get(Book.class, book.getIsbn()));
+    }
+
+    @Test
+    public void testGetUserOfToken() {
+        User user = new User("testuser", "Test123");
+        Token token = new Token(user);
+        persistence.add(user);
+        persistence.add(token);
+        assertEquals(user, persistence.get(Token.class, token.getToken()).getUser());
     }
 
 }

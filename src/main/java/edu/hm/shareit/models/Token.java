@@ -1,5 +1,7 @@
 package edu.hm.shareit.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -7,6 +9,7 @@ import java.util.UUID;
  * This class creates a token with a random UUID.
  */
 @Entity
+@JsonIgnoreProperties({"user"})
 public class Token {
 
     @Id private String token;
@@ -21,6 +24,8 @@ public class Token {
         token = UUID.randomUUID().toString();
         this.user = user;
     }
+
+    private Token() { }
 
     /**
      * Returns the token.

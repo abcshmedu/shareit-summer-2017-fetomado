@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class User {
     @Id
     private String username;
+
     private String password;
 
     /**
@@ -51,5 +52,23 @@ public class User {
 
     private String hashPassword(String pwd) {
         return DigestUtils.sha256Hex("foobar");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        return password != null ? password.equals(user.password) : user.password == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        return result;
     }
 }

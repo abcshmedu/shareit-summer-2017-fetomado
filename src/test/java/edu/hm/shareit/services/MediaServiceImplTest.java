@@ -3,8 +3,12 @@ package edu.hm.shareit.services;
 import edu.hm.shareit.GuiceInjectionTestFeature;
 import edu.hm.shareit.models.Book;
 import edu.hm.shareit.models.Disc;
+import edu.hm.shareit.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.mockito.Mockito.when;
+import java.io.Serializable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -12,6 +16,7 @@ import static org.junit.Assert.assertNull;
 public class MediaServiceImplTest {
 
     private MediaService service;
+    private Persistence persistenceMock;
 
     private Book[] books = {
             new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "9783548376233"),
@@ -26,23 +31,21 @@ public class MediaServiceImplTest {
     public void before() {
         service = new MediaServiceImpl();
         GuiceInjectionTestFeature.getInjectorInstance().injectMembers(service);
+        persistenceMock = GuiceInjectionTestFeature.getInjectorInstance().getInstance(Persistence.class);
     }
 
     @Test
     public void testAddValidBook() {
-        int oldCount = service.getBooks().length;
+        when(persistenceMock.get(Book.class, books[0].getIsbn())).thenReturn(books[0]);
         ServiceResult sr = service.addBook(books[0]);
         assertEquals(ServiceResult.OK, sr);
-        assertEquals(oldCount + 1, service.getBooks().length);
     }
 
     @Test
     public void testAddDuplicateBook() {
-        service.addBook(books[0]);
-        int oldCount = service.getBooks().length;
+        when(persistenceMock.exist(Book.class, books[0].getIsbn())).thenReturn(true);
         ServiceResult sr = service.addBook(books[0]);
         assertEquals(ServiceResult.DUPLICATE, sr);
-        assertEquals(oldCount, service.getBooks().length);
     }
 
     @Test

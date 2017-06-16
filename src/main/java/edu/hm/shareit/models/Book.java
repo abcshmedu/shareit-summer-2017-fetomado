@@ -72,10 +72,4 @@ public class Book extends Medium {
         return isbn != null ? isbn.equals(book.isbn) : book.isbn == null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = author != null ? author.hashCode() : 0;
-        result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
-        return result;
-    }
 }

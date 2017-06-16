@@ -101,7 +101,6 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Disc[] getDiscs() {
-
         List<Disc> discs = persist.getAll(Disc.class);
         return discs.toArray(new Disc[discs.size()]);
     }

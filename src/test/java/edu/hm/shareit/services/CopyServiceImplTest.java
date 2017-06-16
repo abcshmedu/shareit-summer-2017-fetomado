@@ -8,6 +8,9 @@ import edu.hm.shareit.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
@@ -28,6 +31,14 @@ public class CopyServiceImplTest {
         service = new CopyServiceImpl();
         GuiceInjectionTestFeature.getInjectorInstance().injectMembers(service);
         persistenceMock = GuiceInjectionTestFeature.getInjectorInstance().getInstance(Persistence.class);
+    }
+
+
+    @Test
+    public void testGetBooks() {
+        when(persistenceMock.getAll(Copy.class)).thenReturn(Arrays.asList(copies));
+        Copy[] list = service.getCopies();
+        assertArrayEquals(copies, list);
     }
 
     @Test

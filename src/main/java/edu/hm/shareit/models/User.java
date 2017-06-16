@@ -65,10 +65,4 @@ public class User {
         return password != null ? password.equals(user.password) : user.password == null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = username != null ? username.hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        return result;
-    }
 }

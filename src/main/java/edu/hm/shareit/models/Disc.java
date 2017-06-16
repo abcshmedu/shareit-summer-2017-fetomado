@@ -6,17 +6,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import java.io.Serializable;
 
 /**
  * This is the model class representing a disc.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@JsonPropertyOrder({"title","barcode","director","fsk"})
+@JsonPropertyOrder({"title", "barcode", "director", "fsk"})
 public class Disc extends Medium {
 
-    @Id private String barcode;
+    @Id
+    private String barcode;
     private String director;
     private Integer fsk;
 
@@ -93,11 +93,4 @@ public class Disc extends Medium {
         return fsk != null ? fsk.equals(disc.fsk) : disc.fsk == null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = barcode != null ? barcode.hashCode() : 0;
-        result = 31 * result + (director != null ? director.hashCode() : 0);
-        result = 31 * result + (fsk != null ? fsk.hashCode() : 0);
-        return result;
-    }
 }

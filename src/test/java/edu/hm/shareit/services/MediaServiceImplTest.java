@@ -6,9 +6,13 @@ import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
-import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.when;
 
 public class MediaServiceImplTest {
 
@@ -29,6 +33,13 @@ public class MediaServiceImplTest {
         service = new MediaServiceImpl();
         GuiceInjectionTestFeature.getInjectorInstance().injectMembers(service);
         persistenceMock = GuiceInjectionTestFeature.getInjectorInstance().getInstance(Persistence.class);
+    }
+
+    @Test
+    public void testGetBooks() {
+        when(persistenceMock.getAll(Book.class)).thenReturn(Arrays.asList(books));
+        Book[] list = service.getBooks();
+        assertArrayEquals(books, list);
     }
 
     @Test
@@ -61,6 +72,13 @@ public class MediaServiceImplTest {
     public void testAddInvalidISBNBook() {
         ServiceResult sr = service.addBook(new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623"));
         assertEquals(ServiceResult.BAD_REQUEST, sr);
+    }
+
+    @Test
+    public void testGetDiscs() {
+        when(persistenceMock.getAll(Disc.class)).thenReturn(Arrays.asList(discs));
+        Disc[] list = service.getDiscs();
+        assertArrayEquals(discs, list);
     }
 
     @Test

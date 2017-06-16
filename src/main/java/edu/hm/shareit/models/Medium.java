@@ -1,6 +1,6 @@
 package edu.hm.shareit.models;
 
-import javax.persistence.*;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**

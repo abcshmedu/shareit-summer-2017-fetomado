@@ -2,7 +2,8 @@ package edu.hm.shareit.models;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * This is the model class representing an user.

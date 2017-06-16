@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 
 /**
  * This class represents a copy of a medium.
@@ -16,7 +14,8 @@ public class Copy {
 
     private static int idCounter = 1;
 
-    @Id private int id;
+    @Id
+    private int id;
     private Medium medium;
     private String owner;
 

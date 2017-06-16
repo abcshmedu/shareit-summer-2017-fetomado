@@ -2,7 +2,9 @@ package edu.hm.shareit.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.UUID;
 
 /**
@@ -12,7 +14,8 @@ import java.util.UUID;
 @JsonIgnoreProperties({"user"})
 public class Token {
 
-    @Id private String token;
+    @Id
+    private String token;
 
     @ManyToOne
     private User user;
@@ -25,7 +28,8 @@ public class Token {
         this.user = user;
     }
 
-    private Token() { }
+    private Token() {
+    }
 
     /**
      * Returns the token.

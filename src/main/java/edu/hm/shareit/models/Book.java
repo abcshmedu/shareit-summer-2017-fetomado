@@ -15,7 +15,8 @@ import javax.persistence.InheritanceType;
 @JsonPropertyOrder({"title", "author", "isbn"})
 public class Book extends Medium {
 
-    @Id private String isbn;
+    @Id
+    private String isbn;
     private String author;
 
     /**

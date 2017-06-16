@@ -5,8 +5,6 @@ import edu.hm.shareit.models.User;
 import edu.hm.shareit.persistence.Persistence;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Our default implementation of a UserService.
@@ -21,7 +19,7 @@ public class UserServiceImpl implements UserService {
     @Inject
     public UserServiceImpl(Persistence persist) {
         this.persist = persist;
-        if(persist.getAll(User.class).size() == 0) {
+        if (persist.getAll(User.class).size() == 0) {
             persist.add(new User("testuser", "Test123"));
         }
     }
@@ -38,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User checkToken(String token) {
-        if(persist.exist(Token.class, token)) {
+        if (persist.exist(Token.class, token)) {
             return persist.get(Token.class, token).getUser();
         }
         return null;

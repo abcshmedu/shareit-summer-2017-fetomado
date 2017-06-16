@@ -33,7 +33,7 @@ public class MediaServiceImplTest {
 
     @Test
     public void testAddValidBook() {
-        when(persistenceMock.get(Book.class, books[0].getIsbn())).thenReturn(books[0]);
+        when(persistenceMock.exist(Book.class, books[0].getIsbn())).thenReturn(false);
         ServiceResult sr = service.addBook(books[0]);
         assertEquals(ServiceResult.OK, sr);
     }
@@ -65,7 +65,7 @@ public class MediaServiceImplTest {
 
     @Test
     public void testAddValidDisc() {
-        when(persistenceMock.get(Disc.class, discs[0].getBarcode())).thenReturn(discs[0]);
+        when(persistenceMock.exist(Disc.class, discs[0].getBarcode())).thenReturn(false);
         ServiceResult sr = service.addDisc(discs[0]);
         assertEquals(ServiceResult.OK, sr);
     }
@@ -97,8 +97,8 @@ public class MediaServiceImplTest {
 
     @Test
     public void testGetValidBook() {
-        when(persistenceMock.get(Book.class, books[1].getIsbn())).thenReturn(books[1]);
         when(persistenceMock.exist(Book.class, books[1].getIsbn())).thenReturn(true);
+        when(persistenceMock.get(Book.class, books[1].getIsbn())).thenReturn(books[1]);
         Book book = service.getBook(books[1].getIsbn());
         assertEquals(books[1], book);
     }
@@ -112,8 +112,8 @@ public class MediaServiceImplTest {
 
     @Test
     public void testGetValidDisc() {
-        when(persistenceMock.get(Disc.class, discs[1].getBarcode())).thenReturn(discs[1]);
         when(persistenceMock.exist(Disc.class, discs[1].getBarcode())).thenReturn(true);
+        when(persistenceMock.get(Disc.class, discs[1].getBarcode())).thenReturn(discs[1]);
         Disc disc = service.getDisc(discs[1].getBarcode());
         assertEquals(discs[1], disc);
     }
@@ -148,8 +148,6 @@ public class MediaServiceImplTest {
         Book bookToEdit = service.getBook(books[0].getIsbn());
         ServiceResult sr = service.updateBook(bookToEdit.getIsbn(), new Book("Being Hans Sarpei", "Hans Sarpei", bookToEdit.getIsbn()));
         assertEquals(ServiceResult.OK, sr);
-        assertEquals("Being Hans Sarpei", bookToEdit.getTitle());
-        assertEquals("Hans Sarpei", bookToEdit.getAuthor());
     }
 
     @Test
@@ -162,9 +160,7 @@ public class MediaServiceImplTest {
     @Test
     public void testUpdateDiscInvalidData() {
         when(persistenceMock.exist(Disc.class, discs[0].getBarcode())).thenReturn(true);
-        when(persistenceMock.get(Disc.class, discs[0].getBarcode())).thenReturn(discs[0]);
-        Disc discToEdit = service.getDisc(discs[0].getBarcode());
-        ServiceResult sr = service.updateDisc(discToEdit.getBarcode(), new Disc("", "", "", null));
+        ServiceResult sr = service.updateDisc(discs[0].getBarcode(), new Disc("", "", "", null));
         assertEquals(ServiceResult.BAD_REQUEST, sr);
     }
 
@@ -172,11 +168,7 @@ public class MediaServiceImplTest {
     public void testUpdateDiscValidData() {
         when(persistenceMock.exist(Disc.class, discs[0].getBarcode())).thenReturn(true);
         when(persistenceMock.get(Disc.class, discs[0].getBarcode())).thenReturn(discs[0]);
-        Disc discToEdit = service.getDisc(discs[0].getBarcode());
-        ServiceResult sr = service.updateDisc(discToEdit.getBarcode(), new Disc("Test", discToEdit.getBarcode(), "TestDirector", 18));
+        ServiceResult sr = service.updateDisc(discs[0].getBarcode(), new Disc("Test", discs[0].getBarcode(), "TestDirector", 18));
         assertEquals(ServiceResult.OK, sr);
-        assertEquals("Test", discToEdit.getTitle());
-        assertEquals("TestDirector", discToEdit.getDirector());
-        assertEquals(new Integer(18), discToEdit.getFsk());
     }
 }

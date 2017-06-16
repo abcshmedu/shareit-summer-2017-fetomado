@@ -35,7 +35,7 @@ public class CopyServiceImplTest {
 
 
     @Test
-    public void testGetBooks() {
+    public void testGetCopies() {
         when(persistenceMock.getAll(Copy.class)).thenReturn(Arrays.asList(copies));
         Copy[] list = service.getCopies();
         assertArrayEquals(copies, list);

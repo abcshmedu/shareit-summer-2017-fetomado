@@ -21,7 +21,7 @@ import static org.mockito.Mockito.mock;
 
 public class GuiceInjectionTestFeature implements Feature {
 
-    private static final Injector injector = Guice.createInjector(new AbstractModule() {
+    private static final Injector INJECTOR = Guice.createInjector(new AbstractModule() {
         @Override
         protected void configure() {
             bind(MediaService.class).toInstance(mock(MediaService.class));
@@ -49,7 +49,7 @@ public class GuiceInjectionTestFeature implements Feature {
      * @return Injector instance.
      */
     public static Injector getInjectorInstance() {
-        return injector;
+        return INJECTOR;
     }
 
 }

@@ -21,7 +21,8 @@ public class Token {
     private User user;
 
     /**
-     * Constructs a new token object with a random UUID.
+     * Constructs a new token object with a random UUID for a given User.
+     * @param user the user this token is for
      */
     public Token(User user) {
         token = UUID.randomUUID().toString();

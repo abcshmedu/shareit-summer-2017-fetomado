@@ -20,7 +20,7 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class GuiceInjectionFeature implements Feature {
 
-    private static final Injector injector = Guice.createInjector(new AbstractModule() {
+    private static final Injector INJECTOR = Guice.createInjector(new AbstractModule() {
         @Override
         protected void configure() {
             bind(MediaService.class).to(MediaServiceImpl.class);
@@ -45,7 +45,7 @@ public class GuiceInjectionFeature implements Feature {
      * @return Injector instance.
      */
     public static Injector getInjectorInstance() {
-        return injector;
+        return INJECTOR;
     }
 
 }

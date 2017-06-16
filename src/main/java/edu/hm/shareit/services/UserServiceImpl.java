@@ -14,7 +14,8 @@ public class UserServiceImpl implements UserService {
     private Persistence persist;
 
     /**
-     * Default constructor (generates stub data).
+     * Constructs a new UserServiceImpl and generates stub data in the database.
+     * @param persist a object representing the persistence layer
      */
     @Inject
     public UserServiceImpl(Persistence persist) {

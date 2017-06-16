@@ -83,14 +83,29 @@ public class Disc extends Medium {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Disc disc = (Disc) o;
 
-        if (barcode != null ? !barcode.equals(disc.barcode) : disc.barcode != null) return false;
-        if (director != null ? !director.equals(disc.director) : disc.director != null) return false;
+        if (barcode != null ? !barcode.equals(disc.barcode) : disc.barcode != null) {
+            return false;
+        }
+        if (director != null ? !director.equals(disc.director) : disc.director != null) {
+            return false;
+        }
         return fsk != null ? fsk.equals(disc.fsk) : disc.fsk == null;
     }
 
+    @Override
+    public int hashCode() {
+        int result = barcode != null ? barcode.hashCode() : 0;
+        result = 31 * result + (director != null ? director.hashCode() : 0);
+        result = 31 * result + (fsk != null ? fsk.hashCode() : 0);
+        return result;
+    }
 }

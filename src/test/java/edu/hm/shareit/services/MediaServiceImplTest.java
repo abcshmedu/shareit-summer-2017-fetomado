@@ -6,10 +6,7 @@ import edu.hm.shareit.models.Disc;
 import edu.hm.shareit.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.mockito.Mockito.when;
-import java.io.Serializable;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -68,18 +65,16 @@ public class MediaServiceImplTest {
 
     @Test
     public void testAddValidDisc() {
-        int oldCount = service.getDiscs().length;
+        when(persistenceMock.get(Disc.class, discs[0].getBarcode())).thenReturn(discs[0]);
         ServiceResult sr = service.addDisc(discs[0]);
         assertEquals(ServiceResult.OK, sr);
-        assertEquals(oldCount + 1, service.getDiscs().length);
     }
 
     @Test
     public void testAddDuplicateDisc() {
-        int oldCount = service.getDiscs().length;
+        when(persistenceMock.exist(Disc.class, discs[0].getBarcode())).thenReturn(true);
         ServiceResult sr = service.addDisc(discs[0]);
         assertEquals(ServiceResult.DUPLICATE, sr);
-        assertEquals(oldCount, service.getDiscs().length);
     }
 
     @Test
@@ -102,8 +97,9 @@ public class MediaServiceImplTest {
 
     @Test
     public void testGetValidBook() {
-        service.addBook(books[1]);
-        Book book = service.getBook("9783813506255");
+        when(persistenceMock.get(Book.class, books[1].getIsbn())).thenReturn(books[1]);
+        when(persistenceMock.exist(Book.class, books[1].getIsbn())).thenReturn(true);
+        Book book = service.getBook(books[1].getIsbn());
         assertEquals(books[1], book);
     }
 
@@ -115,8 +111,9 @@ public class MediaServiceImplTest {
 
     @Test
     public void testGetValidDisc() {
-        service.addDisc(discs[1]);
-        Disc disc = service.getDisc("456789123");
+        when(persistenceMock.get(Disc.class, discs[1].getBarcode())).thenReturn(discs[1]);
+        when(persistenceMock.exist(Disc.class, discs[1].getBarcode())).thenReturn(true);
+        Disc disc = service.getDisc(discs[1].getBarcode());
         assertEquals(discs[1], disc);
     }
 

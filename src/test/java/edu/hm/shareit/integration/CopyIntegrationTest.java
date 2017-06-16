@@ -20,6 +20,12 @@ public class CopyIntegrationTest extends IntegrationTestWithJetty {
             .put("author", "Peter Lustig")
             .put("isbn", "9795648377233");
 
+    private final JSONObject disc = new JSONObject()
+            .put("title", "Source Code")
+            .put("barcode", "1101110010")
+            .put("director", "Matze Thomson")
+            .put("fsk", "18");
+
     @Test
     public void testLoginAndAddCopy() {
         JSONObject copy = new JSONObject()
@@ -52,13 +58,13 @@ public class CopyIntegrationTest extends IntegrationTestWithJetty {
         int id = 1;
         JSONObject copy = new JSONObject()
                 .put("owner", "Hans")
-                .put("medium", "9795648377233");
+                .put("medium", "1101110010");
         String token = given().contentType(ContentType.JSON).body(login.toString()).when().post("/users/login").then()
                 .statusCode(200)
                 .extract().jsonPath().getString("token");
         copy.put("token", token);
-        book.put("token", token);
-        given().contentType(ContentType.JSON).body(book.toString()).when().post("/media/books").then()
+        disc.put("token", token);
+        given().contentType(ContentType.JSON).body(disc.toString()).when().post("/media/discs").then()
                 .statusCode(200)
                 .body("detail", is("Erfolgreich."));
         get("/copies/" + id).then()
@@ -70,7 +76,7 @@ public class CopyIntegrationTest extends IntegrationTestWithJetty {
         get("/copies/" + id).then()
                 .statusCode(200)
                 .body("owner", is("Hans"))
-                .body("medium.author", is("Peter Lustig"));
+                .body("medium.director", is("Matze Thomson"));
 
         JSONObject body = new JSONObject().put("owner", "Fritz").put("token", token);
         given().contentType(ContentType.JSON).body(body.toString())

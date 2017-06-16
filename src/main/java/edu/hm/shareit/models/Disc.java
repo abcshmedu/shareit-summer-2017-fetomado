@@ -4,14 +4,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 
 /**
  * This is the model class representing a disc.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @JsonPropertyOrder({"title", "barcode", "director", "fsk"})
 public class Disc extends Medium {
 

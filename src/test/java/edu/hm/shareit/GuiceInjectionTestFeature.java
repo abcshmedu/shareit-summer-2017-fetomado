@@ -16,11 +16,9 @@ import org.jvnet.hk2.guice.bridge.api.GuiceIntoHK2Bridge;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
-import javax.ws.rs.ext.Provider;
 
 import static org.mockito.Mockito.mock;
 
-@Provider
 public class GuiceInjectionTestFeature implements Feature {
 
     private static final Injector injector = Guice.createInjector(new AbstractModule() {

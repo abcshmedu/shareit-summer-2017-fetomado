@@ -10,6 +10,9 @@ import javax.ws.rs.ext.Provider;
 
 import static edu.hm.shareit.resources.ResourceHelper.toJson;
 
+/**
+ * The CustomExceptionMapper translates Jackson errors into proper responses.
+ */
 @Provider
 public class CustomExceptionMapper implements ExceptionMapper<PropertyBindingException> {
 

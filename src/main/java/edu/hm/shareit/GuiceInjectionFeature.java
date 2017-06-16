@@ -17,6 +17,9 @@ import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.ext.Provider;
 
+/**
+ * This class provides the default injector for our application.
+ */
 @Provider
 public class GuiceInjectionFeature implements Feature {
 
@@ -32,6 +35,7 @@ public class GuiceInjectionFeature implements Feature {
         }
     });
 
+    @Override
     public boolean configure(FeatureContext context) {
         ServiceLocator serviceLocator = ServiceLocatorProvider.getServiceLocator(context);
         GuiceBridge.getGuiceBridge().initializeGuiceBridge(serviceLocator);

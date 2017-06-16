@@ -19,6 +19,9 @@ import javax.ws.rs.core.FeatureContext;
 
 import static org.mockito.Mockito.mock;
 
+/**
+ * This class provides the injector used for testing.
+ */
 public class GuiceInjectionTestFeature implements Feature {
 
     private static final Injector INJECTOR = Guice.createInjector(new AbstractModule() {
@@ -36,6 +39,7 @@ public class GuiceInjectionTestFeature implements Feature {
         }
     });
 
+    @Override
     public boolean configure(FeatureContext context) {
         ServiceLocator serviceLocator = ServiceLocatorProvider.getServiceLocator(context);
         GuiceBridge.getGuiceBridge().initializeGuiceBridge(serviceLocator);

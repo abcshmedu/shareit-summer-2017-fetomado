@@ -17,7 +17,7 @@ public class PersistenceImplTest {
 
     private Persistence persistence;
 
-    static Book[] books = {
+    private static Book[] books = {
             new Book("Die Kaenguru-Chroniken", "Marc-Uwe Kling", "978-3-548-37623-3"),
             new Book("what if?", "Randall Munroe", "978-3-8135-0625-5"),
     };

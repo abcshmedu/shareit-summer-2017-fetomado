@@ -47,10 +47,19 @@ public class User {
         return password;
     }
 
+    /**
+     * Hashes and updates the password of the user.
+     * @param password the new password
+     */
     public void setPassword(String password) {
         this.password = hashPassword(password);
     }
 
+    /**
+     * Hash a string using SHA256
+     * @param pwd the string to hash
+     * @return the hashed string
+     */
     private String hashPassword(String pwd) {
         return DigestUtils.sha256Hex("foobar");
     }

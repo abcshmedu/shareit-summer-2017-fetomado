@@ -29,6 +29,9 @@ public class Token {
         this.user = user;
     }
 
+    /**
+     * Default constructor needed by Hibernate.
+     */
     private Token() {
     }
 

@@ -8,6 +8,9 @@ import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * This is the default implementation of our persistence layer.
+ */
 public class PersistenceImpl implements Persistence {
 
     @Inject

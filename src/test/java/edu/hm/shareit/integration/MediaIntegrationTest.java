@@ -4,7 +4,8 @@ import io.restassured.http.ContentType;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 

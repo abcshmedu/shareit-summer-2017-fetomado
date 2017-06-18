@@ -2,9 +2,9 @@ package edu.hm.shareit.models;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * This class represents a copy of a medium.
@@ -17,7 +17,7 @@ public class Copy {
 
     @Id
     private int id;
-    @Column(length = 500)
+    @ManyToOne
     private Medium medium;
     private String owner;
 

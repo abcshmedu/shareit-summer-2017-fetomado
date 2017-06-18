@@ -3,7 +3,6 @@ package edu.hm.shareit.models;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 /**
  * This is the model class representing a disc.
@@ -12,8 +11,6 @@ import javax.persistence.Id;
 @JsonPropertyOrder({"title", "barcode", "director", "fsk"})
 public class Disc extends Medium {
 
-    @Id
-    private String barcode;
     private String director;
     private Integer fsk;
 
@@ -26,7 +23,7 @@ public class Disc extends Medium {
      */
     public Disc(String title, String barcode, String director, Integer fsk) {
         super(title);
-        this.barcode = barcode;
+        this.code = barcode;
         this.director = director;
         this.fsk = fsk;
     }
@@ -43,7 +40,11 @@ public class Disc extends Medium {
      * @return barcode unique identifier of the disc
      */
     public String getBarcode() {
-        return barcode;
+        return code;
+    }
+
+    public void setBarcode(String barcode) {
+        code = barcode;
     }
 
     /**
@@ -89,7 +90,7 @@ public class Disc extends Medium {
 
         Disc disc = (Disc) o;
 
-        if (barcode != null ? !barcode.equals(disc.barcode) : disc.barcode != null) {
+        if (code != null ? !code.equals(disc.code) : disc.code != null) {
             return false;
         }
         if (director != null ? !director.equals(disc.director) : disc.director != null) {
@@ -100,7 +101,7 @@ public class Disc extends Medium {
 
     @Override
     public int hashCode() {
-        int result = barcode != null ? barcode.hashCode() : 0;
+        int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (director != null ? director.hashCode() : 0);
         result = 31 * result + (fsk != null ? fsk.hashCode() : 0);
         return result;

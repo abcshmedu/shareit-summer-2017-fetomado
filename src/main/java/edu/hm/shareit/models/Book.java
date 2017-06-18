@@ -1,8 +1,8 @@
 package edu.hm.shareit.models;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 /**
  * This is the model class representing a book.
@@ -11,8 +11,6 @@ import javax.persistence.Id;
 @JsonPropertyOrder({"title", "author", "isbn"})
 public class Book extends Medium {
 
-    @Id
-    private String isbn;
     private String author;
 
     /**
@@ -24,7 +22,7 @@ public class Book extends Medium {
     public Book(String title, String author, String isbn) {
         super(title);
         this.author = author;
-        this.isbn = isbn;
+        this.code = isbn;
     }
 
     /**
@@ -55,7 +53,11 @@ public class Book extends Medium {
      * @return isbn unique identifier of the book
      */
     public String getIsbn() {
-        return isbn;
+        return code;
+    }
+
+    public void setIsbn(String isbn) {
+        code = isbn;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class Book extends Medium {
 
         Book book = (Book) o;
 
-        if (isbn != null ? !isbn.equals(book.isbn) : book.isbn != null) {
+        if (code != null ? !code.equals(book.code) : book.code != null) {
             return false;
         }
         return author != null ? author.equals(book.author) : book.author == null;
@@ -77,7 +79,7 @@ public class Book extends Medium {
 
     @Override
     public int hashCode() {
-        int result = isbn != null ? isbn.hashCode() : 0;
+        int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (author != null ? author.hashCode() : 0);
         return result;
     }

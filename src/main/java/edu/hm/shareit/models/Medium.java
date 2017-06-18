@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Medium implements Serializable {
 
     @Id
-    protected String code;
+    private String code;
     private String title;
 
     /**
@@ -41,4 +41,19 @@ public class Medium implements Serializable {
         this.title = title;
     }
 
+    /**
+     * Returns the identifying code of this medium.
+     * @return the code
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * Sets the identifying code of this medium.
+     * @param code the code
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

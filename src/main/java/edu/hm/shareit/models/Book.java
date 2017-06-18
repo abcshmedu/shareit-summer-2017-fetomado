@@ -1,5 +1,6 @@
 package edu.hm.shareit.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
  */
 @Entity
 @JsonPropertyOrder({"title", "author", "isbn"})
+@JsonIgnoreProperties({"code"})
 public class Book extends Medium {
 
     private String author;
@@ -22,7 +24,7 @@ public class Book extends Medium {
     public Book(String title, String author, String isbn) {
         super(title);
         this.author = author;
-        this.code = isbn;
+        this.setCode(isbn);
     }
 
     /**
@@ -53,11 +55,15 @@ public class Book extends Medium {
      * @return isbn unique identifier of the book
      */
     public String getIsbn() {
-        return code;
+        return getCode();
     }
 
+    /**
+     * Sets the ISBN of the book.
+     * @param isbn the new ISBN
+     */
     public void setIsbn(String isbn) {
-        code = isbn;
+        setCode(isbn);
     }
 
     @Override
@@ -71,7 +77,7 @@ public class Book extends Medium {
 
         Book book = (Book) o;
 
-        if (code != null ? !code.equals(book.code) : book.code != null) {
+        if (getCode() != null ? !getCode().equals(book.getCode()) : book.getCode() != null) {
             return false;
         }
         return author != null ? author.equals(book.author) : book.author == null;
@@ -79,7 +85,7 @@ public class Book extends Medium {
 
     @Override
     public int hashCode() {
-        int result = code != null ? code.hashCode() : 0;
+        int result = getCode() != null ? getCode().hashCode() : 0;
         result = 31 * result + (author != null ? author.hashCode() : 0);
         return result;
     }
